@@ -20,7 +20,7 @@ public class Search {
         NUM_COURSES = 10; // Place holder
         searched = null;
         dept = null;
-        professor = null;
+        //professor = null;
         creditHrs = -1;
         startTime = null;
         endTime = null;
@@ -65,13 +65,13 @@ public class Search {
         this.dept = dept;
     }
 
-    public String getProfessor() {
-        return professor;
-    }
+    //public String getProfessor() {
+    //    return professor;
+    //}
 
-    public void setProfessor(String professor) {
-        this.professor = professor;
-    }
+    //public void setProfessor(String professor) {
+    //    this.professor = professor;
+    //}
 
     public int getCreditHrs() {
         return creditHrs;
