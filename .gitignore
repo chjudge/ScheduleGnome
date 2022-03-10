@@ -24,3 +24,9 @@ hs_err_pid*
 ScheduleGnome/.vscode
 ScheduleGnome/class-scheduler.iml
 .idea
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
