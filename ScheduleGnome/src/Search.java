@@ -12,7 +12,6 @@ public class Search {
     private String endTime;
     private ArrayList<Match> results;
 
-    public Search(String searched, String dept, String prof, int creditHrs, String startTime, ArrayList<Course> results){
     public Search() {
         // data = new Data();
         // NUM_COURSES = data.courses.size();
