@@ -7,7 +7,8 @@ public class Search {
     private int NUM_COURSES;
     private String searched;
     private String dept;
-    private String professor;
+    private int code;
+    // private String professor; // Web scraper needed
     private int creditHrs;
     private String startTime;
     private String endTime;
@@ -28,7 +29,7 @@ public class Search {
 
     public ArrayList<Match> QuerySearch() {
         for (int i = 0; i < NUM_COURSES; i++) {
-            Course curr = Data.getCourses().get(i);
+            Course curr = data.courses.get(i);
             int rate = isMatch(curr);
             if (rate > 0) { // Add in if matches user query as well
                 Match newMatch = new Match(curr, rate);
@@ -40,7 +41,10 @@ public class Search {
 
     public int isMatch(Course crs) {
         // TODO: Check if crs is a match
-        return 0;
+        int rating = 0;
+        if (dept != null && dept != crs.dept) return -1;
+
+        return rating;
     }
 
     // GETTERS N' SETTERS
@@ -73,33 +77,19 @@ public class Search {
         return creditHrs;
     }
 
-    public void setCreditHrs(int creditHrs) {
-        this.creditHrs = creditHrs;
-    }
+    public void setCreditHrs(int creditHrs) { this.creditHrs = creditHrs; }
 
-    public String getStartTime() {
-        return startTime;
-    }
+    public String getStartTime() { return startTime; }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
+    public void setStartTime(String startTime) { this.startTime = startTime; }
 
-    public String getEndTime() {
-        return endTime;
-    }
+    public String getEndTime() { return endTime; }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+    public void setEndTime(String endTime) { this.endTime = endTime; }
 
-    public ArrayList<Match> getResults() {
-        return results;
-    }
+    public ArrayList<Match> getResults() { return results; }
 
-    public void setResults(ArrayList<Match> results) {
-        this.results = results;
-    }
+    public void setResults(ArrayList<Match> results) { this.results = results; }
 }
 
 class Match {
