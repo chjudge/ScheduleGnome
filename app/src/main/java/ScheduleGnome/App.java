@@ -21,12 +21,9 @@ public class App {
     public void parseTest(){
         ArrayList<Event> events = new ArrayList<Event>();
         ParseCourses parser = new ParseCourses();
-        try {
-            parser.readCourses(events);
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
-
+        
+        parser.readCourses(events);
+        
         for (Event event : events) {
             System.out.println((Course)event);
         }

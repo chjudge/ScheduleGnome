@@ -34,6 +34,55 @@ public class Course extends Event {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((building == null) ? 0 : building.hashCode());
+        result = prime * result + capacity;
+        result = prime * result + ((courseCode == null) ? 0 : courseCode.hashCode());
+        result = prime * result + enrollment;
+        result = prime * result + ((room == null) ? 0 : room.hashCode());
+        result = prime * result + ((shortTitle == null) ? 0 : shortTitle.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Course other = (Course) obj;
+        if (building == null) {
+            if (other.building != null)
+                return false;
+        } else if (!building.equals(other.building))
+            return false;
+        if (capacity != other.capacity)
+            return false;
+        if (courseCode == null) {
+            if (other.courseCode != null)
+                return false;
+        } else if (!courseCode.equals(other.courseCode))
+            return false;
+        if (enrollment != other.enrollment)
+            return false;
+        if (room == null) {
+            if (other.room != null)
+                return false;
+        } else if (!room.equals(other.room))
+            return false;
+        if (shortTitle == null) {
+            if (other.shortTitle != null)
+                return false;
+        } else if (!shortTitle.equals(other.shortTitle))
+            return false;
+        return true;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ", in " + building + " room " + room + ", with " +
         enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;

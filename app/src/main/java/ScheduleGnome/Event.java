@@ -19,17 +19,20 @@ public abstract class Event {
 
     public Event(String title, String s, String e, String day){
         this.title = title;
+
         
         LocalTime start = null, end = null;
         try {
             start = s == null ? null : LocalTime.parse(s);
         } catch (java.time.format.DateTimeParseException ex) {
             s = "0" + s;
+            start = s == null ? null : LocalTime.parse(s);
         }
         try {
             end = e == null ? null : LocalTime.parse(e);
         } catch (java.time.format.DateTimeParseException ex) {
             e = "0" + e;
+            end = e == null ? null : LocalTime.parse(e);
         }
 
         this.startTime = start;
@@ -67,6 +70,46 @@ public abstract class Event {
         }
 
         dates = meets.clone();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(dates);
+        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+        result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Event other = (Event) obj;
+        if (!Arrays.equals(dates, other.dates))
+            return false;
+        if (endTime == null) {
+            if (other.endTime != null)
+                return false;
+        } else if (!endTime.equals(other.endTime))
+            return false;
+        if (startTime == null) {
+            if (other.startTime != null)
+                return false;
+        } else if (!startTime.equals(other.startTime))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        return true;
     }
 
     @Override
