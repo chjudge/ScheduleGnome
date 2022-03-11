@@ -5,10 +5,15 @@ package ScheduleGnome;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.lang.Object;
+import java.util.PriorityQueue;
 
-class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+class MatchTest {
+    @Test
+    void filtersForDept() {
+//        Search searchingTool = new Search();
+//        searchingTool.setDept("COMP 314");
+//        Course crs = new Course(0, "COMP 314 A", "FOUN COMP SCI", "FOUNDATIONS OF COMPUTER SCIENCE", LocalTime.parse("10:00:00"), LocalTime.parse("10:50:00"), x, "STEM", "326");
+//        assertEquals(1, searchingTool.isMatch(crs));
     }
 }
