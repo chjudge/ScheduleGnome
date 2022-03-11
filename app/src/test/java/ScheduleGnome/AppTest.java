@@ -13,7 +13,9 @@ class MatchTest {
     void filtersForDept() {
 //        Search searchingTool = new Search();
 //        searchingTool.setDept("COMP 314");
-//        Course crs = new Course(0, "COMP 314 A", "FOUN COMP SCI", "FOUNDATIONS OF COMPUTER SCIENCE", LocalTime.parse("10:00:00"), LocalTime.parse("10:50:00"), x, "STEM", "326");
+//        Course crs = new Course(new String[] { "COMP 314 A", "FOUN COMP SCI",
+//                "FOUNDATIONS OF COMPUTER SCIENCE", "10:00:00", "10:50:00", "MWF",
+//                "STEM", "326", "33", "39" });
 //        assertEquals(1, searchingTool.isMatch(crs));
     }
 }
