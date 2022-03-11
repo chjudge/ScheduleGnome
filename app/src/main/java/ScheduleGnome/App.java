@@ -14,19 +14,9 @@ public class App {
     }
 
     public static void main(String[] args) {
-        // System.out.println(new App().getGreeting());
-        new App().parseTest();
+        System.out.println(new App().getGreeting());
+        
     }
 
-    private void parseTest(){
-        ArrayList<Event> events = new ArrayList<Event>();
-        ParseCourses parser = new ParseCourses();
-        try {
-            parser.readCourses(events);
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(events.size());
-    }
+    
 }
