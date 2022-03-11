@@ -3,6 +3,11 @@
  */
 package ScheduleGnome;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.opencsv.exceptions.CsvValidationException;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +15,8 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        
     }
+
+    
 }
