@@ -25,4 +25,44 @@ public abstract class Event {
         ", dates=" + Arrays.toString(dates) + ", title=" + title + "]";
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public DayOfWeek[] getDates() {
+        return dates;
+    }
+
+    public void setDates(DayOfWeek[] dates) {
+        this.dates = dates;
+    }
+
 }
