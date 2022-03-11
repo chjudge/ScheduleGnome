@@ -15,8 +15,20 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        
+        //new App().parseTest();
     }
 
-    
+    public void parseTest(){
+        ArrayList<Event> events = new ArrayList<Event>();
+        ParseCourses parser = new ParseCourses();
+        try {
+            parser.readCourses(events);
+        } catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        }
+
+        for (Event event : events) {
+            System.out.println((Course)event);
+        }
+    }
 }

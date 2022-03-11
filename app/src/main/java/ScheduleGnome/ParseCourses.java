@@ -39,78 +39,70 @@ public class ParseCourses {
         // bufferedReader.readLine();
         csvReader.skip(1);
         while ((lines = csvReader.readNext()) != null) {
-            c = readCourse(lines, events.size());
+            c = readCourse(lines);
             System.out.println(c);
             events.add(c);
         }
     }
 
-    private Course readCourse(String[] items, int id) {
-        // String[]items;
-
-        // if(!line.contains("\""))
-        //     items = line.split(",");
-        // else {
-        //     StringBuilder sb = new StringBuilder();
-        //     for (int i = 0; i < line.length(); i++) {
-        //         if(line.charAt(i) == '"');
-
-        //     }
-        //     items = new String[10];
-        // }
+    private Course readCourse(String[] items) {
+        
         for (int i = 0; i < items.length; i++) {
             if (items[i].equals("NULL"))
                 items[i] = null;
         }
 
-        DayOfWeek[] meets;
+        return new Course(items);
 
-        if (items[5] == null)
-            meets = null;
-        else {
-            String[] days = items[5].split("");
-            meets = new DayOfWeek[days.length];
+        // DayOfWeek[] meets;
 
-            for (int i = 0; i < days.length; i++) {
-                switch (days[i]) {
-                    case "M":
-                        meets[i] = DayOfWeek.of(1);
-                        break;
-                    case "T":
-                        meets[i] = DayOfWeek.of(2);
-                        break;
-                    case "W":
-                        meets[i] = DayOfWeek.of(3);
-                        break;
-                    case "R":
-                        meets[i] = DayOfWeek.of(4);
-                        break;
-                    case "F":
-                        meets[i] = DayOfWeek.of(5);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        // if (items[5] == null)
+        //     meets = null;
+        // else {
+        //     String[] days = items[5].split("");
+        //     meets = new DayOfWeek[days.length];
+
+        //     for (int i = 0; i < days.length; i++) {
+        //         switch (days[i]) {
+        //             case "M":
+        //                 meets[i] = DayOfWeek.of(1);
+        //                 break;
+        //             case "T":
+        //                 meets[i] = DayOfWeek.of(2);
+        //                 break;
+        //             case "W":
+        //                 meets[i] = DayOfWeek.of(3);
+        //                 break;
+        //             case "R":
+        //                 meets[i] = DayOfWeek.of(4);
+        //                 break;
+        //             case "F":
+        //                 meets[i] = DayOfWeek.of(5);
+        //                 break;
+        //             default:
+        //                 break;
+        //         }
+        //     }
+        // }
         
-        LocalTime start = null, end = null;
-        try {
-            start = items[3] == null ? null : LocalTime.parse(items[3]);
-        } catch (java.time.format.DateTimeParseException e) {
-            items[3] = "0" + items[3];
-        }
-        try {
-            end = items[4] == null ? null : LocalTime.parse(items[3]);
-        } catch (java.time.format.DateTimeParseException e) {
-            items[4] = "0" + items[4];
-        }
+        // LocalTime start = null, end = null;
+        // try {
+        //     start = items[3] == null ? null : LocalTime.parse(items[3]);
+        // } catch (java.time.format.DateTimeParseException e) {
+        //     items[3] = "0" + items[3];
+        // }
+        // try {
+        //     end = items[4] == null ? null : LocalTime.parse(items[3]);
+        // } catch (java.time.format.DateTimeParseException e) {
+        //     items[4] = "0" + items[4];
+        // }
 
-        System.out.println(Arrays.toString(items));
+        // System.out.println(Arrays.toString(items));
 
-        return new Course(id, items[0], items[1], items[2], start, end, meets,
-                items[6], items[7],
-                items[8] == null ? -1 : Integer.parseInt(items[8]),
-                items[9] == null ? -1 : Integer.parseInt(items[9]));
+
+        // return new Course(items[0], items[1], items[2], start, end, meets,
+        //         items[6], items[7],
+        //         items[8] == null ? -1 : Integer.parseInt(items[8]),
+        //         items[9] == null ? -1 : Integer.parseInt(items[9]));
     }
 }

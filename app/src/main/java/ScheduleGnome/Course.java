@@ -11,9 +11,9 @@ public class Course extends Event {
     private int enrollment;
     private int capacity;
 
-    public Course(int id, String courseCode, String shortTitle, String longTitle, LocalTime start, LocalTime end,
+    public Course(String courseCode, String shortTitle, String longTitle, LocalTime start, LocalTime end,
             DayOfWeek[] dates, String building, String room, int enrollment, int capacity) {
-        super(id, longTitle, start, end, dates);
+        super(longTitle, start, end, dates);
         this.courseCode = courseCode;
         this.shortTitle = shortTitle;
         this.building = building;
@@ -22,9 +22,20 @@ public class Course extends Event {
         this.capacity = capacity;
     }
 
+    public Course(String[] items){
+        super(items[2], items[3], items[4], items[5]);
+
+        this.courseCode = items[0];
+        this.shortTitle = items[1];
+        this.building = items[6];
+        this.room = items[7];
+        this.enrollment = items[8] == null ? -1 : Integer.parseInt(items[8]);
+        this.capacity = items[9] == null ? -1 : Integer.parseInt(items[9]);
+    }
+
     @Override
     public String toString() {
-        return "Course [building=" + building + ", capacity=" + capacity + ", courseCode=" + courseCode
-                + ", enrollment=" + enrollment + ", room=" + room + ", shortTitle=" + shortTitle + super.toString();
+        return super.toString() + ", in " + building + " room " + room + ", with " +
+        enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;
     }
 }
