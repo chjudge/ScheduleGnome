@@ -3,12 +3,30 @@
  */
 package ScheduleGnome;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.opencsv.exceptions.CsvValidationException;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        // System.out.println(new App().getGreeting());
+        new App().parseTest();
+    }
+
+    private void parseTest(){
+        ArrayList<Event> events = new ArrayList<Event>();
+        ParseCourses parser = new ParseCourses();
+        try {
+            parser.readCourses(events);
+        } catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(events.size());
     }
 }

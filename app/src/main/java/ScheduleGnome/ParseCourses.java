@@ -1,9 +1,12 @@
 package ScheduleGnome;
 
-import java.io.BufferedReader;
-import java.io.File;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.Reader;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -11,47 +14,50 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ParseCourses {
-    private static File courses;
-    private static FileReader fileReader;
-    private static BufferedReader bufferedReader;
+    private static Reader reader;
+    private static CSVReader csvReader;
     private static final String COURSES_PATH = "data/courses.csv";
 
     public ParseCourses() {
-        courses = new File(COURSES_PATH);
+        
 
         try {
-            fileReader = new FileReader(courses);
-            bufferedReader = new BufferedReader(fileReader);
+            reader = Files.newBufferedReader(Paths.get(COURSES_PATH));
+            csvReader = new CSVReader(reader);
         } catch (FileNotFoundException e) {
+            System.err.println("FILE NOT FOUND");
             e.printStackTrace();
-            System.err.println(e.getMessage());
+        }catch (IOException e){
+            System.err.println("IO EXCEPTION");
+            e.printStackTrace();
         }
     }
 
-    public void readCourses(ArrayList<Event> events) throws IOException {
-        String line;
+    public void readCourses(ArrayList<Event> events) throws IOException, CsvValidationException {
+        String[] lines;
         Course c;
-        bufferedReader.readLine();
-        for (; (line = bufferedReader.readLine()) != null;) {
-            c = readCourse(line, events.size());
+        // bufferedReader.readLine();
+        csvReader.skip(1);
+        while ((lines = csvReader.readNext()) != null) {
+            c = readCourse(lines, events.size());
             System.out.println(c);
             events.add(c);
         }
     }
 
-    private Course readCourse(String line, int id) {
-        String[]items;
+    private Course readCourse(String[] items, int id) {
+        // String[]items;
 
-        if(!line.contains("\""))
-            items = line.split(",");
-        else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < line.length(); i++) {
-                if(line.charAt(i) == '"');
+        // if(!line.contains("\""))
+        //     items = line.split(",");
+        // else {
+        //     StringBuilder sb = new StringBuilder();
+        //     for (int i = 0; i < line.length(); i++) {
+        //         if(line.charAt(i) == '"');
 
-            }
-            items = new String[10];
-        }
+        //     }
+        //     items = new String[10];
+        // }
         for (int i = 0; i < items.length; i++) {
             if (items[i].equals("NULL"))
                 items[i] = null;
