@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import java.time.DayOfWeek;
+
 public class Extracurriculars {
     public Extracurriculars(boolean isFlexible){
 
@@ -9,7 +11,7 @@ public class Extracurriculars {
 
     }
 
-    void changeDate(Enum newDate){
+    void changeDate(DayOfWeek date){
 
     }
 

@@ -3,9 +3,9 @@ package ScheduleGnome;
 import java.util.ArrayList;
 
 public class Data {
-     static ArrayList<Course> courses;
+     ArrayList<Course> courses;
 
-    public static ArrayList<Course> getCourses() {
+    public ArrayList<Course> getCourses() {
         return courses;
     }
 

@@ -8,10 +8,7 @@ import java.nio.file.Paths;
 import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ParseCourses {
     private static Reader reader;
