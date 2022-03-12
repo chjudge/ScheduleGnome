@@ -29,7 +29,7 @@ public class ParseCourses {
         }
     }
 
-    public void readCourses(ArrayList<Event> events) {
+    public void readCourses(ArrayList<Course> courses) {
         String[] lines;
         Course c;
         
@@ -37,7 +37,7 @@ public class ParseCourses {
             csvReader.skip(1);
             while ((lines = csvReader.readNext()) != null) {
                 c = readCourse(lines);
-                events.add(c);
+                courses.add(c);
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();

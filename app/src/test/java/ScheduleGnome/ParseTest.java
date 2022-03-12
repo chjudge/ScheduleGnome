@@ -7,22 +7,22 @@ import java.util.ArrayList;
 class ParseTest {
     @Test
     void loadCourses() {
-        ArrayList<Event> events = new ArrayList<Event>(); 
+        ArrayList<Course> courses = new ArrayList<Course>();
         ParseCourses parser = new ParseCourses();
         
-        parser.readCourses(events);
+        parser.readCourses(courses);
 
-        assertEquals(761, events.size());
+        assertEquals(761, courses.size());
     }
 
     @Test
     void correctCourses(){
-        ArrayList<Event> events = new ArrayList<Event>(); 
+        ArrayList<Course> courses = new ArrayList<Course>();
         ParseCourses parser = new ParseCourses();
         
-        parser.readCourses(events);
+        parser.readCourses(courses);
         String[] s = {"ACCT 202  C","PRIN OF ACCOUNT","PRINCIPLES OF ACCOUNTING II","9:00:00","9:50:00","MWF","HAL","306","35","42"};
         Course c = new Course(s);
-        assertEquals(c, events.get(5));
+        assertEquals(c, courses.get(5));
     }
 }

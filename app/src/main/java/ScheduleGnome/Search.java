@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -8,11 +10,12 @@ public class Search {
     private Data data;
     private int NUM_COURSES;
     private String searched;
-    private String dept;
+    private ArrayList<String> depts;
     // private String professor; // Web scraper needed
-    private int creditHrs;
-    private String startTime;
-    private String endTime;
+    private ArrayList<Integer> creditHrs;
+    private ArrayList<DayOfWeek[]> dates;
+    private ArrayList<LocalTime> startTimes;
+    private ArrayList<LocalTime> endTimes;
     private PriorityQueue<Match> results;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
@@ -20,11 +23,12 @@ public class Search {
         data = new Data();
         NUM_COURSES = data.courses.size();
         searched = null;
-        dept = null;
+        depts = new ArrayList<>();
         //professor = null;
-        creditHrs = -1;
-        startTime = null;
-        endTime = null;
+        creditHrs = new ArrayList<>();
+        dates = new ArrayList<>();
+        startTimes = new ArrayList<>();
+        endTimes = new ArrayList<>();
         results = new PriorityQueue<>(new MatchComparator());
     }
 
@@ -50,8 +54,45 @@ public class Search {
 
     public int isMatch(Course crs) {
         int rating = 0;
-        if (dept != null && !crs.getCourseCode().contains(dept)) return -1; else rating++;
-        if (startTime != null && !crs.getStartTime().equals(startTime)) return -1; else rating++;
+        // Apply department filter
+        DeptIf:
+        if (!depts.isEmpty()) {
+            for (String dept : depts) {
+                if (crs.getCourseCode().contains(dept)) {
+                    rating++; // Found a match
+                    break DeptIf;
+                }
+            }
+            return -1;
+        }
+        // Apply start time filter
+        StartIf:
+        if (!startTimes.isEmpty()) {
+            for (LocalTime startTime : startTimes) {
+                if (crs.getStartTime().equals(startTime)) {
+                    rating++; // Found a match
+                    break StartIf;
+                }
+            }
+            return -1;
+        }
+        // Apply day of the week filter
+        DatesIf:
+        if (!dates.isEmpty()) {
+            DayOfWeek[] crsDates = crs.getDates();
+            int numDays = crsDates.length;
+            for (DayOfWeek[] daysOfWeek : dates) {
+                if (numDays == daysOfWeek.length) {
+                    for (int i = 0; i < daysOfWeek.length; i++) {
+                        if (crsDates[i].equals(daysOfWeek[i])) {
+                            rating++; // Found a match
+                            break DatesIf;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
         // TODO: Add credit hours check, professor, class level filters?
         // TODO: Add user input filtering
         return rating;
@@ -67,12 +108,12 @@ public class Search {
         this.searched = searched;
     }
 
-    public String getDept() {
-        return dept;
+    public ArrayList<String> getDepts() {
+        return depts;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
+    public void addDept(String dept) {
+        this.depts.add(dept);
     }
 
     //public String getProfessor() {
@@ -83,17 +124,70 @@ public class Search {
     //    this.professor = professor;
     //}
 
-    public int getCreditHrs() { return creditHrs; }
+    public ArrayList<Integer> getCreditHrs() { return creditHrs; }
 
-    public void setCreditHrs(int creditHrs) { this.creditHrs = creditHrs; }
+    public void addCreditHrs(int creditHrs) { this.creditHrs.add(creditHrs); }
 
-    public String getStartTime() { return startTime; }
+    public ArrayList<DayOfWeek[]> getDates() { return dates; }
 
-    public void setStartTime(String startTime) { this.startTime = startTime; }
+    public void addDates(String dates) {
+        DayOfWeek[] meets;
+        if (dates == null)
+            meets = null;
+        else {
+            String[] days = dates.split("");
+            meets = new DayOfWeek[days.length];
 
-    public String getEndTime() { return endTime; }
+            for (int i = 0; i < days.length; i++) {
+                switch (days[i]) {
+                    case "M":
+                        meets[i] = DayOfWeek.of(1);
+                        break;
+                    case "T":
+                        meets[i] = DayOfWeek.of(2);
+                        break;
+                    case "W":
+                        meets[i] = DayOfWeek.of(3);
+                        break;
+                    case "R":
+                        meets[i] = DayOfWeek.of(4);
+                        break;
+                    case "F":
+                        meets[i] = DayOfWeek.of(5);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        this.dates.add(meets);
+    }
 
-    public void setEndTime(String endTime) { this.endTime = endTime; }
+    public ArrayList<LocalTime> getStartTimes() { return startTimes; }
+
+    public void addStartTime(String startTime) {
+        LocalTime start = null;
+        try {
+            start = startTime == null ? null : LocalTime.parse(startTime);
+        } catch (java.time.format.DateTimeParseException ex) {
+            startTime = "0" + startTime;
+            start = startTime == null ? null : LocalTime.parse(startTime);
+        }
+        this.startTimes.add(start);
+    }
+
+    public ArrayList<LocalTime> getEndTimes() { return endTimes; }
+
+    public void addEndTime(String endTime) {
+        LocalTime end = null;
+        try {
+            end = endTime == null ? null : LocalTime.parse(endTime);
+        } catch (java.time.format.DateTimeParseException ex) {
+            endTime = "0" + endTime;
+            end = endTime == null ? null : LocalTime.parse(endTime);
+        }
+        this.endTimes.add(end);
+    }
 
     public PriorityQueue<Match> getResults() { return results; }
 

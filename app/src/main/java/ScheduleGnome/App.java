@@ -19,13 +19,13 @@ public class App {
     }
 
     public void parseTest(){
-        ArrayList<Event> events = new ArrayList<Event>();
+        ArrayList<Course> courses = new ArrayList<Course>();
         ParseCourses parser = new ParseCourses();
         
-        parser.readCourses(events);
+        parser.readCourses(courses);
         
-        for (Event event : events) {
-            System.out.println((Course)event);
+        for (Course course : courses) {
+            System.out.println((Course)course);
         }
     }
 }
