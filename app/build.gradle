@@ -38,4 +38,5 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    // jvmArgs '--enable-preview'
 }

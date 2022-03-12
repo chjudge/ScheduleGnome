@@ -11,11 +11,11 @@ import java.util.PriorityQueue;
 class MatchTest {
     @Test
     void filtersForDept() {
-//        Search searchingTool = new Search();
-//        searchingTool.setDept("COMP 314");
-//        Course crs = new Course(new String[] { "COMP 314 A", "FOUN COMP SCI",
-//                "FOUNDATIONS OF COMPUTER SCIENCE", "10:00:00", "10:50:00", "MWF",
-//                "STEM", "326", "33", "39" });
-//        assertEquals(1, searchingTool.isMatch(crs));
+        Search searchingTool = new Search();
+        searchingTool.setDept("COMP 314");
+        Course crs = new Course(new String[] { "COMP 314 A", "FOUN COMP SCI",
+                "FOUNDATIONS OF COMPUTER SCIENCE", "10:00:00", "10:50:00", "MWF",
+                "STEM", "326", "33", "39" });
+        assertEquals(1, searchingTool.isMatch(crs));
     }
 }
