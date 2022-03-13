@@ -11,13 +11,14 @@ public class Schedule {
     ArrayList<Event> events;
 
 
-    public Schedule(String semester, String schedule_id, Calendar calendar){
+    public Schedule(String semester, String schedule_id){
         this.semester = semester;
         this.schedule_id = schedule_id;
         events = new ArrayList<>();
     }
 
     void addEvent(Event e){
+        events.add(e);
 
     }
 
