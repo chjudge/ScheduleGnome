@@ -88,9 +88,7 @@ public class Course extends Event {
         enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
+    public String getCourseCode() { return courseCode; }
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;

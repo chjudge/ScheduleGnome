@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.PriorityQueue;
 
 public class Search {
@@ -16,6 +17,8 @@ public class Search {
     private ArrayList<DayOfWeek[]> dates;
     private ArrayList<LocalTime> startTimes;
     private ArrayList<LocalTime> endTimes;
+    // TODO: PriorityQueue might not be the way to go
+    // TODO: Maybe replace with just an arraylist and sort it when needed
     private PriorityQueue<Match> results;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
@@ -40,12 +43,54 @@ public class Search {
     }
 
     public PriorityQueue<Match> QuerySearch() {
+        ApplyFilters();
+        ApplySearchedInput();
+        return results;
+    }
+
+    // TODO: IFFY way to do this. Might need to rethink
+    public PriorityQueue<Match> ApplySearchedInput() {
+        if (!hasSearchedQuery()) return results;
+        for (Match result : results) {
+            Course crs = result.getCourse();
+            int newRating = result.getRating();
+            // TODO: This is just a very iffy way of doing this
+            if (searched.contains(crs.getBuilding().toLowerCase())) newRating++;
+            // Check through course code matches
+            for (String s : crs.getCourseCode().split(" ")) {
+                if (searched.contains(" " + s.toLowerCase() + " ")) newRating++;
+            }
+            // Check for keywords
+            for (String s : crs.getTitle().split(" ")) {
+                if (searched.contains(s.toLowerCase())) newRating++;
+            }
+            if (newRating != result.getRating()) {
+                results.remove(result);      // Remove from list
+                result.setRating(newRating); // Give results new rating
+                results.add(result);         // Add back onto list
+            }
+        }
+        return results;
+    }
+
+    public PriorityQueue<Match> ApplyFilters() {
         // TODO: Somehow clear filters (here or as user interacts with it)
-        for (int i = 0; i < NUM_COURSES; i++) {
-            Course curr = data.courses.get(i);
-            int rate = isMatch(curr);
-            if (rate > 0) { // Add in if matches user query as well
-                Match newMatch = new Match(curr, rate);
+        results.clear(); // TODO: Temporary solution (could be permanent)
+        Boolean hasFilters = hasFilters();
+        if (hasFilters) {
+            for (int i = 0; i < NUM_COURSES; i++) {
+                Course curr = data.courses.get(i);
+                int rate = isMatch(curr);
+                if (rate > 0) { // Add in if matches user query as well
+                    Match newMatch = new Match(curr, rate);
+                    results.add(newMatch);
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < NUM_COURSES; i++) {
+                Course curr = data.courses.get(i);
+                Match newMatch = new Match(curr, 0);
                 results.add(newMatch);
             }
         }
@@ -94,8 +139,21 @@ public class Search {
             return -1;
         }
         // TODO: Add credit hours check, professor, class level filters?
-        // TODO: Add user input filtering
         return rating;
+    }
+
+    public Boolean hasFilters() {
+        if (!depts.isEmpty()) return true;
+        if (!startTimes.isEmpty()) return true;
+        if (!dates.isEmpty()) return true;
+        if (!creditHrs.isEmpty()) return true;
+        return false;
+    }
+
+    public Boolean hasSearchedQuery() {
+        if (searched == null) return false;
+        if (searched.isBlank()) return false;
+        return true;
     }
 
     // GETTERS N' SETTERS
@@ -209,6 +267,10 @@ class Match {
 
     public int getRating() {
         return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
 
