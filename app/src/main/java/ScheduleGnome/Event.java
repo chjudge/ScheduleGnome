@@ -114,8 +114,15 @@ public abstract class Event {
 
     @Override
     public String toString() {
+        //Print dates in a concise and understandable fashion
+        char[] datesChars = {'M','T','W','R','F','S','S'};
+        String datesString = "";
+        for(DayOfWeek date : dates) {
+            datesString += datesChars[date.getValue() - 1];
+        }
+
         return title + ", from " + startTime + " to " + endTime +
-        " on " + Arrays.toString(dates) ;
+        " on " + datesString;
     }
 
     public String getTitle() {

@@ -17,6 +17,10 @@ public class Schedule {
         events = new ArrayList<>();
     }
 
+    public String getSemester() {
+        return semester;
+    }
+
     void addEvent(Event e){
         events.add(e);
 
