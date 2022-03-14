@@ -58,16 +58,4 @@ public class App {
         }
         System.out.println();
     }
-
-    public void parseTest(){
-        ArrayList<Course> courses = new ArrayList<Course>();
-        ParseCourses parser = new ParseCourses();
-        
-        parser.readCourses(courses);
-        
-        for (Course course : courses) {
-            //Should I format this more specifically? 
-            System.out.println((Course)course);
-        }
-    }
 }
