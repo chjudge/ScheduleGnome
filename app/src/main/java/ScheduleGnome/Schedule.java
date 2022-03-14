@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Schedule {
 
-   final private String semester;
+    final private String semester;
     final private String schedule_id;
     ArrayList<Event> events;
 
@@ -23,7 +23,6 @@ public class Schedule {
 
     void addEvent(Event e){
         events.add(e);
-
     }
 
     void updateCalendar(){

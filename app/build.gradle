@@ -19,6 +19,7 @@ repositories {
 
 javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
+
 }
 
 dependencies {
@@ -32,7 +33,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ScheduleGnome.App'
+    mainClass = 'ScheduleGnome.JavaFXApp'
 }
 
 tasks.named('test') {
