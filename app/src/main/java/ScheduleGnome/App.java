@@ -49,5 +49,9 @@ public class App {
             System.out.println(event);
         }
         System.out.println();
+
+        //Testing Calendar display
+        Calendar calendar = new Calendar(schedule);
+        System.out.println(calendar);
     }
 }
