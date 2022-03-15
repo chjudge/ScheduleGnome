@@ -40,7 +40,7 @@ public class App {
         //Display all courses in the schedule
     
         //Sample data to test displaying courses
-        Schedule schedule = new Schedule("Spring 2022","123");
+        Schedule schedule = new Schedule("123");
         initSampleData(schedule);
 
         //Display courses as a list
