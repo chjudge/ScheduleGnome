@@ -2,23 +2,46 @@ package ScheduleGnome;
 
 
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Schedule {
 
    final private String semester;
-    final private String schedule_id;
+    private String scheduleID;
     ArrayList<Event> events;
 
 
-    public Schedule(String semester, String schedule_id){
-        this.semester = semester;
-        this.schedule_id = schedule_id;
+    public Schedule(String scheduleID){
+        this.semester = setSemester();
+        this.scheduleID = scheduleID;
         events = new ArrayList<>();
     }
 
     public String getSemester() {
         return semester;
+    }
+
+    public String setSemester(){
+        System.out.println("Is this schedule for fall or spring semester?");
+        Scanner scanner = new Scanner(System.in);
+        String semester = scanner.next();
+        scanner.close();
+        if(semester.equalsIgnoreCase("fall") || semester.equalsIgnoreCase("f")){
+            return "Fall";
+        }
+        if(semester.equalsIgnoreCase("spring") || semester.equalsIgnoreCase("s")){
+            return "Spring";
+        }
+        else{
+            System.out.println("invalid semester");
+            return null;
+        }
+
+
     }
 
     void addEvent(Event e){
@@ -38,7 +61,9 @@ public class Schedule {
 
     }
 
+
    void deleteEvent(Event e){
+
         events.remove(e);
     }
 
