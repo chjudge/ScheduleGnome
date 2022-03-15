@@ -3,17 +3,10 @@
  */
 package ScheduleGnome;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
-
-import com.opencsv.exceptions.CsvValidationException;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void initSampleData(Schedule schedule) {
         LocalTime start1 = LocalTime.of(10,0,0);
@@ -43,7 +36,6 @@ public class App {
 
     public static void main(String[] args) {
         //System.out.println(new App().getGreeting());
-        //new App().parseTest();
 
         //Display all courses in the schedule
     
@@ -57,17 +49,9 @@ public class App {
             System.out.println(event);
         }
         System.out.println();
-    }
 
-    public void parseTest(){
-        ArrayList<Course> courses = new ArrayList<Course>();
-        ParseCourses parser = new ParseCourses();
-        
-        parser.readCourses(courses);
-        
-        for (Course course : courses) {
-            //Should I format this more specifically? 
-            System.out.println((Course)course);
-        }
+        //Testing Calendar display
+        Calendar calendar = new Calendar(schedule);
+        System.out.println(calendar);
     }
 }
