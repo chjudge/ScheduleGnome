@@ -12,7 +12,7 @@ public class Search {
     private int NUM_COURSES;
     private String searched;
     private ArrayList<String> depts;
-    // private String professor; // Web scraper needed
+    // private ArrayList<String> professor; // Web scraper needed
     private ArrayList<Integer> creditHrs;
     private ArrayList<DayOfWeek[]> dates;
     private ArrayList<LocalTime> startTimes;
@@ -27,7 +27,7 @@ public class Search {
         NUM_COURSES = data.courses.size();
         searched = null;
         depts = new ArrayList<>();
-        //professor = null;
+        //professor = new ArrayList<>();
         creditHrs = new ArrayList<>();
         dates = new ArrayList<>();
         startTimes = new ArrayList<>();
@@ -68,6 +68,9 @@ public class Search {
                 results.remove(result);      // Remove from list
                 result.setRating(newRating); // Give results new rating
                 results.add(result);         // Add back onto list
+            }
+            if (result.getRating() == 0) {
+                results.remove(result);
             }
         }
         return results;
