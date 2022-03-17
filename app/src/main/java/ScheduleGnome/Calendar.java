@@ -17,6 +17,14 @@ public class Calendar {
         
         // Event[] eventsPerDay = new Event[5];
         //I would love a more space-efficient solution to this
+        ret += dailyScheduleToString();
+        ret += "\n";
+        return ret;
+    }
+
+    private String dailyScheduleToString() {
+        String ret = "";
+
         ArrayList<Event> monEvents = new ArrayList<Event>();
         ArrayList<Event> tueEvents = new ArrayList<Event>();
         ArrayList<Event> wedEvents = new ArrayList<Event>();
@@ -55,29 +63,31 @@ public class Calendar {
             switch(i) {
                 case 0:
                     //Make a method for this and add each event to the string
-                    ret += monEvents.toString();
-                    ret += "\n";
+                    ret += eventArrayToString(monEvents);
                 break;
                 case 1:
-                    ret += tueEvents.toString();
-                    ret += "\n";
+                    ret += eventArrayToString(tueEvents);
                 break;
                 case 2:
-                    ret += wedEvents.toString();;
-                    ret += "\n";
+                    ret += eventArrayToString(wedEvents);
                 break;
                 case 3:
-                    ret += thuEvents.toString();
-                    ret += "\n";
+                    ret += eventArrayToString(thuEvents);
                 break;
                 case 4:
-                    ret += friEvents.toString();
-                    ret += "\n";
+                    ret += eventArrayToString(friEvents);
                 break;
             }
 
         }
-        
+        return ret;
+    }
+
+    private String eventArrayToString(ArrayList<Event> eventList) {
+        String ret = "";
+        for(Event event : eventList) {
+            ret += event.getTitle() + "\n";
+        }
         ret += "\n";
         return ret;
     }
