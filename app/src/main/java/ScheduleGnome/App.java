@@ -44,11 +44,13 @@ public class App {
         initSampleData(schedule);
 
         //Display courses as a list
+        /*
         System.out.println("Printing " + schedule.getSemester() + " schedule\n------------------------------");
         for(Event event : schedule.events) {
             System.out.println(event);
         }
         System.out.println();
+        */
 
         //Testing Calendar display
         Calendar calendar = new Calendar(schedule);

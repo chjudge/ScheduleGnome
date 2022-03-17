@@ -47,7 +47,6 @@ public class Calendar {
                     break;
                 }
             }
-            ret += event + "\n";
         }
         
         String[] weekdays = {"MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"};
@@ -55,6 +54,7 @@ public class Calendar {
             ret += weekdays[i] + "\n------------------------\n";
             switch(i) {
                 case 0:
+                    //Make a method for this and add each event to the string
                     ret += monEvents.toString();
                     ret += "\n";
                 break;
