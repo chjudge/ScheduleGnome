@@ -4,8 +4,6 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Locale;
-import java.util.PriorityQueue;
 
 public class Search {
     private Data data;
@@ -19,7 +17,7 @@ public class Search {
     private ArrayList<LocalTime> endTimes;
     // TODO: PriorityQueue might not be the way to go
     // TODO: Maybe replace with just an arraylist and sort it when needed
-    private PriorityQueue<Match> results;
+    private ArrayList<Match> results;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
     public Search() {
@@ -32,24 +30,24 @@ public class Search {
         dates = new ArrayList<>();
         startTimes = new ArrayList<>();
         endTimes = new ArrayList<>();
-        results = new PriorityQueue<>(new MatchComparator());
+        results = new ArrayList<>();
     }
 
     public void PrintResults() {
-        while (!results.isEmpty()) {
-            Match result = results.remove();
-            System.out.println(result.getCourse().toString());
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println(i + " " + results.get(i).getCourse().toString());
         }
     }
 
-    public PriorityQueue<Match> QuerySearch() {
-        ApplyFilters();
-        ApplySearchedInput();
+    public ArrayList<Match> querySearch() {
+        applyFilters();
+        applySearchedInput();
+        results.sort(new MatchComparator());
         return results;
     }
 
     // TODO: IFFY way to do this. Might need to rethink
-    public PriorityQueue<Match> ApplySearchedInput() {
+    public ArrayList<Match> applySearchedInput() {
         if (!hasSearchedQuery()) return results;
         for (Match result : results) {
             Course crs = result.getCourse();
@@ -76,7 +74,7 @@ public class Search {
         return results;
     }
 
-    public PriorityQueue<Match> ApplyFilters() {
+    public ArrayList<Match> applyFilters() {
         // TODO: Somehow clear filters (here or as user interacts with it)
         results.clear(); // TODO: Temporary solution (could be permanent)
         Boolean hasFilters = hasFilters();
@@ -250,9 +248,9 @@ public class Search {
         this.endTimes.add(end);
     }
 
-    public PriorityQueue<Match> getResults() { return results; }
+    public ArrayList<Match> getResults() { return results; }
 
-    public void setResults(PriorityQueue<Match> results) { this.results = results; }
+    public void setResults(ArrayList<Match> results) { this.results = results; }
 }
 
 class Match {
