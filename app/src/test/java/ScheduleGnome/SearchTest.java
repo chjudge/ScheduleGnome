@@ -53,4 +53,15 @@ class SearchTest {
 
     //
 
+    @Test
+    void onlySearchQuery() {
+        Search searchingTool = new Search();
+        searchingTool.setSearched("coMpUter");
+        Course crs = new Course(new String[] { "COMP 314 A", "FOUN COMP SCI",
+                "FOUNDATIONS OF COMPUTER SCIENCE", "10:00:00", "10:50:00", "MWF",
+                "STEM", "326", "33", "39" });
+        int size = searchingTool.querySearch().size();
+        assertEquals(12, size);
+    }
+
 }

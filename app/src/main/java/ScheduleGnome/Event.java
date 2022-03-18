@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -117,8 +119,10 @@ public abstract class Event {
         //Print dates in a concise and understandable fashion
         char[] datesChars = {'M','T','W','R','F','S','S'};
         String datesString = "";
+
         for(DayOfWeek date : dates) {
-            datesString += datesChars[date.getValue() - 1];
+            if(date != null)
+                datesString += datesChars[date.getValue() - 1];
         }
 
         return title + ", from " + startTime + " to " + endTime +

@@ -3,7 +3,6 @@ package ScheduleGnome;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Search {
     private Data data;
@@ -15,8 +14,6 @@ public class Search {
     private ArrayList<DayOfWeek[]> dates;
     private ArrayList<LocalTime> startTimes;
     private ArrayList<LocalTime> endTimes;
-    // TODO: PriorityQueue might not be the way to go
-    // TODO: Maybe replace with just an arraylist and sort it when needed
     private ArrayList<Match> results;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
@@ -33,17 +30,26 @@ public class Search {
         results = new ArrayList<>();
     }
 
-    // Prints with index
-    public void PrintResults() {
+    // toString for results
+    public String resultToString() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < results.size(); i++) {
-            System.out.println(i + " " + results.get(i).getCourse().toString());
+            sb.append((i + " " + results.get(i).getCourse().toString() + "\n"));
         }
+        return sb.toString();
     }
 
     public ArrayList<Match> querySearch() {
         applyFilters();
         applySearchedInput();
         results.sort(new MatchComparator());
+        for (int i = results.size()-1; i>=0; i--) {
+            Match result = results.get(i);
+            if (result.getRating() > 0) {
+                break;
+            }
+            results.remove(result);
+        }
         return results;
     }
 
@@ -54,23 +60,26 @@ public class Search {
             Course crs = result.getCourse();
             int newRating = result.getRating();
             // TODO: This is just a very iffy way of doing this
-            if (searched.contains(crs.getBuilding().toLowerCase())) newRating++;
+            if (crs.getBuilding()!=null && searched.contains(crs.getBuilding().toLowerCase())) {
+                result.addSimilarity(crs.getBuilding());
+                newRating++;
+            }
             // Check through course code matches
             for (String s : crs.getCourseCode().split(" ")) {
-                if (searched.contains(" " + s.toLowerCase() + " ")) newRating++;
+                if (searched.contains(" " + s.toLowerCase() + " ")) {
+                    result.addSimilarity(s);
+                    newRating++;
+                }
             }
             // Check for keywords
             for (String s : crs.getTitle().split(" ")) {
-                if (searched.contains(s.toLowerCase())) newRating++;
+                if (s.equals("")) continue;
+                if (searched.contains(s.toLowerCase())) {
+                    result.addSimilarity(s);
+                    newRating++;
+                }
             }
-            if (newRating != result.getRating()) {
-                results.remove(result);      // Remove from list
-                result.setRating(newRating); // Give results new rating
-                results.add(result);         // Add back onto list
-            }
-            if (result.getRating() == 0) {
-                results.remove(result);
-            }
+            result.setRating(newRating);
         }
         return results;
     }
@@ -78,8 +87,7 @@ public class Search {
     public ArrayList<Match> applyFilters() {
         // TODO: Somehow clear filters (here or as user interacts with it)
         results.clear(); // TODO: Temporary solution (could be permanent)
-        Boolean hasFilters = hasFilters();
-        if (hasFilters) {
+        if (hasFilters()) {
             for (int i = 0; i < NUM_COURSES; i++) {
                 Course curr = data.courses.get(i);
                 int rate = isMatch(curr);
@@ -165,7 +173,7 @@ public class Search {
     }
 
     public void setSearched(String searched) {
-        this.searched = searched;
+        this.searched = searched.toLowerCase();
     }
 
     public ArrayList<String> getDepts() {
@@ -252,38 +260,4 @@ public class Search {
     public ArrayList<Match> getResults() { return results; }
 
     public void setResults(ArrayList<Match> results) { this.results = results; }
-}
-
-class Match {
-    private Course crs;
-    private int rating; // Will be used for a comparator
-
-    public Match(Course crs, int rating) {
-        this.crs = crs;
-        this.rating = rating;
-    }
-
-    public Course getCourse() {
-        return crs;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-}
-
-class MatchComparator implements Comparator<Match>{
-    // Overriding compare()method of Comparator
-    // for descending order of cgpa
-    public int compare(Match m1, Match m2) {
-        if (m1.getRating() < m2.getRating())
-            return 1;
-        else if (m1.getRating() > m2.getRating())
-            return -1;
-        return 0;
-    }
 }
