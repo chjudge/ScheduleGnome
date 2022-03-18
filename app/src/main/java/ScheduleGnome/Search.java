@@ -33,6 +33,7 @@ public class Search {
         results = new ArrayList<>();
     }
 
+    // Prints with index
     public void PrintResults() {
         for (int i = 0; i < results.size(); i++) {
             System.out.println(i + " " + results.get(i).getCourse().toString());
