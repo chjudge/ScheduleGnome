@@ -13,7 +13,7 @@ public class Calendar {
     @Override
     public String toString() {
         String ret = "";
-        ret += schedule.getSemester() + " schedule\n------------------------------\n\n";
+        ret += " schedule\n------------------------------\n\n";
         
         // Event[] eventsPerDay = new Event[5];
         //I would love a more space-efficient solution to this

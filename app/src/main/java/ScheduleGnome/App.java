@@ -3,45 +3,64 @@
  */
 package ScheduleGnome;
 
+import java.sql.SQLOutput;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Scanner;
 
 public class App {
 
+
     public static void initSampleData(Schedule schedule) {
-        LocalTime start1 = LocalTime.of(10,0,0);
-        LocalTime end1 = LocalTime.of(10,50,0);
+        LocalTime start1 = LocalTime.of(10, 0, 0);
+        LocalTime end1 = LocalTime.of(10, 50, 0);
         DayOfWeek[] days1 = {DayOfWeek.of(1), DayOfWeek.of(3), DayOfWeek.of(5)};
-        Course class1 = new Course("ELEE 304 A","Emag","ELECTROMAGNETIC THEORY", start1, end1, days1,"HOYT", "113", 30, 36);
+        Course class1 = new Course("ELEE 304 A", "Emag", "ELECTROMAGNETIC THEORY", start1, end1, days1, "HOYT", "113", 30, 36);
         schedule.addEvent(class1);
 
-        LocalTime start2 = LocalTime.of(1,0,0);
-        LocalTime end2 = LocalTime.of(1,50,0);
+        LocalTime start2 = LocalTime.of(1, 0, 0);
+        LocalTime end2 = LocalTime.of(1, 50, 0);
         DayOfWeek[] days2 = {DayOfWeek.of(1), DayOfWeek.of(3), DayOfWeek.of(5)};
-        Course class2 = new Course("ENGR 274 A","Emath", "MATHEMATICAL METHODS IN ENGINEERING", start2, end2, days2,"HOYT", "218", 15, 20);
+        Course class2 = new Course("ENGR 274 A", "Emath", "MATHEMATICAL METHODS IN ENGINEERING", start2, end2, days2, "HOYT", "218", 15, 20);
         schedule.addEvent(class2);
 
-        LocalTime start3 = LocalTime.of(2,0,0);
-        LocalTime end3 = LocalTime.of(3,15,0);
+        LocalTime start3 = LocalTime.of(2, 0, 0);
+        LocalTime end3 = LocalTime.of(3, 15, 0);
         DayOfWeek[] days3 = {DayOfWeek.of(2), DayOfWeek.of(4)};
-        Course class3 = new Course("HUMA 303 I","Christ Civ", "CHRISTIANITY AND CIVILIZATION", start3, end3, days3,"SHAL", "114", 31, 32);
+        Course class3 = new Course("HUMA 303 I", "Christ Civ", "CHRISTIANITY AND CIVILIZATION", start3, end3, days3, "SHAL", "114", 31, 32);
         schedule.addEvent(class3);
 
-        LocalTime start4 = LocalTime.of(11,0,0);
-        LocalTime end4 = LocalTime.of(12,15,0);
+        LocalTime start4 = LocalTime.of(11, 0, 0);
+        LocalTime end4 = LocalTime.of(12, 15, 0);
         DayOfWeek[] days4 = {DayOfWeek.of(2), DayOfWeek.of(4)};
-        Course class4 = new Course("COMP 244 A","Parallel", "PARALLEL COMPUTING", start4, end4, days4,"STEM", "376", 22, 22);
+        Course class4 = new Course("COMP 244 A", "Parallel", "PARALLEL COMPUTING", start4, end4, days4, "STEM", "376", 22, 22);
         schedule.addEvent(class4);
     }
 
     public static void main(String[] args) {
-        //System.out.println(new App().getGreeting());
+
+
+//        System.out.println(new App().getGreeting());
+
+        //new account is created
+        Schedule mySchedule = new Schedule("mySchedule");
+        boolean run;
+
+        do {
+            run = userOptions(mySchedule);
+        } while (run);
+
+
+        System.out.println("Have a great day :)");
+
 
         //Display all courses in the schedule
-    
+
         //Sample data to test displaying courses
-        Schedule schedule = new Schedule("123");
-        initSampleData(schedule);
+//        Schedule schedule = new Schedule("123");
+
+//        initSampleData(schedule);
+
 
         //Display courses as a list
         /*
@@ -53,7 +72,64 @@ public class App {
         */
 
         //Testing Calendar display
-        Calendar calendar = new Calendar(schedule);
-        System.out.println(calendar);
+//        Calendar calendar = new Calendar(schedule);
+//        System.out.println(calendar);
+
     }
+
+    static boolean userOptions(Schedule s) {
+        boolean run = true;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(
+                "Input 1 to view your schedule\n" +
+                        "Input 2 to edit your schedule\n" +
+                        "Input 3 to exit\n");
+        int input = scanner.nextInt();
+        if (input == 1) {
+            System.out.println(s.getCalendar());
+        }
+        if (input == 2) {
+            //fake data for now
+            LocalTime start4 = LocalTime.of(11, 0, 0);
+            LocalTime end4 = LocalTime.of(12, 15, 0);
+            DayOfWeek[] days4 = {DayOfWeek.of(2), DayOfWeek.of(4)};
+            Course class4 = new Course("COMP 244 A", "Parallel", "PARALLEL COMPUTING", start4, end4, days4, "STEM", "376", 22, 22);
+
+            if (s.scheduleSize() > 0) {
+                System.out.println("Input a to add a course\n" +
+                        "Input d to delete a course");
+            } else {
+                System.out.println("Input a to add a course\n");
+            }
+
+            String next = scanner.next();
+
+            if (next.equalsIgnoreCase("a")) {
+                //course search?
+                System.out.println("What course would you like to add?(we only offer Parallel atm)");
+                if (scanner.next().equalsIgnoreCase("parallel")) {
+                    s.addEvent(class4);
+                }
+
+            } else if (next.equals("d") && s.scheduleSize() > 0) {
+                System.out.println(s.getCalendar());
+                System.out.println("what class would you like to delete?(Parallel)");
+                String delete = scanner.next();
+                s.deleteEvent(class4);
+
+
+            }
+
+        } else if (input == 3) {
+            System.out.println("Are you sure you want to exit?");
+            if (scanner.next().contains("y")) {
+                run = false;
+                scanner.close();
+            }
+
+
+        }
+        return run;
+    }
+
 }

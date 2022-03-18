@@ -1,69 +1,73 @@
 package ScheduleGnome;
 
-
-
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Schedule {
 
-    final private String semester;
+//    final private String semester;
     final private String schedule_id;
     ArrayList<Event> events;
 
 
+
     public Schedule(String schedule_id){
-        this.semester = setSemester();
+//        this.semester = setSemester();
         this.schedule_id = schedule_id;
         events = new ArrayList<>();
     }
 
-    public String getSemester() {
-        return semester;
-    }
-
-    public String setSemester() {
-        System.out.println("Is this schedule for fall or spring semester?");
-        Scanner scanner = new Scanner(System.in);
-        String semester = scanner.next();
-        scanner.close();
-        if (semester.equalsIgnoreCase("fall") || semester.equalsIgnoreCase("f")) {
-            return "Fall";
-        }
-        if (semester.equalsIgnoreCase("spring") || semester.equalsIgnoreCase("s")) {
-            return "Spring";
-        } else {
-            System.out.println("invalid semester");
-            return null;
-        }
-
-
-    }
-        void addEvent(Event e){
+    public void addEvent(Event e){
         events.add(e);
     }
+
+    public void deleteEvent(Event e){
+        events.remove(e);
+    }
+
+    public Event getEvent(int i){
+        return events.get(i);
+    }
+
+
+    public int scheduleSize(){
+        return events.size();
+    }
+
+    public String getID(){
+        return schedule_id;
+    }
+
+
+//  not doing semesters for now
+//    public String getSemester() {
+//        return semester;
+//    }
+
+//    public String setSemester() {
+//
+//    }
+
+    void downloadSchedule(){
+
+    }
+
+
 
     void updateCalendar(){
 
     }
 
-   void viewCalendar(){
-
+   Calendar getCalendar(){
+       Calendar c = new Calendar(this);
+        return c;
     }
 
-    void displaySchedule(){
+//don't have reference numbers
+//   void getRefNums(){
+//
+//    }
 
-    }
 
-   void deleteEvent(Event e){
-        events.remove(e);
-    }
-
-   void getRefNums(){
-
-    }
-
-   void downloadSchedule(){
-
-    }
 }
