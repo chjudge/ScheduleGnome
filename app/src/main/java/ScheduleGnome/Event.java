@@ -1,7 +1,5 @@
 package ScheduleGnome;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;

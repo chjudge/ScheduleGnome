@@ -6,6 +6,7 @@ package ScheduleGnome;
 import java.sql.SQLOutput;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -43,12 +44,176 @@ public class App {
 //        System.out.println(new App().getGreeting());
 
         //new account is created
-        Schedule mySchedule = new Schedule("mySchedule");
-        boolean run;
+        User tempUsr = new User("User", "Password");
 
-        do {
-            run = userOptions(mySchedule);
-        } while (run);
+        Search searchTool = new Search();
+        String output = "";
+        boolean isRunning = true;
+
+        while (isRunning) {
+            Scanner scanner = new Scanner(System.in);
+            // TODO: Have user login
+            System.out.println("[WELCOME TO OUR SCHEDULER!]\n" +
+                    "Input 1 to select saved schedules\n" +
+                    "Input 2 to create a new schedule\n" +
+                    "Input 3 to exit");
+            if (!output.equals("")) System.out.println("\n" + output + "\n");
+            output = "";
+
+            switch (scanner.nextInt()) {
+                case 1:
+                    boolean inSavedSchedules = true;
+                    if (tempUsr.getSavedSchedules().size() == 0) {
+                        System.out.println("\nNOTHING TO SEE HERE!\n");
+                        inSavedSchedules = false;
+                    }
+                    while (inSavedSchedules) {
+                        System.out.println(tempUsr.printScheduleNames());
+                        System.out.println("Input the schedule name to view and edit\n" +
+                                "Input return to go back\n" +
+                                "Input exit to quit");
+                        if (!output.equals("")) System.out.println("\n" + output + "\n");
+                        output = "";
+                        String response = scanner.next();
+                        Schedule currSched = tempUsr.getSchedule(response);
+                        if (currSched != null) {
+                            boolean inEdit = true;
+                            while (inEdit) {
+                                System.out.println(currSched.getCalendar());
+                                System.out.println("Input ? [search query] to search courses to add\n" +
+                                        "Input remove [course code] to remove courses\n" +
+                                        "Input return to go back\n" +
+                                        "Input exit to quit");
+                                if (!output.equals("")) System.out.println("\n" + output + "\n");
+                                output = "";
+                                switch (scanner.next()) {
+                                    case "?":
+                                        searchTool.setSearched(scanner.nextLine());
+                                        searchTool.querySearch();
+                                        String results = searchTool.resultToString();
+                                        boolean isAdding = true;
+                                        while (isAdding) {
+                                            System.out.println(currSched.getCalendar());
+                                            System.out.println(results);
+                                            System.out.println("Input add [number] to add to schedule\n" +
+                                                    "Input return to go back\n" +
+                                                    "Input exit to quit");
+                                            if (!output.equals("")) System.out.println("\n" + output + "\n");
+                                            output = "";
+                                            switch (scanner.next()) {
+                                                case "add":
+                                                    int id = scanner.nextInt();
+                                                    currSched.addEvent(searchTool.getResults().get(id).getCourse());
+                                                    break;
+                                                case "exit":
+                                                    inEdit = false;
+                                                    inSavedSchedules = false;
+                                                    isRunning = false;
+                                                case "return":
+                                                    isAdding = false;
+                                                default:
+                                                    output = "[Unknown Command]";
+                                            }
+                                        }
+                                        break;
+                                    case "remove":
+                                        // TODO: Add a way to id courses to remove
+                                        System.out.println("Not implemented yet!");
+                                        break;
+                                    case "exit":
+                                        inSavedSchedules = false;
+                                        isRunning = false;
+                                    case "return":
+                                        inEdit = false;
+                                        break;
+                                    default:
+                                        output = "[Unknown Command]";
+                                }
+                            }
+                        }
+                        else if (response.equals("exit")) {
+                            inSavedSchedules = false;
+                            isRunning = false;
+                        }
+                        else if (response.equals("return")) {
+                            inSavedSchedules = false;
+                        }
+                        else {
+                            output = "[Unknown command]";
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("What would you like your new schedule to be called?");
+                    Schedule currSched = tempUsr.addNewSchedule(scanner.nextLine());
+                    boolean inEdit = true;
+                    while (inEdit) {
+                        System.out.println(currSched.getCalendar());
+                        System.out.println("Input ? [search query] to search courses to add\n" +
+                                "Input remove [course code] to remove courses\n" +
+                                "Input return to go back\n" +
+                                "Input exit to quit");
+                        if (!output.equals("")) System.out.println("\n" + output + "\n");
+                        output = "";
+                        switch (scanner.next()) {
+                            case "?":
+                                searchTool.setSearched(scanner.nextLine());
+                                searchTool.querySearch();
+                                String results = searchTool.resultToString();
+                                boolean isAdding = true;
+                                while (isAdding) {
+                                    System.out.println(currSched.getCalendar());
+                                    System.out.println(results);
+                                    System.out.println("Input add [number] to add to schedule\n" +
+                                            "Input return to go back\n" +
+                                            "Input exit to quit");
+                                    if (!output.equals("")) System.out.println("\n" + output + "\n");
+                                    output = "";
+                                    switch (scanner.next()) {
+                                        case "add":
+                                            int id = scanner.nextInt();
+                                            currSched.addEvent(searchTool.getResults().get(id).getCourse());
+                                            break;
+                                        case "exit":
+                                            inEdit = false;
+                                            isRunning = false;
+                                        case "return":
+                                            isAdding = false;
+                                        default:
+                                            output = "Unknown Command";
+                                    }
+                                }
+                                break;
+                            case "remove":
+                                // TODO: Add a way to id courses to remove
+                                System.out.println("Not implemented yet!");
+                                break;
+                            case "exit":
+                                inSavedSchedules = false;
+                                isRunning = false;
+                            case "return":
+                                inEdit = false;
+                                break;
+                            default:
+                                output = "[Unknown Command]";
+                        }
+                    }
+                    break;
+                case 3:
+                    isRunning = false;
+                    break;
+                default:
+                    output = "[Unknown command]";
+            }
+
+        }
+
+
+//        boolean run;
+//
+//        do {
+//            run = userOptions(mySchedule);
+//        } while (run);
 
 
         System.out.println("Have a great day :)");

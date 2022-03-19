@@ -17,6 +17,10 @@ public class Calendar {
         
         // Event[] eventsPerDay = new Event[5];
         //I would love a more space-efficient solution to this
+        // TODO: Do something like this: (not exactly but you get it)
+        // TODO: ___Monday___|___Tuesday___|___Wednesday....
+        // TODO: Class Name  | Class Name  | Class Name
+        // TODO: Class Name  | .....
         ret += dailyScheduleToString();
         ret += "\n";
         return ret;

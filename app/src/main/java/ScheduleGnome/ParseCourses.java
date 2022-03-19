@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ParseCourses {
     private static Reader reader;
     private static CSVReader csvReader;
-    private static final String COURSES_PATH = "data/courses.csv";
+    private static final String COURSES_PATH = "app/data/courses.csv";
 
     public ParseCourses() {
 
