@@ -145,7 +145,7 @@ public class App {
                     break;
                 case 2:
                     System.out.println("What would you like your new schedule to be called?");
-                    Schedule currSched = tempUsr.addNewSchedule(scanner.nextLine());
+                    Schedule currSched = tempUsr.addNewSchedule(scanner.next());
                     boolean inEdit = true;
                     while (inEdit) {
                         System.out.println(currSched.getCalendar());
