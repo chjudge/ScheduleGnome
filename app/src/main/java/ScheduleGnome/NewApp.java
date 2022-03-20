@@ -14,11 +14,14 @@ public class NewApp {
         if (currentUser == null)
             return;
 
-        Schedule currentSchedule = new NewApp().setSchedule(in, currentUser);
-        if (currentSchedule == null)
-            return;
+        boolean quit = false;
+        do {
+            Schedule currentSchedule = new NewApp().setSchedule(in, currentUser);
+            if (currentSchedule == null)
+                return;
+            quit = new NewApp().editSchedule(in, currentSchedule, searchTool);
+        } while (!quit);
 
-        boolean quit = new NewApp().editSchedule(in, currentSchedule, searchTool);
     }
 
     void addCourse(Scanner in, Schedule currentSchedule, Search searchTool) {
@@ -55,10 +58,10 @@ public class NewApp {
         if (input.startsWith("? ")) {
             searchTool.setSearched(input.substring(2));
             addCourse(in, currentSchedule, searchTool);
-        }
-        else if(input.startsWith("remove ")){
+            return editSchedule(in, currentSchedule, searchTool);
+        } else if (input.startsWith("remove ")) {
             Course toRemove = currentSchedule.getCourse(input.substring(8));
-            if(toRemove != null)
+            if (toRemove != null)
                 currentSchedule.deleteEvent(toRemove);
             else
                 System.out.println("invalid course code");
@@ -78,25 +81,26 @@ public class NewApp {
     }
 
     Schedule setSchedule(Scanner in, User currentUser) {
-        switch (getInput("Type edit to select saved schedules\n" +
-                "Type new to create a new schedule\n" +
-                "Type quit to quit", in)) {
-            case "edit":
-                if (currentUser.getSavedSchedules().isEmpty()) {
-                    System.out.println("You don't have any schedules, you might want to create one");
+        while (true) {
+            switch (getInput("Type edit to select saved schedules\n" +
+                    "Type new to create a new schedule\n" +
+                    "Type quit to quit", in)) {
+                case "edit":
+                    if (currentUser.getSavedSchedules().isEmpty()) {
+                        System.out.println("You don't have any schedules, you might want to create one");
+                        break;
+                    }
+                    return selectCurrentSchedule(in, currentUser);
+                case "new":
+                    return new Schedule(getInput("What would you like to name your new schedule?", in));
+                case "quit":
+                    System.out.println("Have a great day :)");
+                    return null;
+                default:
+                    System.out.println("Invalid input");
                     break;
-                }
-                return selectCurrentSchedule(in, currentUser);
-            case "new":
-                return new Schedule(getInput("What would you like to name your new schedule?", in));
-            case "quit":
-                System.out.println("Have a great day :)");
-                return null;
-            default:
-                System.out.println("Invalid input");
-                break;
+            }
         }
-        return null;
     }
 
     Schedule selectCurrentSchedule(Scanner in, User currentUser) {
