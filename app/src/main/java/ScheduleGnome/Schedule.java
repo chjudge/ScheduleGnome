@@ -30,6 +30,14 @@ public class Schedule {
         return events.get(i);
     }
 
+    public Course getCourse(String courseCode){
+        for (Event event : events) {
+            if(((Course) event).getCourseCode().equals(courseCode))
+                return (Course) event;
+        }
+        return null;
+    }
+
 
     public int scheduleSize(){
         return events.size();

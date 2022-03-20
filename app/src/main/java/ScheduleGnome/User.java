@@ -5,16 +5,25 @@ import java.util.Map;
 
 public class User {
     Map<String, Schedule> savedSchedules;
+    private String username;
+    private String password;
 
     public User(String username, String password){
         savedSchedules = new HashMap<>();
+        this.username = username;
+        this.password = password;
+
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public Boolean checkPassword(String toCheck){
+        return this.password.equals(toCheck);
     }
 
     public void compareSchedules(Map<String, Schedule> schedules){
-
-    }
-
-    public void createAccount(){
 
     }
 
@@ -45,7 +54,4 @@ public class User {
         }
         return sb.toString();
     }
-
-
-
 }
