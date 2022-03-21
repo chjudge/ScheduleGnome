@@ -7,24 +7,28 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.FileNotFoundException;
 import java.io.Reader;
+import java.net.URISyntaxException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParseCourses {
     private static Reader reader;
     private static CSVReader csvReader;
-    private static final String COURSES_PATH = "data/courses.csv";
+    private static final String COURSES = "courses.csv";
 
     public ParseCourses() {
 
         try {
-            reader = Files.newBufferedReader(Paths.get(COURSES_PATH));
+            reader = Files.newBufferedReader(Paths.get(getClass().getResource(COURSES).toURI()));
             csvReader = new CSVReader(reader);
         } catch (FileNotFoundException e) {
             System.err.println("FILE NOT FOUND");
             e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IO EXCEPTION");
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            System.out.println("URI Syntax Error: " + e.getMessage());  
             e.printStackTrace();
         }
     }

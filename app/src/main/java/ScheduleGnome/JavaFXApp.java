@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,11 +15,14 @@ public class JavaFXApp extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         
-        Scene scene = new Scene(root, 1000, 600);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        Scene loginScene = new Scene(root, 1000, 600);
+        loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         
+        Search searchTool = new Search();
+        
+
         stage.setTitle("ScheduleGnome");
-        stage.setScene(scene);
+        stage.setScene(loginScene);
         stage.show();
     }
 
