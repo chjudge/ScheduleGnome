@@ -23,7 +23,8 @@ public class loginFXMLController {
                 actiontarget.setText("Sorry, your password is incorrect");
                 break;
             case 1:
-                actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
+                JavaFXApp.setScene("select");
+                //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 break;
             default:
                 break;
@@ -35,6 +36,9 @@ public class loginFXMLController {
 
         User newUser = new User(usernameField.getText(), passwordField.getText());
         JavaFXApp.addUser(newUser);
-        actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
+
+        JavaFXApp.setScene("select");
+
+        //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
     }
 }

@@ -1,2 +1,2 @@
-# class-scheduler
+# ScheduleGnome
 Class scheduling tool
