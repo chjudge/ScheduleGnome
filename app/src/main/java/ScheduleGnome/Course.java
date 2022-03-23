@@ -133,4 +133,29 @@ public class Course extends Event {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    public String getDept() {
+        if (courseCode==null || courseCode.isEmpty()) return "Error";
+        String[] crsCode = courseCode.split(" ");
+        String out = "output";
+        for (int i = 0, j = 0;  j < 1; i++) {
+            if(crsCode[i].equals("")) continue;
+            out = crsCode[i];
+            j++;
+        }
+        return out;
+    }
+
+    public String getCode() {
+        if (courseCode==null || courseCode.isEmpty()) return "Error";
+        String[] crsCode = courseCode.split(" ");
+        String out = "output";
+        for (int i = 0, j = 0;  j < 2; i++) {
+            if(crsCode[i].equals("")) continue;
+            if (j==1) out = crsCode[i];
+            j++;
+        }
+        return out;
+    }
+
 }

@@ -65,24 +65,34 @@ public class Search {
                 newRating++;
             }
             // Check through course code matches
-            String[] crsCode = crs.getCourseCode().split(" ");
-            for (int i = 0, j = 0;  j < 2; i++) {
-                if(crsCode[i].equals("")) continue;
-                j++;
-                if (searched.contains(crsCode[i].toLowerCase())) {
-                    System.out.println("sjfasjk:" + crsCode[i]);
-                    result.addSimilarity(crsCode[i]);
-                    newRating++;
-                }
+            if (searched.contains(crs.getDept().toLowerCase())) {
+                result.addSimilarity(crs.getDept());
+                newRating++;
             }
+            if (searched.contains(crs.getCode())) {
+                result.addSimilarity(crs.getCode());
+                newRating++;
+            }
+
+//            String[] crsCode = crs.getCourseCode().split(" ");
+//            for (int i = 0, j = 0;  j < 2; i++) {
+//                if(crsCode[i].equals("")) continue;
+//                j++;
+//                if (searched.contains(crsCode[i].toLowerCase())) {
+//                    result.addSimilarity(crsCode[i]);
+//                    newRating++;
+//                }
+//            }
+
             // Check for keywords
             for (String s : crs.getTitle().split(" ")) {
-                if (s.length() < 2) continue;
+                if (s.length() < 3) continue;
                 if (searched.contains(s.toLowerCase())) {
                     result.addSimilarity(s);
                     newRating++;
                 }
             }
+
             result.setRating(newRating);
         }
         return results;
