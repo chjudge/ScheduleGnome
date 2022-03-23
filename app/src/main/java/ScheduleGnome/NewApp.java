@@ -35,7 +35,7 @@ public class NewApp {
 
             if (input.startsWith("add ")) {
                 int id = Integer.parseInt(input.substring(4));
-                currentSchedule.addEvent(searchTool.getResults().get(id).getCourse());
+                currentSchedule.addEvent(searchTool.getResults().get(id));
                 System.out.println("Course added to schedule!");
             }
 

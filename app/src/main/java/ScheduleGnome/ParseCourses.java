@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ParseCourses {
@@ -18,19 +19,10 @@ public class ParseCourses {
 
     public ParseCourses() {
 
-        try {
-            reader = Files.newBufferedReader(Paths.get(getClass().getResource(COURSES).toURI()));
+    
+            reader = new InputStreamReader((getClass().getResourceAsStream(COURSES)));
             csvReader = new CSVReader(reader);
-        } catch (FileNotFoundException e) {
-            System.err.println("FILE NOT FOUND");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("IO EXCEPTION");
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            System.out.println("URI Syntax Error: " + e.getMessage());  
-            e.printStackTrace();
-        }
+        
     }
 
     public void readCourses(ArrayList<Course> courses) {

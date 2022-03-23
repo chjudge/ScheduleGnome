@@ -39,7 +39,7 @@ public class Search {
         return sb.toString();
     }
 
-    public ArrayList<Match> querySearch() {
+    public ArrayList<Course> querySearch() {
         applyFilters();
         applySearchedInput();
         results.sort(new MatchComparator());
@@ -50,7 +50,7 @@ public class Search {
             }
             results.remove(result);
         }
-        return results;
+        return getResults();
     }
 
     // TODO: IFFY way to do this. Might need to rethink
@@ -178,6 +178,7 @@ public class Search {
 
     public void setSearched(String searched) {
         this.searched = searched.toLowerCase();
+        System.out.println("SetSeatcheddddas:" +this.searched);
     }
 
     public ArrayList<String> getDepts() {
@@ -261,7 +262,13 @@ public class Search {
         this.endTimes.add(end);
     }
 
-    public ArrayList<Match> getResults() { return results; }
+    public ArrayList<Course> getResults() { 
+        ArrayList<Course> out = new ArrayList<Course>();
+        for (Match match : results) {
+            out.add(match.getCourse());
+        }
+        return out;
+     }
 
     public void setResults(ArrayList<Match> results) { this.results = results; }
 }
