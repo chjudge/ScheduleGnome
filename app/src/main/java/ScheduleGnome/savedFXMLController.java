@@ -1,14 +1,22 @@
 package ScheduleGnome;
 
-import com.sun.tools.javac.Main;
+import javafx.event.ActionEvent;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class savedFXMLController {
-    
-    public void userLogOut(ActionEvent event) throws IOException {
-        JavaFXApp javaFXApp = new JavaFXApp();
-        javaFXApp.changeScene("loginScene.fxml");
+
+
+
+    public void logout(ActionEvent actionEvent) throws IOException {
+        JavaFXApp.changeScene("loginScene.fxml");
+
     }
+
+    public void newSchedule(ActionEvent actionEvent)throws IOException{
+        JavaFXApp.changeScene("searchScheduleScene.fxml");
+    }
+
+
+
 }

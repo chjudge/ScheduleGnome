@@ -40,8 +40,8 @@ public class JavaFXApp extends Application {
 
     }
 
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
+    public static void changeScene(String fxml) throws IOException {
+        Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
         stg.getScene().setRoot(pane);
     }
 

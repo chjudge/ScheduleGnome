@@ -33,7 +33,7 @@ public class loginFXMLController {
             case 1:
                 actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 javaFXApp.changeScene("savedScene.fxml");
-                JavaFXApp.setScene("select");
+//                JavaFXApp.setScene("select");
                 //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 break;
             default:
@@ -41,13 +41,13 @@ public class loginFXMLController {
         }
     }
 
-    @FXML protected void registerButton(ActionEvent event){
+    @FXML protected void registerButton(ActionEvent event) throws IOException {
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
 
         User newUser = new User(usernameField.getText(), passwordField.getText());
         JavaFXApp.addUser(newUser);
-
-        JavaFXApp.setScene("select");
+        JavaFXApp.changeScene("savedScene.fxml");
+//        JavaFXApp.setScene("select");
 
         //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
     }
