@@ -17,7 +17,8 @@ public class Schedule {
     }
 
     public void addEvent(Event e){
-        events.add(e);
+        if(!events.contains(e))
+            events.add(e);
     }
 
     public void deleteEvent(Event e){
