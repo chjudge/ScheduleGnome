@@ -114,6 +114,11 @@ public abstract class Event {
 
     @Override
     public String toString() {
+        return title + ", from " + startTime + " to " + endTime +
+        " on " + getDatesString();
+    }
+
+    public String getDatesString() {
         //Print dates in a concise and understandable fashion
         char[] datesChars = {'M','T','W','R','F','S','S'};
         String datesString = "";
@@ -122,9 +127,7 @@ public abstract class Event {
             if(date != null)
                 datesString += datesChars[date.getValue() - 1];
         }
-
-        return title + ", from " + startTime + " to " + endTime +
-        " on " + datesString;
+        return datesString;
     }
 
     public String getTitle() {

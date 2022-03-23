@@ -84,8 +84,12 @@ public class Course extends Event {
 
     @Override
     public String toString() {
-        return super.toString() + ", in " + building + " room " + room + ", with " +
-        enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;
+
+        return String.format("|%-25s|\n|%-25s|%-60s|%-20s|%-20s|\n|%-25s|",courseCode,getStartTime()+" - "+getEndTime(),
+                getTitle(),enrollment+"/"+capacity,building+" "+room,getDatesString());
+
+//        return super.toString() + ", in " + building + " room " + room + ", with " +
+//        enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;
     }
 
     public String getCourseCode() { return courseCode; }
