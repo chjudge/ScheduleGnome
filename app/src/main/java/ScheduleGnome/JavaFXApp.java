@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class JavaFXApp extends Application {
-    private static HashMap<String, Parent> sceneMap = new HashMap<>();
+    //private static HashMap<String, Parent> sceneMap = new HashMap<>();
     private static Scene mainScene;
 
     private static Search searchTool;
@@ -25,14 +25,16 @@ public class JavaFXApp extends Application {
         stg = stage;
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         
-        Scene loginScene = new Scene(root, 1000, 600);
-        loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
-        sceneMap.put("select", FXMLLoader.load(getClass().getResource("selectScheduleScene.fxml")));
-        sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
-
-        mainScene = new Scene(sceneMap.get("login"), 800, 450);
+        // Scene loginScene = new Scene(root, 800, 450);
         // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        // sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
+        // sceneMap.put("saved", FXMLLoader.load(getClass().getResource("savedScene.fxml")));
+        // sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
+
+        mainScene = new Scene(root, 800, 450);
+        // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+        System.out.println("LOading Scene!");
 
         stage.setTitle("ScheduleGnome");
         stage.setScene(mainScene);
@@ -44,8 +46,6 @@ public class JavaFXApp extends Application {
         Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
         stg.getScene().setRoot(pane);
     }
-
-
 
     public static void main(String[] args) {
         users = new HashMap<String, User>();
@@ -74,9 +74,13 @@ public class JavaFXApp extends Application {
         return currentUser;
     }
 
-    public static void setScene(String name){
-        Parent scene = sceneMap.get(name);
-        if(scene != null)
-            mainScene.setRoot(sceneMap.get(name));
+    // public static void setScene(String name){
+    //     Parent scene = sceneMap.get(name);
+    //     if(scene != null)
+    //         mainScene.setRoot(sceneMap.get(name));
+    // }
+
+    public static Search getSearch(){
+        return searchTool;
     }
 }

@@ -46,6 +46,10 @@ public class Schedule {
         return schedule_id;
     }
 
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
 
 //  not doing semesters for now
 //    public String getSemester() {

@@ -103,7 +103,7 @@ public class App {
                                             switch (scanner.next()) {
                                                 case "add":
                                                     int id = scanner.nextInt();
-                                                    currSched.addEvent(searchTool.getResults().get(id).getCourse());
+                                                    currSched.addEvent(searchTool.getResults().get(id));
                                                     break;
                                                 case "exit":
                                                     inEdit = false;
@@ -172,7 +172,7 @@ public class App {
                                     switch (scanner.next()) {
                                         case "add":
                                             int id = scanner.nextInt();
-                                            currSched.addEvent(searchTool.getResults().get(id).getCourse());
+                                            currSched.addEvent(searchTool.getResults().get(id));
                                             break;
                                         case "exit":
                                             inEdit = false;

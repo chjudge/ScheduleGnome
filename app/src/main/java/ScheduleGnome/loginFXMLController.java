@@ -2,14 +2,9 @@ package ScheduleGnome;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -20,7 +15,6 @@ public class loginFXMLController {
     @FXML private PasswordField passwordField;
     
     @FXML protected void loginButton(ActionEvent event) throws IOException {
-        JavaFXApp javaFXApp = new JavaFXApp();
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
         int response = JavaFXApp.login(usernameField.getText(), passwordField.getText());
         switch (response) {
@@ -32,7 +26,7 @@ public class loginFXMLController {
                 break;
             case 1:
                 actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
-                javaFXApp.changeScene("savedScene.fxml");
+                JavaFXApp.changeScene("savedScene.fxml");
 //                JavaFXApp.setScene("select");
                 //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 break;
