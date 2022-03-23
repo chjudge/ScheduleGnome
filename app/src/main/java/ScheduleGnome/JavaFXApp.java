@@ -1,5 +1,6 @@
 package ScheduleGnome;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -12,9 +13,11 @@ public class JavaFXApp extends Application {
     private static Search searchTool;
     private static ArrayList<User> users;
     private static User currentUser;
+    private static Stage stg;
 
     @Override
     public void start(Stage stage) throws Exception {
+        stg = stage;
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         
         Scene loginScene = new Scene(root, 1000, 600);
@@ -24,7 +27,15 @@ public class JavaFXApp extends Application {
         stage.setTitle("ScheduleGnome");
         stage.setScene(loginScene);
         stage.show();
+
     }
+
+    public void changeScene(String fxml) throws IOException {
+        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
+        stg.getScene().setRoot(pane);
+    }
+
+
 
     public static void main(String[] args) {
         users = new ArrayList<User>();
