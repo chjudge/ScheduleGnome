@@ -65,13 +65,9 @@ public class Schedule {
 
 
 
-    void updateCalendar(){
-
-    }
-
    Calendar getCalendar(){
-       Calendar c = new Calendar(this);
-        return c;
+       Calendar cal = new Calendar(this);
+        return cal;
     }
 
 //don't have reference numbers

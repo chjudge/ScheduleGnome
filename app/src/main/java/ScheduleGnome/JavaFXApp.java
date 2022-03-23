@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +18,15 @@ public class JavaFXApp extends Application {
     private static Search searchTool;
     private static Map<String, User> users;
     private static User currentUser;
+    private static Stage stg;
 
     @Override
     public void start(Stage stage) throws Exception {
+        stg = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
+        
+        Scene loginScene = new Scene(root, 1000, 600);
+        loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
         sceneMap.put("select", FXMLLoader.load(getClass().getResource("selectScheduleScene.fxml")));
         sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
@@ -29,7 +37,15 @@ public class JavaFXApp extends Application {
         stage.setTitle("ScheduleGnome");
         stage.setScene(mainScene);
         stage.show();
+
     }
+
+    public static void changeScene(String fxml) throws IOException {
+        Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
+        stg.getScene().setRoot(pane);
+    }
+
+
 
     public static void main(String[] args) {
         users = new HashMap<String, User>();

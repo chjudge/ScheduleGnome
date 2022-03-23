@@ -2,9 +2,16 @@ package ScheduleGnome;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class loginFXMLController {
 
@@ -12,7 +19,8 @@ public class loginFXMLController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     
-    @FXML protected void loginButton(ActionEvent event) {
+    @FXML protected void loginButton(ActionEvent event) throws IOException {
+        JavaFXApp javaFXApp = new JavaFXApp();
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
         int response = JavaFXApp.login(usernameField.getText(), passwordField.getText());
         switch (response) {
@@ -23,7 +31,9 @@ public class loginFXMLController {
                 actiontarget.setText("Sorry, your password is incorrect");
                 break;
             case 1:
-                JavaFXApp.setScene("select");
+                actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
+                javaFXApp.changeScene("savedScene.fxml");
+//                JavaFXApp.setScene("select");
                 //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 break;
             default:
@@ -31,14 +41,15 @@ public class loginFXMLController {
         }
     }
 
-    @FXML protected void registerButton(ActionEvent event){
+    @FXML protected void registerButton(ActionEvent event) throws IOException {
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
 
         User newUser = new User(usernameField.getText(), passwordField.getText());
         JavaFXApp.addUser(newUser);
-
-        JavaFXApp.setScene("select");
+        JavaFXApp.changeScene("savedScene.fxml");
+//        JavaFXApp.setScene("select");
 
         //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
     }
+
 }
