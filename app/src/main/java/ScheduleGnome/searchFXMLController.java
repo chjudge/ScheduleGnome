@@ -35,6 +35,8 @@ public class searchFXMLController{
         if(searched.isBlank()) return;
         System.out.println(searched);
 
+        searchResultList.clear();
+
         //System.out.println("cleared list");
 
         search.setSearched(searched);
