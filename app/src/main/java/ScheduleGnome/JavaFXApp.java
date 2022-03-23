@@ -28,7 +28,7 @@ public class JavaFXApp extends Application {
         Scene loginScene = new Scene(root, 1000, 600);
         loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
-        sceneMap.put("select", FXMLLoader.load(getClass().getResource("selectScheduleScene.fxml")));
+        sceneMap.put("saved", FXMLLoader.load(getClass().getResource("savedScene.fxml")));
         sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
 
         mainScene = new Scene(sceneMap.get("login"), 800, 450);
