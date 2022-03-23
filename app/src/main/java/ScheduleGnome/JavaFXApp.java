@@ -63,4 +63,8 @@ public class JavaFXApp extends Application {
         if(scene != null)
             mainScene.setRoot(sceneMap.get(name));
     }
+
+    public static Search getSearch(){
+        return searchTool;
+    }
 }
