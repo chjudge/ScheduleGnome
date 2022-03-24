@@ -17,6 +17,7 @@ public class JavaFXApp extends Application {
     private static Search searchTool;
     private static Map<String, User> users;
     private static User currentUser;
+    private static Schedule currentSchedule;
     private static Stage stg;
 
     @Override
@@ -71,6 +72,14 @@ public class JavaFXApp extends Application {
 
     public static User getCurrentUser() {
         return currentUser;
+    }
+
+    public static Schedule getCurrentSchedule(){
+        return currentSchedule;
+    }
+
+    public static void setCurrentSchedule(Schedule schedule){
+        currentSchedule = schedule;
     }
 
     // public static void setScene(String name){

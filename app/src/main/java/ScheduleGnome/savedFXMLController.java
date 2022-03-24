@@ -14,6 +14,8 @@ public class savedFXMLController {
     }
 
     public void newSchedule(ActionEvent actionEvent)throws IOException{
+        JavaFXApp.setCurrentSchedule(new Schedule("" + java.lang.Math.random()));
+
         JavaFXApp.changeScene("searchScheduleScene.fxml");
     }
 
