@@ -1,7 +1,6 @@
 package ScheduleGnome;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class JavaFXApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         
         // Scene loginScene = new Scene(root, 800, 450);
-        // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        //mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         // sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
         // sceneMap.put("saved", FXMLLoader.load(getClass().getResource("savedScene.fxml")));
         // sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));

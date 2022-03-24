@@ -22,7 +22,7 @@ public class Course extends Event {
         this.capacity = capacity;
     }
 
-    public Course(String[] items){
+    public Course(String[] items) {
         super(items[2], items[3], items[4], items[5]);
 
         this.courseCode = items[0];
@@ -85,14 +85,17 @@ public class Course extends Event {
     @Override
     public String toString() {
 
-        return String.format("|%-25s|\n|%-25s|%-60s|%-20s|%-20s|\n|%-25s|",courseCode,getStartTime()+" - "+getEndTime(),
-                getTitle(),enrollment+"/"+capacity,building+" "+room,getDatesString());
+        return String.format("%-15s%-55s\n%-40s%-15s%-15s%-15s", courseCode,  getDatesString(), getTitle(), getStartTime() + " - " + getEndTime(),
+                 enrollment + "/" + capacity, building + " " + room);
 
-//        return super.toString() + ", in " + building + " room " + room + ", with " +
-//        enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code= "+courseCode;
+        // return super.toString() + ", in " + building + " room " + room + ", with " +
+        // enrollment + "/" + capacity + ", shortTitle= " + shortTitle + " code=
+        // "+courseCode;
     }
 
-    public String getCourseCode() { return courseCode; }
+    public String getCourseCode() {
+        return courseCode;
+    }
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
@@ -139,11 +142,13 @@ public class Course extends Event {
     }
 
     public String getDept() {
-        if (courseCode==null || courseCode.isEmpty()) return "Error";
+        if (courseCode == null || courseCode.isEmpty())
+            return "Error";
         String[] crsCode = courseCode.split(" ");
         String out = "output";
-        for (int i = 0, j = 0;  j < 1; i++) {
-            if(crsCode[i].equals("")) continue;
+        for (int i = 0, j = 0; j < 1; i++) {
+            if (crsCode[i].equals(""))
+                continue;
             out = crsCode[i];
             j++;
         }
@@ -151,12 +156,15 @@ public class Course extends Event {
     }
 
     public String getCode() {
-        if (courseCode==null || courseCode.isEmpty()) return "Error";
+        if (courseCode == null || courseCode.isEmpty())
+            return "Error";
         String[] crsCode = courseCode.split(" ");
         String out = "output";
-        for (int i = 0, j = 0;  j < 2; i++) {
-            if(crsCode[i].equals("")) continue;
-            if (j==1) out = crsCode[i];
+        for (int i = 0, j = 0; j < 2; i++) {
+            if (crsCode[i].equals(""))
+                continue;
+            if (j == 1)
+                out = crsCode[i];
             j++;
         }
         return out;
