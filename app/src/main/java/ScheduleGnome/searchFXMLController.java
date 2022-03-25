@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.time.LocalTime;
 
 public class searchFXMLController {
@@ -16,6 +17,7 @@ public class searchFXMLController {
     @FXML ChoiceBox<LocalTime> startTimeChoice;
     @FXML ListView<SearchResult> searchList;
     @FXML ListView<CalendarEvent> eventList;
+    @FXML Button backButton;
 
     @FXML ObservableList<SearchResult> searchResultList;
     @FXML
@@ -72,6 +74,10 @@ public class searchFXMLController {
         }
         eventList.setItems(calendarEventList);
     }
+
+    public void back() throws IOException {
+        JavaFXApp.changeScene("savedScene.fxml");
+    }
 }
 
 class SearchResult extends HBox {
@@ -85,7 +91,7 @@ class SearchResult extends HBox {
         this.course = course;
         this.controller = controller;
         courseLabel = new Label(course.toString());
-        addButton = new Button("Add");
+        addButton = new Button("+");
         addButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().addEvent(course);
             controller.updateCalendar();
@@ -106,7 +112,7 @@ class CalendarEvent extends HBox {
         this.event = event;
         this.controller = controller;
         eventLabel = new Label(event.getTitle()); // TODO: For now
-        removeButton = new Button("Remove");
+        removeButton = new Button("x");
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().deleteEvent(event);
             controller.updateCalendar();
