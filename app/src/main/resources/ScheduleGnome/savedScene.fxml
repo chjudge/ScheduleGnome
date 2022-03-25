@@ -19,8 +19,11 @@
             <Font name="MT Extra" size="21.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="529.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back," />
-      <Button layoutX="656.0" layoutY="142.0" mnemonicParsing="false" onAction="#newSchedule" prefHeight="31.0" prefWidth="113.0" text="New">
+      <Text fill="WHITE" layoutX="531.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Button layoutX="656.0" layoutY="142.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="31.0" prefWidth="113.0" text="New">
          <font>
             <Font name="Arial Nova Light" size="22.0" />
          </font>
