@@ -9,6 +9,8 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class loginFXMLController {
 
@@ -16,14 +18,15 @@ public class loginFXMLController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     private String usersFileName = "users.txt";
+
+    @FXML public void initialize() {
+        readAllUsers();
+    }
     
     @FXML protected void loginButton(ActionEvent event) throws IOException {
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
 
-        //I should add all existing users from the usersFile to JavaFXApp.addUser i think
-
-        
-        int response = JavaFXApp.login(usernameField.getText(), passwordField.getText());
+        int response = JavaFXApp.login(usernameField.getText().toUpperCase(), passwordField.getText());
         switch (response) {
             case -1:
                 actiontarget.setText("Sorry, there is no user named " + usernameField.getText());
@@ -34,8 +37,6 @@ public class loginFXMLController {
             case 1:
                 actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 JavaFXApp.changeScene("savedScene.fxml");
-//                JavaFXApp.setScene("select");
-                //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
                 break;
             default:
                 break;
@@ -54,20 +55,13 @@ public class loginFXMLController {
             JavaFXApp.addUser(newUser);
             JavaFXApp.changeScene("savedScene.fxml");
         }
-        else {
-            //Is this how I do this?
-            //How do i display the message from earlier
-            actiontarget.setText("Registration failed.");
-        }
-
-        
-//        JavaFXApp.setScene("select");
-
-        //actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
     }
 
     /**
      * Registers the new user in the users file
+     * Logins are delimited by a ':' symbol and end in a new line in the users file
+     * Usernames are not case sensitive, passwords are
+     * Ex: USERNAME:password
      * @param username username of the new user
      * @param password password of the new user
      * @return true on success, false on error
@@ -75,21 +69,62 @@ public class loginFXMLController {
     protected boolean registerUser(String username, String password) {
         try {
             File usersFile = new File(usersFileName);
-            FileWriter fw = new FileWriter(usersFile);
+            FileWriter fw = new FileWriter(usersFile,true);
 
             if(username.contains(":")) {
                 fw.close();
                 throw new Exception("Username cannot contain the character \':\'");
             }
+            else if(username.isBlank()) {
+                fw.close();
+                throw new Exception("Username cannot be blank.");
+            }
+            if(password.contains(":")) {
+                fw.close();
+                throw new Exception("Password cannot contain the character \':\'");
+            }
+            else if(password.isBlank()) {
+                fw.close();
+                throw new Exception("Password cannot be blank.");
+            }
 
-            fw.write(username + ":" + password + "\n");
+            //Store usernames in uppercase so they aren't case sensitive
+            fw.write(username.toUpperCase() + ":" + password + "\n");
             fw.flush();
             fw.close();
             return true;
         }
         catch (Exception e) {
             //Log the exception or display it in javafx app
+            actiontarget.setText("Registration failed. " + e.getMessage());
             return false;
+        }
+    }
+
+    protected void readAllUsers() {
+        File usersFile = new File(usersFileName);
+        Scanner scanner;
+        try {
+            scanner = new Scanner(usersFile);
+        }
+        catch(IOException ioe) {
+            actiontarget.setText("Error loading all users.");
+            return;
+        }
+
+        while(scanner.hasNextLine()) {
+            String userAndPassString = scanner.nextLine();
+            if (userAndPassString.isBlank()) {
+                return; //An empty line in the file
+            }
+            String[] userAndPassArray = userAndPassString.split(":");
+
+            if (userAndPassArray.length > 2) {
+                actiontarget.setText("Error loading all users.");
+                return;
+            }
+            User newUser = new User(userAndPassArray[0], userAndPassArray[1]);
+            JavaFXApp.addUser(newUser);
         }
     }
 
