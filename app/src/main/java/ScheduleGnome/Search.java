@@ -40,6 +40,7 @@ public class Search {
     }
 
     public ArrayList<Course> querySearch() {
+        results.clear();
         applyFilters();
         applySearchedInput();
         results.sort(new MatchComparator());
@@ -50,6 +51,7 @@ public class Search {
             }
             results.remove(result);
         }
+        clearFilters();
         return getResults();
     }
 
@@ -99,8 +101,6 @@ public class Search {
     }
 
     public ArrayList<Match> applyFilters() {
-        // TODO: Somehow clear filters (here or as user interacts with it)
-        results.clear(); // TODO: Temporary solution (could be permanent)
         if (hasFilters()) {
             for (int i = 0; i < NUM_COURSES; i++) {
                 Course curr = data.courses.get(i);
@@ -138,7 +138,7 @@ public class Search {
         StartIf:
         if (!startTimes.isEmpty()) {
             for (LocalTime startTime : startTimes) {
-                if (crs.getStartTime().equals(startTime)) {
+                if (crs.getStartTime() != null && crs.getStartTime().compareTo(startTime) >= 0) {
                     rating++; // Found a match
                     break StartIf;
                 }
@@ -259,6 +259,10 @@ public class Search {
         this.startTimes.add(start);
     }
 
+    public void addStartTime(LocalTime startTime){
+        startTimes.add(startTime);
+    }
+
     public ArrayList<LocalTime> getEndTimes() { return endTimes; }
 
     public void addEndTime(String endTime) {
@@ -281,4 +285,16 @@ public class Search {
      }
 
     public void setResults(ArrayList<Match> results) { this.results = results; }
+
+    public ArrayList<Course> getAllCourses(){
+        return data.getCourses();
+    }
+
+    private void clearFilters(){
+        depts.clear();
+        endTimes.clear();
+        startTimes.clear();
+        creditHrs.clear();
+        dates.clear();
+    }
 }

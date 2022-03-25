@@ -9,44 +9,61 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class searchFXMLController {
-    @FXML TextField searchField;
-    @FXML ChoiceBox<String> departmentChoice;
-    @FXML ChoiceBox<Integer> creditChoice;
-    @FXML ChoiceBox<LocalTime> startTimeChoice;
-    @FXML ListView<SearchResult> searchList;
-    @FXML ListView<CalendarEvent> eventList;
-    @FXML Button backButton;
+    @FXML
+    TextField searchField;
+    @FXML
+    ComboBox<String> departmentChoice;
+    @FXML
+    ComboBox<Integer> creditChoice;
+    @FXML
+    ComboBox<LocalTime> startTimeChoice;
+    @FXML
+    ListView<SearchResult> searchList;
+    @FXML
+    ListView<CalendarEvent> eventList;
+    @FXML
+    Button backButton;
 
-    @FXML ObservableList<SearchResult> searchResultList;
+    @FXML
+    ObservableList<String> departmentList;
+    @FXML
+    ObservableList<LocalTime> timeList;
+
+    @FXML
+    ObservableList<SearchResult> searchResultList;
     @FXML
     static ObservableList<CalendarEvent> calendarEventList; // TODO Need to make some for MTWRF
 
     Search search;
-    
-    @FXML protected void search(ActionEvent event){
-        if(search == null)
-            search = JavaFXApp.getSearch();
-        if(searchResultList == null)
-            searchResultList = FXCollections.observableArrayList();
 
+    @FXML
+    protected void search(ActionEvent event) {
         String searched = searchField.getText();
-        if(searched.isBlank()) return;
+        //if (searched.isBlank()) return;
         System.out.println(searched);
+
 
         searchResultList.clear();
 
         //System.out.println("cleared list");
 
         search.setSearched(searched);
+        if(departmentChoice.getValue() != null)
+            search.addDept(departmentChoice.getValue());
+        if(startTimeChoice.getValue() != null)
+            search.addStartTime(startTimeChoice.getValue());
 
-        System.out.println("search query: "+searched);
+        System.out.println("search query: " + searched);
 
-        for (Course course : search.querySearch()) {
+        ArrayList<Course> results = search.querySearch();
+
+        for (Course course : results) {
             searchResultList.add(new SearchResult(course, this));
         }
-        
+
         // for (Course course : searchResultList) {
         //     System.out.println(course);
         // }
@@ -58,6 +75,30 @@ public class searchFXMLController {
 
     public void initialize() {
         System.out.println("loading search");
+        search = JavaFXApp.getSearch();
+        searchResultList = FXCollections.observableArrayList();
+
+        departmentList = FXCollections.observableArrayList();
+        for (Course course : search.getAllCourses()) {
+
+            if (!departmentList.contains(course.getDept()))
+                departmentList.add(course.getDept());
+        }
+
+        departmentList.sort(String.CASE_INSENSITIVE_ORDER);
+
+        System.out.println(departmentList.toString());
+
+        departmentChoice.setItems(departmentList);
+
+        timeList = FXCollections.observableArrayList();
+
+        for (int i = 8; i < 16; i++) {
+            timeList.add(LocalTime.of(i, 0));
+        }
+
+        startTimeChoice.setItems(timeList);
+
         calendarEventList = FXCollections.observableArrayList();
         // TODO: Fill this with events
 
@@ -86,7 +127,7 @@ class SearchResult extends HBox {
     Button addButton;
     searchFXMLController controller;
 
-    public SearchResult(Course course, searchFXMLController controller){
+    public SearchResult(Course course, searchFXMLController controller) {
         super();
         this.course = course;
         this.controller = controller;
@@ -107,7 +148,7 @@ class CalendarEvent extends HBox {
     Button removeButton;
     searchFXMLController controller;
 
-    public CalendarEvent(Event event, searchFXMLController controller){
+    public CalendarEvent(Event event, searchFXMLController controller) {
         super();
         this.event = event;
         this.controller = controller;
