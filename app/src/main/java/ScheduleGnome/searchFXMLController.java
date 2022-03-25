@@ -1,35 +1,29 @@
 package ScheduleGnome;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 
-public class searchFXMLController{
+public class searchFXMLController {
     @FXML TextField searchField;
     @FXML ChoiceBox<String> departmentChoice;
     @FXML ChoiceBox<Integer> creditChoice;
     @FXML ChoiceBox<LocalTime> startTimeChoice;
     @FXML ListView<SearchResult> searchList;
+    @FXML ListView<CalendarEvent> eventList;
 
     @FXML ObservableList<SearchResult> searchResultList;
+    @FXML
+    static ObservableList<CalendarEvent> calendarEventList; // TODO Need to make some for MTWRF
 
     Search search;
     
     @FXML protected void search(ActionEvent event){
-        System.out.println("tringtg");
-
         if(search == null)
             search = JavaFXApp.getSearch();
         if(searchResultList == null)
@@ -47,13 +41,9 @@ public class searchFXMLController{
 
         System.out.println("search query: "+searched);
 
-        ArrayList<SearchResult> searchResults = new ArrayList<SearchResult>();
-
         for (Course course : search.querySearch()) {
-            searchResults.add(new SearchResult(course));
+            searchResultList.add(new SearchResult(course, this));
         }
-
-        searchResultList.addAll(searchResults);
         
         // for (Course course : searchResultList) {
         //     System.out.println(course);
@@ -64,11 +54,23 @@ public class searchFXMLController{
         searchList.setItems(searchResultList);
     }
 
-    @FXML public void intialize() {
+    public void initialize() {
         System.out.println("loading search");
+        calendarEventList = FXCollections.observableArrayList();
+        // TODO: Fill this with events
 
+        updateCalendar();
+        System.out.println("UWU");
+        System.out.println("INIT!!!");
+    }
 
-        //fill this with events idk how
+    public void updateCalendar() {
+        // TODO: Fill this with events
+        calendarEventList.clear();
+        for (Event e : JavaFXApp.getCurrentSchedule().getEvents()) {
+            calendarEventList.add(new CalendarEvent(e, this));
+        }
+        eventList.setItems(calendarEventList);
     }
 }
 
@@ -76,16 +78,40 @@ class SearchResult extends HBox {
     Course course;
     Label courseLabel;
     Button addButton;
+    searchFXMLController controller;
 
-    public SearchResult(Course course){
+    public SearchResult(Course course, searchFXMLController controller){
         super();
         this.course = course;
+        this.controller = controller;
         courseLabel = new Label(course.toString());
         addButton = new Button("Add");
         addButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().addEvent(course);
+            controller.updateCalendar();
         });
 
         this.getChildren().addAll(courseLabel, addButton);
+    }
+}
+
+class CalendarEvent extends HBox {
+    Event event;
+    Label eventLabel;
+    Button removeButton;
+    searchFXMLController controller;
+
+    public CalendarEvent(Event event, searchFXMLController controller){
+        super();
+        this.event = event;
+        this.controller = controller;
+        eventLabel = new Label(event.getTitle()); // TODO: For now
+        removeButton = new Button("Remove");
+        removeButton.setOnAction((ActionEvent e) -> {
+            JavaFXApp.getCurrentSchedule().deleteEvent(event);
+            controller.updateCalendar();
+        });
+
+        this.getChildren().addAll(eventLabel, removeButton);
     }
 }
