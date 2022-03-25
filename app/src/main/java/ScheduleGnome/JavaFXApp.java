@@ -38,6 +38,7 @@ public class JavaFXApp extends Application {
 
         stage.setTitle("ScheduleGnome");
         stage.setScene(mainScene);
+        stage.setResizable(false);
         stage.show();
 
     }

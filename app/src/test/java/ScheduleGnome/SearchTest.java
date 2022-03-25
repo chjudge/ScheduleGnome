@@ -51,7 +51,15 @@ class SearchTest {
         assertEquals(2, searchingTool.isMatch(crs));
     }
 
-    //
+    @Test
+    void singleFilter() {
+        Search searchingTool = new Search();
+        searchingTool.addDept("MATH");
+        int size = searchingTool.querySearch().size();
+        assertEquals(42, size);
+    }
+
+    // Search query
 
     @Test
     void onlySearchQuery() {
@@ -61,7 +69,17 @@ class SearchTest {
                 "FOUNDATIONS OF COMPUTER SCIENCE", "10:00:00", "10:50:00", "MWF",
                 "STEM", "326", "33", "39" });
         int size = searchingTool.querySearch().size();
+        System.out.println(searchingTool.resultToString());
         assertEquals(23, size);
+    }
+
+    @Test
+    void searchComp() {
+        Search searchingTool = new Search();
+        searchingTool.setSearched("comp");
+        int size = searchingTool.querySearch().size();
+        System.out.println(searchingTool.resultToString());
+        assertEquals(18, size);
     }
 
 }
