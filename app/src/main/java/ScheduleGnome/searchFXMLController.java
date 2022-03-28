@@ -120,7 +120,6 @@ public class searchFXMLController {
         calendarEventList = FXCollections.observableArrayList();
         // TODO: Fill this with events
 
-        eventList.setStyle("-fx-font: 12 monospace;"); // TODO: Not working?
         updateCalendar();
     }
 
@@ -170,6 +169,7 @@ class SearchResult extends HBox {
         this.course = course;
         this.controller = controller;
         courseLabel = new Label(course.toString());
+        courseLabel.setStyle("-fx-font: 12 monospace;");
         addButton = new Button("+");
         addButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().addEvent(course);
