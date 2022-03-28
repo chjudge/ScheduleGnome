@@ -50,8 +50,8 @@
                         </TextField>
                         <ListView fx:id="searchList" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                         <ComboBox fx:id="departmentChoice" onAction="#search" prefWidth="150.0" promptText="Department" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <ComboBox fx:id="creditChoice" onAction="#search" prefWidth="150.0" promptText="Credit Hours" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <ComboBox fx:id="startTimeChoice" onAction="#search" prefWidth="150.0" promptText="Starts After" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <ComboBox fx:id="endTimeChoice" onAction="#search" prefWidth="150.0" promptText="Ends Before" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <ComboBox fx:id="startTimeChoice" onAction="#search" prefWidth="150.0" promptText="Starts After" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
               </content>
