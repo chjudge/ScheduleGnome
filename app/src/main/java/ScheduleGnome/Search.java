@@ -3,6 +3,7 @@ package ScheduleGnome;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Search {
     private Data data;
@@ -61,40 +62,31 @@ public class Search {
         for (Match result : results) {
             Course crs = result.getCourse();
             int newRating = result.getRating();
-            // TODO: This is just a very iffy way of doing this
-            if (crs.getBuilding()!=null && searched.contains(crs.getBuilding().toLowerCase())) {
-                result.addSimilarity(crs.getBuilding());
-                newRating++;
-            }
-            // Check through course code matches
-            if (searched.contains(crs.getDept().toLowerCase())) {
-                result.addSimilarity(crs.getDept());
-                newRating++;
-            }
-            if (searched.contains(crs.getCode())) {
-                result.addSimilarity(crs.getCode());
-                newRating++;
-            }
 
-//            String[] crsCode = crs.getCourseCode().split(" ");
-//            for (int i = 0, j = 0;  j < 2; i++) {
-//                if(crsCode[i].equals("")) continue;
-//                j++;
-//                if (searched.contains(crsCode[i].toLowerCase())) {
-//                    result.addSimilarity(crsCode[i]);
-//                    newRating++;
-//                }
-//            }
-
-            // Check for keywords
-            for (String s : crs.getTitle().split(" ")) {
-                if (s.length() < 3) continue;
-                if (searched.contains(s.toLowerCase())) {
-                    result.addSimilarity(s);
+            for (String s : searched.split(" ")) {
+                if (s.isEmpty()) continue;
+                // Check for building
+                if (crs.getBuilding()!=null && s.equals(crs.getBuilding().toLowerCase())) {
+                    result.addSimilarity((crs.getBuilding()));
                     newRating++;
                 }
-            }
+                if (s.equals(crs.getDept().toLowerCase())) {
+                    result.addSimilarity(crs.getDept());
+                    newRating += 2;
+                }
+                if (s.equals(crs.getCode())) {
+                    result.addSimilarity(crs.getCode());
+                    newRating += 2;
+                }
+                for (String t : crs.getTitle().split(" ")) {
+                    if (t.length() < 3 || s.length() < 3) continue;
+                    if (t.toLowerCase().contains(s)) {
+                        result.addSimilarity(t);
+                        newRating++;
+                    }
+                }
 
+            }
             result.setRating(newRating);
         }
         return results;
