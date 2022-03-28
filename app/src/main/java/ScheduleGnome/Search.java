@@ -71,11 +71,11 @@ public class Search {
                 }
                 if (s.equals(crs.getDept().toLowerCase())) {
                     result.addSimilarity(crs.getDept());
-                    newRating += 2;
+                    newRating += 3;
                 }
                 if (s.equals(crs.getCode())) {
                     result.addSimilarity(crs.getCode());
-                    newRating += 2;
+                    newRating += 3;
                 }
                 for (String t : crs.getTitle().split(" ")) {
                     if (t.length() < 3 || s.length() < 3) continue;
@@ -132,6 +132,16 @@ public class Search {
                 if (crs.getStartTime() != null && crs.getStartTime().compareTo(startTime) >= 0) {
                     rating++; // Found a match
                     break StartIf;
+                }
+            }
+            return -1;
+        }
+        EndIf:
+        if (!endTimes.isEmpty()) {
+            for (LocalTime endTime : endTimes) {
+                if (crs.getEndTime() != null && crs.getEndTime().compareTo(endTime) <= 0) {
+                    rating++; // Found a match
+                    break EndIf;
                 }
             }
             return -1;

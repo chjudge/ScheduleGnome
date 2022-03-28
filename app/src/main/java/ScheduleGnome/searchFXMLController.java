@@ -106,9 +106,8 @@ public class searchFXMLController {
         calendarEventList = FXCollections.observableArrayList();
         // TODO: Fill this with events
 
+        eventList.setStyle("-fx-font: 12 monospace;"); // TODO: Not working?
         updateCalendar();
-        System.out.println("UWU");
-        System.out.println("INIT!!!");
     }
 
     public void updateCalendar() {
