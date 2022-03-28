@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -19,9 +20,9 @@ public class searchFXMLController {
     @FXML
     ComboBox<String> departmentChoice;
     @FXML
-    ComboBox<Integer> creditChoice;
-    @FXML
     ComboBox<LocalTime> startTimeChoice;
+    @FXML
+    ComboBox<LocalTime> endTimeChoice;
     @FXML
     ListView<SearchResult> searchList;
     @FXML
@@ -32,8 +33,9 @@ public class searchFXMLController {
     @FXML
     ObservableList<String> departmentList;
     @FXML
-    ObservableList<LocalTime> timeList;
-
+    ObservableList<LocalTime> startTimeList;
+    @FXML
+    ObservableList<LocalTime> endTimeList;
     @FXML
     ObservableList<SearchResult> searchResultList;
     @FXML
@@ -55,10 +57,12 @@ public class searchFXMLController {
         //System.out.println("cleared list");
 
         search.setSearched(searched);
-        if(departmentChoice.getValue() != null)
+        if (departmentChoice.getValue() != null)
             search.addDept(departmentChoice.getValue());
-        if(startTimeChoice.getValue() != null)
+        if (startTimeChoice.getValue() != null)
             search.addStartTime(startTimeChoice.getValue());
+        if (endTimeChoice.getValue() != null)
+            search.addEndTime(endTimeChoice.getValue());
 
         System.out.println("search query: " + searched);
 
@@ -91,24 +95,32 @@ public class searchFXMLController {
 
         departmentList.sort(String.CASE_INSENSITIVE_ORDER);
 
+        departmentList.add(0, null);
+
         System.out.println(departmentList.toString());
 
         departmentChoice.setItems(departmentList);
 
-        timeList = FXCollections.observableArrayList();
+
+
+        startTimeList = FXCollections.observableArrayList();
+        endTimeList = FXCollections.observableArrayList();
+
+        startTimeList.add(null);
+        endTimeList.add(null);
 
         for (int i = 8; i < 16; i++) {
-            timeList.add(LocalTime.of(i, 0));
+            startTimeList.add(LocalTime.of(i, 0));
+            endTimeList.add(LocalTime.of(i, 0));
         }
 
-        startTimeChoice.setItems(timeList);
+        startTimeChoice.setItems(startTimeList);
+        endTimeChoice.setItems(endTimeList);
 
         calendarEventList = FXCollections.observableArrayList();
         // TODO: Fill this with events
 
         updateCalendar();
-        System.out.println("UWU");
-        System.out.println("INIT!!!");
     }
 
     public void updateCalendar() {
@@ -131,15 +143,14 @@ public class searchFXMLController {
         File savedSchedulesFile;
         FileWriter fw;
         try {
-            savedSchedulesFile = new File(savedSchedulePath + "/"+ currUsername + ".txt");
+            savedSchedulesFile = new File(savedSchedulePath + "/" + currUsername + ".txt");
             fw = new FileWriter(savedSchedulesFile);
-            for(CalendarEvent calendarEvent : calendarEventList) {
+            for (CalendarEvent calendarEvent : calendarEventList) {
                 Event event = calendarEvent.getEvent();
                 fw.write(event.toString());
             }
             fw.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace(); //TODO: Print error message better
         }
 
@@ -158,6 +169,7 @@ class SearchResult extends HBox {
         this.course = course;
         this.controller = controller;
         courseLabel = new Label(course.toString());
+        courseLabel.setStyle("-fx-font: 12 monospace;");
         addButton = new Button("+");
         addButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().addEvent(course);

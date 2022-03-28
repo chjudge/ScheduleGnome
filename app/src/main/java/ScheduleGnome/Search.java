@@ -61,40 +61,31 @@ public class Search {
         for (Match result : results) {
             Course crs = result.getCourse();
             int newRating = result.getRating();
-            // TODO: This is just a very iffy way of doing this
-            if (crs.getBuilding()!=null && searched.contains(crs.getBuilding().toLowerCase())) {
-                result.addSimilarity(crs.getBuilding());
-                newRating++;
-            }
-            // Check through course code matches
-            if (searched.contains(crs.getDept().toLowerCase())) {
-                result.addSimilarity(crs.getDept());
-                newRating++;
-            }
-            if (searched.contains(crs.getCode())) {
-                result.addSimilarity(crs.getCode());
-                newRating++;
-            }
 
-//            String[] crsCode = crs.getCourseCode().split(" ");
-//            for (int i = 0, j = 0;  j < 2; i++) {
-//                if(crsCode[i].equals("")) continue;
-//                j++;
-//                if (searched.contains(crsCode[i].toLowerCase())) {
-//                    result.addSimilarity(crsCode[i]);
-//                    newRating++;
-//                }
-//            }
-
-            // Check for keywords
-            for (String s : crs.getTitle().split(" ")) {
-                if (s.length() < 3) continue;
-                if (searched.contains(s.toLowerCase())) {
-                    result.addSimilarity(s);
+            for (String s : searched.split(" ")) {
+                if (s.isEmpty()) continue;
+                // Check for building
+                if (crs.getBuilding()!=null && s.equals(crs.getBuilding().toLowerCase())) {
+                    result.addSimilarity((crs.getBuilding()));
                     newRating++;
                 }
-            }
+                if (s.equals(crs.getDept().toLowerCase())) {
+                    result.addSimilarity(crs.getDept());
+                    newRating += 3;
+                }
+                if (s.equals(crs.getCode())) {
+                    result.addSimilarity(crs.getCode());
+                    newRating += 3;
+                }
+                for (String t : crs.getTitle().split(" ")) {
+                    if (t.length() < 3 || s.length() < 3) continue;
+                    if (t.toLowerCase().contains(s)) {
+                        result.addSimilarity(t);
+                        newRating++;
+                    }
+                }
 
+            }
             result.setRating(newRating);
         }
         return results;
@@ -141,6 +132,16 @@ public class Search {
                 if (crs.getStartTime() != null && crs.getStartTime().compareTo(startTime) >= 0) {
                     rating++; // Found a match
                     break StartIf;
+                }
+            }
+            return -1;
+        }
+        EndIf:
+        if (!endTimes.isEmpty()) {
+            for (LocalTime endTime : endTimes) {
+                if (crs.getEndTime() != null && crs.getEndTime().compareTo(endTime) <= 0) {
+                    rating++; // Found a match
+                    break EndIf;
                 }
             }
             return -1;
@@ -274,6 +275,10 @@ public class Search {
             end = endTime == null ? null : LocalTime.parse(endTime);
         }
         this.endTimes.add(end);
+    }
+    public void addEndTime(LocalTime endTime) {
+        endTimes.add(endTime);
+        System.out.println(endTimes.toString());
     }
 
     public ArrayList<Course> getResults() { 
