@@ -266,6 +266,10 @@ public class Search {
         }
         this.endTimes.add(end);
     }
+    public void addEndTime(LocalTime endTime) {
+        endTimes.add(endTime);
+        System.out.println(endTimes.toString());
+    }
 
     public ArrayList<Course> getResults() { 
         ArrayList<Course> out = new ArrayList<Course>();
