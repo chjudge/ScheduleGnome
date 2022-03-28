@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class searchFXMLController {
     static ObservableList<CalendarEvent> calendarEventList; // TODO Need to make some for MTWRF
 
     Search search;
+
+    private String savedSchedulePath = "./src/main/savedSchedules";
 
     @FXML
     protected void search(ActionEvent event) {
@@ -117,7 +121,29 @@ public class searchFXMLController {
     }
 
     public void back() throws IOException {
+        saveSchedule();
         JavaFXApp.changeScene("savedScene.fxml");
+    }
+
+    private void saveSchedule() {
+        String currUsername = JavaFXApp.getCurrentUser().getUsername();
+
+        File savedSchedulesFile;
+        FileWriter fw;
+        try {
+            savedSchedulesFile = new File(savedSchedulePath + "/"+ currUsername + ".txt");
+            fw = new FileWriter(savedSchedulesFile);
+            for(CalendarEvent calendarEvent : calendarEventList) {
+                Event event = calendarEvent.getEvent();
+                fw.write(event.toString());
+            }
+            fw.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace(); //TODO: Print error message better
+        }
+
+
     }
 }
 
@@ -160,5 +186,9 @@ class CalendarEvent extends HBox {
         });
 
         this.getChildren().addAll(eventLabel, removeButton);
+    }
+
+    public Event getEvent() {
+        return event;
     }
 }

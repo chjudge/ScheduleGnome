@@ -1,0 +1,3 @@
+opened fileHere is one calendar EventCOMP 141  A    MWF                                                    
+COMP PROGRAMMING I                      13:00 - 13:50  31/37          STEM 326       Here is one calendar EventCOMP 141  B    MWF                                                    
+COMP PROGRAMMING I                      14:00 - 14:50  28/33          STEM 326       

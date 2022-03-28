@@ -29,6 +29,9 @@ public class savedFXMLController implements Initializable {
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
+        //Load in schedules
+
+
         savedNames = new ArrayList<>();
         savedNames.addAll(JavaFXApp.getCurrentUser().savedSchedules.keySet());
         listView.getItems().addAll(savedNames);

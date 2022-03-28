@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ public class loginFXMLController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     private String usersFileName = "users.txt";
+    private ArrayList<User> users = new ArrayList<User>();
 
     @FXML public void initialize() {
         readAllUsers();
@@ -69,29 +71,42 @@ public class loginFXMLController {
     protected boolean registerUser(String username, String password) {
         try {
             File usersFile = new File(usersFileName);
-            FileWriter fw = new FileWriter(usersFile,true);
+            FileWriter usersFileWriter = new FileWriter(usersFile,true);
 
             if(username.contains(":")) {
-                fw.close();
+                usersFileWriter.close();
                 throw new Exception("Username cannot contain the character \':\'");
             }
             else if(username.isBlank()) {
-                fw.close();
+                usersFileWriter.close();
                 throw new Exception("Username cannot be blank.");
             }
             if(password.contains(":")) {
-                fw.close();
+                usersFileWriter.close();
                 throw new Exception("Password cannot contain the character \':\'");
             }
             else if(password.isBlank()) {
-                fw.close();
+                usersFileWriter.close();
                 throw new Exception("Password cannot be blank.");
             }
 
+            for(User user : users) {
+                if(user.getUsername().equals(username.toUpperCase())) {
+                    usersFileWriter.close();
+                    throw new Exception("Username taken.");
+                }
+            }
+
             //Store usernames in uppercase so they aren't case sensitive
-            fw.write(username.toUpperCase() + ":" + password + "\n");
-            fw.flush();
-            fw.close();
+            usersFileWriter.write(username.toUpperCase() + ":" + password + "\n");
+            usersFileWriter.flush();
+            usersFileWriter.close();
+
+            //Create a file for the new user to store their saved schedules
+            File savedScheduleFile = new File(username + ".txt");
+            FileWriter scheduleFileWriter = new FileWriter(savedScheduleFile);
+            scheduleFileWriter.close();
+
             return true;
         }
         catch (Exception e) {
@@ -124,6 +139,8 @@ public class loginFXMLController {
                 return;
             }
             User newUser = new User(userAndPassArray[0], userAndPassArray[1]);
+            users.add(newUser);
+
             JavaFXApp.addUser(newUser);
         }
     }
