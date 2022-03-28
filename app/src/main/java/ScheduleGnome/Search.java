@@ -3,7 +3,6 @@ package ScheduleGnome;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Search {
     private Data data;
