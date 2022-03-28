@@ -69,9 +69,17 @@ public class loginFXMLController {
      * @return true on success, false on error
      */
     protected boolean registerUser(String username, String password) {
+
+
         try {
             File usersFile = new File(usersFileName);
-            FileWriter usersFileWriter = new FileWriter(usersFile,true);
+            FileWriter usersFileWriter;
+            if(usersFile.exists()) {
+                usersFileWriter = new FileWriter(usersFile,true);
+            }
+            else {
+                usersFileWriter = new FileWriter(usersFile);
+            }
 
             if(username.contains(":")) {
                 usersFileWriter.close();
@@ -117,6 +125,7 @@ public class loginFXMLController {
     }
 
     protected void readAllUsers() {
+
         File usersFile = new File(usersFileName);
         Scanner scanner;
         try {
