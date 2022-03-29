@@ -21,6 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-ScheduleGnome/.vscode
-ScheduleGnome/class-scheduler.iml
+
+# IDE ish
+.vscode
+class-scheduler.iml
 .idea
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

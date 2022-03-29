@@ -1,0 +1,4 @@
+You can run the application by running ScheduleGnome.jar 
+
+You can build and run the application using Gradle, either with a plugin in your IDE of choice or by installing Gradle and running gradlew run in the command line in the root directory of the project.
+
