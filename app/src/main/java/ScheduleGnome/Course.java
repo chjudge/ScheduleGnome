@@ -4,6 +4,8 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class Course extends Event {
+    private String year;
+
     private String courseCode;
     private String shortTitle;
     private String building;
