@@ -27,7 +27,7 @@ public abstract class Event {
             dates =dates.concat(day == null ? "" : day);
         }
 
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.US);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm a", Locale.US);
 
         try {
             start = b == null ? null : LocalTime.parse(b, df);
