@@ -1,5 +1,7 @@
 package ScheduleGnome;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -7,7 +9,7 @@ public class Course extends Event {
     private String year;
     private String semester;
     private String department;
-    private String courseNumber;
+    private int number;
     private String section;
     private int creditHours;
     private int capacity;
@@ -30,7 +32,7 @@ public class Course extends Event {
         int sem = items[1] == null ? -1 : Integer.parseInt(items[1]);
         this.semester = sem == 10 ? "Fall" : sem == 30 ? "Spring" : "";
         this.department = items[2];
-        this.courseNumber = items[3];
+        this.number = items[3] == null ? -1 : Integer.parseInt(items[3]);
         this.section = items[4];
         this.creditHours = items[6] == null ? -1 : Integer.parseInt(items[6]);
         this.capacity = items[7] == null ? -1 : Integer.parseInt(items[7]);
@@ -39,18 +41,33 @@ public class Course extends Event {
         this.comments = items[19];
     }
 
+    public Course(ResultSet result) throws SQLException {
+        super(result.getString(4),result.getObject(12,LocalTime.class),
+                result.getObject(13,LocalTime.class),result.getString(11));
+        year = result.getString(2);
+        semester = result.getString(3);
+        department = result.getString(5);
+        number = result.getInt(6);
+        section = result.getString(7);
+        creditHours = result.getInt(8);
+        capacity = result.getInt(9);
+        enrollment = result.getInt(10);
+        professor = result.getString(14);
+        comments = result.getString(15);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Course course = (Course) o;
-        return creditHours == course.creditHours && capacity == course.capacity && enrollment == course.enrollment && Objects.equals(year, course.year) && Objects.equals(semester, course.semester) && Objects.equals(department, course.department) && Objects.equals(courseNumber, course.courseNumber) && Objects.equals(section, course.section) && Objects.equals(professor, course.professor) && Objects.equals(comments, course.comments);
+        return creditHours == course.creditHours && capacity == course.capacity && enrollment == course.enrollment && Objects.equals(year, course.year) && Objects.equals(semester, course.semester) && Objects.equals(department, course.department) && Objects.equals(number, course.number) && Objects.equals(section, course.section) && Objects.equals(professor, course.professor) && Objects.equals(comments, course.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), year, semester, department, courseNumber, section, creditHours, capacity, enrollment, professor, comments);
+        return Objects.hash(super.hashCode(), year, semester, department, number, section, creditHours, capacity, enrollment, professor, comments);
     }
 
     @Override
@@ -61,7 +78,7 @@ public class Course extends Event {
     }
 
     public String getCourseCode() {
-        return department + " " + courseNumber + " " + section;
+        return department + " " + number + " " + section;
     }
 
     public int getEnrollment() {
@@ -84,10 +101,6 @@ public class Course extends Event {
         return department;
     }
 
-    public String getCode() {
-        return courseNumber;
-    }
-
     public String getYear() {
         return year;
     }
@@ -106,5 +119,21 @@ public class Course extends Event {
 
     public String getComments() {
         return comments;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }

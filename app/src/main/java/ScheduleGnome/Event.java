@@ -19,7 +19,7 @@ public abstract class Event {
 
     public Event(String title, String m, String t, String w, String r, String f, String b, String e) {
         this.title = title;
-        LocalTime start = null, end = null;
+        LocalTime start = LocalTime.of(0,0), end = LocalTime.of(0,0);
 
         dates = "";
         for (String day : new String[]{m, t, w, r, f}) {

@@ -58,11 +58,11 @@ public class searchFXMLController {
 
         search.setSearched(searched);
         if (departmentChoice.getValue() != null)
-            search.addDept(departmentChoice.getValue());
+            search.setDept(departmentChoice.getValue());
         if (startTimeChoice.getValue() != null)
-            search.addStartTime(startTimeChoice.getValue());
+            search.setStartTime(startTimeChoice.toString());
         if (endTimeChoice.getValue() != null)
-            search.addEndTime(endTimeChoice.getValue());
+            search.setEndTime(endTimeChoice.toString());
 
         System.out.println("search query: " + searched);
 
@@ -86,13 +86,9 @@ public class searchFXMLController {
         search = JavaFXApp.getSearch();
         searchResultList = FXCollections.observableArrayList();
 
+
         departmentList = FXCollections.observableArrayList();
-        for (Course course : search.getAllCourses()) {
-
-            if (!departmentList.contains(course.getDept()))
-                departmentList.add(course.getDept());
-        }
-
+        departmentList.addAll(search.getDB().getDistinctDepts());
         departmentList.sort(String.CASE_INSENSITIVE_ORDER);
 
         departmentList.add(0, null);
