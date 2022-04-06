@@ -65,10 +65,7 @@ public class Search {
             for (String s : searched.split(" ")) {
                 if (s.isEmpty()) continue;
                 // Check for building
-                if (crs.getBuilding()!=null && s.equals(crs.getBuilding().toLowerCase())) {
-                    result.addSimilarity((crs.getBuilding()));
-                    newRating++;
-                }
+
                 if (s.equals(crs.getDept().toLowerCase())) {
                     result.addSimilarity(crs.getDept());
                     newRating += 3;
@@ -147,22 +144,8 @@ public class Search {
             return -1;
         }
         // Apply day of the week filter
-        DatesIf:
-        if (!dates.isEmpty()) {
-            DayOfWeek[] crsDates = crs.getDates();
-            int numDays = crsDates.length;
-            for (DayOfWeek[] daysOfWeek : dates) {
-                if (numDays == daysOfWeek.length) {
-                    for (int i = 0; i < daysOfWeek.length; i++) {
-                        if (crsDates[i].equals(daysOfWeek[i])) {
-                            rating++; // Found a match
-                            break DatesIf;
-                        }
-                    }
-                }
-            }
-            return -1;
-        }
+
+
         // TODO: Add credit hours check, professor, class level filters?
         return rating;
     }

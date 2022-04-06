@@ -12,7 +12,7 @@ class ParseTest {
         
         parser.readCourses(courses);
 
-        assertEquals(761, courses.size());
+        assertEquals(1494, courses.size());
     }
 
     @Test

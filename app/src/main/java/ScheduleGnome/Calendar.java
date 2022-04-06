@@ -35,31 +35,31 @@ public class Calendar {
         ArrayList<Event> thuEvents = new ArrayList<Event>();
         ArrayList<Event> friEvents = new ArrayList<Event>();
         
-        for(Event event : schedule.events) {
-            for(DayOfWeek day : event.getDates()) {
-                switch(day.getValue()) {
-                    case 1:
-                        monEvents.add(event);
-                    break;
-
-                    case 2:
-                        tueEvents.add(event);
-                    break;
-
-                    case 3:
-                        wedEvents.add(event);
-                    break;
-
-                    case 4:
-                        thuEvents.add(event);
-                    break;
-
-                    case 5:
-                        friEvents.add(event);
-                    break;
-                }
-            }
-        }
+//        for(Event event : schedule.events) {
+//            for(DayOfWeek day : event.getDates()) {
+//                switch(day.getValue()) {
+//                    case 1:
+//                        monEvents.add(event);
+//                    break;
+//
+//                    case 2:
+//                        tueEvents.add(event);
+//                    break;
+//
+//                    case 3:
+//                        wedEvents.add(event);
+//                    break;
+//
+//                    case 4:
+//                        thuEvents.add(event);
+//                    break;
+//
+//                    case 5:
+//                        friEvents.add(event);
+//                    break;
+//                }
+//            }
+//        }
         
         String[] weekdays = {"MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"};
         for(int i=0; i<5; i++) {
