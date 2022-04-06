@@ -1,7 +1,9 @@
 package ScheduleGnome;
 
+import javax.persistence.Entity;
 import java.time.DayOfWeek;
 
+@Entity
 public class Extracurriculars {
     public Extracurriculars(boolean isFlexible){
 

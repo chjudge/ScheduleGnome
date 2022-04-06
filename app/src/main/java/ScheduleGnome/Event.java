@@ -5,6 +5,8 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 public abstract class Event {
+    private int id;
+
     private String title;
     private LocalTime startTime;
     private LocalTime endTime;
