@@ -1,6 +1,5 @@
 package ScheduleGnome;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -27,7 +26,7 @@ public abstract class Event {
             dates =dates.concat(day == null ? "" : day);
         }
 
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm a", Locale.US);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.US);
 
         try {
             start = b == null ? null : LocalTime.parse(b, df);
@@ -106,24 +105,12 @@ public abstract class Event {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
     public LocalTime getEndTime() {
         return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
 }
