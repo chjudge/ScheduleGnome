@@ -60,13 +60,14 @@ public class searchFXMLController {
         if (departmentChoice.getValue() != null)
             search.setDept(departmentChoice.getValue());
         if (startTimeChoice.getValue() != null)
-            search.setStartTime(startTimeChoice.toString());
+            search.setStartTime(startTimeChoice.getValue().toString());
         if (endTimeChoice.getValue() != null)
-            search.setEndTime(endTimeChoice.toString());
+            search.setEndTime(endTimeChoice.getValue().toString());
 
         System.out.println("search query: " + searched);
 
         ArrayList<Course> results = search.querySearch();
+        System.out.println(results.size() + " results");
 
         for (Course course : results) {
             searchResultList.add(new SearchResult(course, this));
@@ -76,7 +77,6 @@ public class searchFXMLController {
         //     System.out.println(course);
         // }
 
-        System.out.println(search.querySearch().size() + " results");
 
         searchList.setItems(searchResultList);
     }

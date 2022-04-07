@@ -2,6 +2,7 @@ package ScheduleGnome;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
@@ -34,7 +35,8 @@ public class DBOperator {
             String sql = "select * from course";
             if (!filters.isEmpty()) sql += " where";
             for (String key : filters.keySet()) {
-                if (key.equals("startTime")) {
+                if (filters.get(key) == null) continue;
+                if (key.equals("beginTime")) {
                     sql += " " + key + " >= ? and";
                 }
                 else if (key.equals("endTime")) {
@@ -50,7 +52,8 @@ public class DBOperator {
             int i = 1;
             for (String key : filters.keySet()) {
                 if (key.contains("Time")) {
-                    filterQuery.setTime(i++,Time.valueOf(filters.get(key)));
+                    System.out.println("Time thing: " + filters.get(key));
+                    filterQuery.setTime(i++,Time.valueOf(LocalTime.parse(filters.get(key))));
                 }
                 else if (key.equals("credits")) {
                     filterQuery.setInt(i++,Integer.getInteger(filters.get(key)));
