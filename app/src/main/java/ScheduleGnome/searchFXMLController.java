@@ -5,11 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -38,6 +41,11 @@ public class searchFXMLController {
     ObservableList<LocalTime> endTimeList;
     @FXML
     ObservableList<SearchResult> searchResultList;
+    @FXML
+    GridPane calGrid;
+    private Label[][] label = new Label[6][9];
+
+
     @FXML
     static ObservableList<CalendarEvent> calendarEventList; // TODO Need to make some for MTWRF
 
@@ -114,18 +122,61 @@ public class searchFXMLController {
         endTimeChoice.setItems(endTimeList);
 
         calendarEventList = FXCollections.observableArrayList();
+
+        for(int i = 0; i<1; i++){//column
+            for(int j = 1; j<label[i].length; j++){//row
+                label[i][j] = new Label();
+                label[i][j].setText(startTimeList.get(j).toString());
+                calGrid.add(label[i][j], i, j);
+            }
+        }
+
+
+
+
+
+
+
+
         // TODO: Fill this with events
 
         updateCalendar();
     }
 
+
+
     public void updateCalendar() {
         // TODO: Fill this with events
         calendarEventList.clear();
+        int row;
+        ArrayList<Integer> classes = new ArrayList<>();
+
         for (Event e : JavaFXApp.getCurrentSchedule().getEvents()) {
-            calendarEventList.add(new CalendarEvent(e, this));
+            row = e.getStartTime().getHour();
+            if(e.getDatesString().contains("M")){
+                classes.add(1);
+            }if(e.getDatesString().contains("T")){
+                classes.add(2);
+            }if(e.getDatesString().contains("W")){
+                classes.add(3);
+            }if(e.getDatesString().contains("R")){
+                classes.add(4);
+            }if(e.getDatesString().contains("F")){
+                classes.add(5);
+            }
+
+            for (Integer aClass : classes) {
+                label[aClass][row - 7] = new Label();
+                label[aClass][row - 7].setText(e.getTitle());
+                label[aClass][row - 7].setWrapText(true);
+
+                calGrid.add(label[aClass][row - 7], aClass, row - 7);
+            }
+//            calendarEventList.add(new CalendarEvent(e, this));
+            classes.clear();
         }
-        eventList.setItems(calendarEventList);
+
+//        eventList.setItems(calendarEventList);
     }
 
     public void back() throws IOException {
