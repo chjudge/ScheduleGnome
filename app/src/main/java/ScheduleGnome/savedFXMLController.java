@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -22,6 +23,9 @@ public class savedFXMLController implements Initializable {
 
     @FXML
     public void clickNew(ActionEvent actionEvent) throws IOException{
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": "+JavaFXApp.getCurrentUser().getUsername()+" selected to make" +
+                "a new schedule");
         JavaFXApp.changeScene("nameSchedule.fxml");
     }
 
@@ -30,8 +34,8 @@ public class savedFXMLController implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         //Load in schedules
-
-
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": Loading saved schedules page");
         savedNames = new ArrayList<>();
         savedNames.addAll(JavaFXApp.getCurrentUser().savedSchedules.keySet());
         listView.getItems().addAll(savedNames);

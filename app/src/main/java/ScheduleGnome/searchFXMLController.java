@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -90,7 +91,8 @@ public class searchFXMLController {
     }
 
     public void initialize() {
-        System.out.println("loading search");
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": Loading search page");
         search = JavaFXApp.getSearch();
         searchResultList = FXCollections.observableArrayList();
 
@@ -131,13 +133,6 @@ public class searchFXMLController {
             }
         }
 
-
-
-
-
-
-
-
         // TODO: Fill this with events
 
         updateCalendar();
@@ -147,6 +142,9 @@ public class searchFXMLController {
 
     public void updateCalendar() {
         // TODO: Fill this with events
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": Updating "+JavaFXApp.getCurrentUser().getUsername()+"'s "
+                +JavaFXApp.getCurrentSchedule().getID()+" calendar");
         calendarEventList.clear();
         int row;
         ArrayList<Integer> classes = new ArrayList<>();
@@ -180,13 +178,20 @@ public class searchFXMLController {
     }
 
     public void back() throws IOException {
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": "+JavaFXApp.getCurrentUser().getUsername()+" hit the back button");
         saveSchedule();
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": "+JavaFXApp.getCurrentUser().getUsername()+" saved their "+
+                JavaFXApp.getCurrentSchedule().getID()+" schedule");
         JavaFXApp.changeScene("savedScene.fxml");
     }
 
     private void saveSchedule() {
         String currUsername = JavaFXApp.getCurrentUser().getUsername();
-
+        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
+                ": Saving "+currUsername+"'s "
+                +JavaFXApp.getCurrentSchedule().getID()+" schedule");
         File savedSchedulesFile;
         FileWriter fw;
         try {

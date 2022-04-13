@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class JavaFXApp extends Application {
     //private static HashMap<String, Parent> sceneMap = new HashMap<>();
@@ -19,6 +21,8 @@ public class JavaFXApp extends Application {
     private static User currentUser;
     private static Schedule currentSchedule;
     private static Stage stg;
+    public static DateTimeFormatter dtf;
+    public static boolean isLogging;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -34,7 +38,7 @@ public class JavaFXApp extends Application {
         mainScene = new Scene(root, 800, 450);
         // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
-        System.out.println("LOading Scene!");
+        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched main scene");
 
         stage.setTitle("ScheduleGnome");
         stage.setScene(mainScene);
@@ -44,13 +48,19 @@ public class JavaFXApp extends Application {
     }
 
     public static void changeScene(String fxml) throws IOException {
+        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "+
+                        currentUser.getUsername()+" changed scene to "+fxml);
         Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
         stg.getScene().setRoot(pane);
     }
 
     public static void main(String[] args) {
+        dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        if (args.length>1 && args[1].equals("logger")) isLogging = true;
+        else isLogging = false;
         users = new HashMap<String, User>();
         searchTool = new Search();
+        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched");
         launch(args);
     }
 
@@ -58,17 +68,26 @@ public class JavaFXApp extends Application {
         if (users.get(username) != null) {
             if (users.get(username).checkPassword(password)) {
                 currentUser = users.get(username);
+                if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "
+                        +username+" successfully logged in");
                 return 1;
             }
+            if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": +"+
+                    username+" typed in wrong password");
             return 0;
         }
-
+        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "+
+                username+" was not in the database");
         return -1;
     }
 
+    // TODO: make sure you can't overwrite users
     public static void addUser(User user) {
         users.put(user.getUsername(), user);
         currentUser = user;
+        // TODO: print log if user is added
+        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+
+                ": New user \""+user+"\" was added to the database");
     }
 
     public static User getCurrentUser() {

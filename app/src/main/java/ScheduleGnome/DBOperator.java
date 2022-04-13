@@ -1,6 +1,5 @@
 package ScheduleGnome;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -66,7 +65,6 @@ public class DBOperator {
             ResultSet result = filterQuery.executeQuery();
             ArrayList<Match> filteredResults = new ArrayList<>();
             while (result.next()) {
-                // TODO: Course constructor from ResultSet
                 filteredResults.add(new Match(new Course(result), 0));
             }
             filters.clear();
@@ -115,6 +113,8 @@ public class DBOperator {
         }
         return true;
     }
+
+
 
     public ArrayList<String> getDistinctDepts() {
         ArrayList<String> depts = new ArrayList<>();
