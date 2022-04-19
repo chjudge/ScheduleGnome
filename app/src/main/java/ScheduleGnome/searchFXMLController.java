@@ -149,8 +149,11 @@ public class searchFXMLController {
         int row;
         ArrayList<Integer> classes = new ArrayList<>();
 
-        for (Event e : JavaFXApp.getCurrentSchedule().getEvents()) {
+        if(JavaFXApp.getCurrentSchedule().scheduleSize()>0){
+            Event e  = JavaFXApp.getCurrentSchedule().getEvents().get(JavaFXApp.getCurrentSchedule().scheduleSize()-1);
             row = e.getStartTime().getHour();
+
+            //determines which columns the course should be in
             if(e.getDatesString().contains("M")){
                 classes.add(1);
             }if(e.getDatesString().contains("T")){
@@ -162,7 +165,7 @@ public class searchFXMLController {
             }if(e.getDatesString().contains("F")){
                 classes.add(5);
             }
-
+            //creates labels for the added course
             for (Integer aClass : classes) {
                 label[aClass][row - 7] = new Label();
                 label[aClass][row - 7].setText(e.getTitle());
@@ -170,11 +173,9 @@ public class searchFXMLController {
 
                 calGrid.add(label[aClass][row - 7], aClass, row - 7);
             }
-//            calendarEventList.add(new CalendarEvent(e, this));
             classes.clear();
         }
 
-//        eventList.setItems(calendarEventList);
     }
 
     public void back() throws IOException {
