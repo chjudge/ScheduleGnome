@@ -41,7 +41,7 @@ public class Search {
         if (hasSearchedQuery()) {
             for (int i = results.size() - 1; i >= 0; i--) {
                 Match result = results.get(i);
-                if (result.getRating() > 0) {
+                if (result.getRating() > 6) {
                     break;
                 }
                 results.remove(result);
@@ -49,6 +49,8 @@ public class Search {
         }
         return getResults();
     }
+
+
 
     public ArrayList<Match> applySearchedInput() {
         if (!hasSearchedQuery()) return results;
@@ -64,17 +66,27 @@ public class Search {
                     result.addSimilarity(crs.getDept());
                     newRating += 3;
                 }
-                if (s.equals(crs.getNumber()+"")) {
-                    result.addSimilarity(crs.getNumber()+"");
+                if (s.equals(crs.getNumber() + "")) {
+                    result.addSimilarity(crs.getNumber() + "");
                     newRating += 3;
                 }
-                for (String t : crs.getTitle().split(" ")) {
-                    if (t.length() < 3 || s.length() < 3) continue;
-                    if (t.toLowerCase().contains(s)) {
-                        result.addSimilarity(t);
-                        newRating++;
+                int i = 8;
+                for(String t : crs.getTitle().split(" ")){
+                    if(t.toLowerCase().startsWith(s)){
+                        newRating += i;
                     }
+                    i-=2;
                 }
+               if(crs.getSection().equals("A")){
+                   newRating += 4;
+               }
+               if(crs.getDept().toLowerCase().equals(s)){
+                   newRating += 2;
+               }
+
+
+              newRating += crs.getCapacity()/20;
+
 
             }
             result.setRating(newRating);
