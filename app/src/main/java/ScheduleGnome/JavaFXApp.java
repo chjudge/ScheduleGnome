@@ -16,7 +16,7 @@ public class JavaFXApp extends Application {
     //private static HashMap<String, Parent> sceneMap = new HashMap<>();
     private static Scene mainScene;
 
-    private static Search searchTool;
+    //private static Search searchTool;
     private static Map<String, User> users;
     private static User currentUser;
     private static Schedule currentSchedule;
@@ -59,7 +59,7 @@ public class JavaFXApp extends Application {
         if (args.length>1 && args[1].equals("logger")) isLogging = true;
         else isLogging = false;
         users = new HashMap<String, User>();
-        searchTool = new Search();
+        //searchTool = new Search(currentSchedule.isFall());
         if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched");
         launch(args);
     }
@@ -108,7 +108,7 @@ public class JavaFXApp extends Application {
     //         mainScene.setRoot(sceneMap.get(name));
     // }
 
-    public static Search getSearch(){
-        return searchTool;
-    }
+//   public static Search getSearch(){
+//        return searchTool;
+//    //}
 }

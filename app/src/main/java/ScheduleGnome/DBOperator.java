@@ -29,10 +29,10 @@ public class DBOperator {
 
     }
 
-    public ArrayList<Match> filterCourses(Map<String,String> filters) {
+    public ArrayList<Match> filterCourses(Map<String,String> filters, boolean isFall) {
         try {
-            String sql = "select * from course";
-            if (!filters.isEmpty()) sql += " where";
+            String sql = "select * from course where semester = ?";
+            if (!filters.isEmpty()) sql += " and";
             for (String key : filters.keySet()) {
                 if (filters.get(key) == null) continue;
                 if (key.equals("beginTime")) {
@@ -49,6 +49,8 @@ public class DBOperator {
             System.out.println(sql);
             PreparedStatement filterQuery = conn.prepareStatement(sql);
             int i = 1;
+            if (isFall) filterQuery.setString(i++,"Fall");
+            else filterQuery.setString(i++,"Spring");
             for (String key : filters.keySet()) {
                 if (key.contains("Time")) {
                     System.out.println("Time thing: " + filters.get(key));

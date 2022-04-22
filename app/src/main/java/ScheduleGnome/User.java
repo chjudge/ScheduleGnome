@@ -31,8 +31,8 @@ public class User {
 
     }
 
-    public Schedule addNewSchedule(String name) {
-        Schedule newSched = new Schedule(name);
+    public Schedule addNewSchedule(String name, boolean isFall) {
+        Schedule newSched = new Schedule(name, isFall);
         savedSchedules.put(name, newSched);
         return newSched;
     }

@@ -5,14 +5,16 @@ import java.util.ArrayList;
 public class Schedule {
 
 //    final private String semester;
-    final private String schedule_id;
+    final private String name;
+    final private boolean isFall;
     ArrayList<Event> events;
 
 
 
-    public Schedule(String schedule_id){
+    public Schedule(String name, boolean isFall){
 //        this.semester = setSemester();
-        this.schedule_id = schedule_id;
+        this.name = name;
+        this.isFall = isFall;
         events = new ArrayList<>();
     }
 
@@ -42,13 +44,15 @@ public class Schedule {
         return events.size();
     }
 
-    public String getID(){
-        return schedule_id;
+    public String getName(){
+        return name;
     }
 
     public ArrayList<Event> getEvents() {
         return events;
     }
+
+    public boolean isFall() { return isFall; }
 
 
 //  not doing semesters for now

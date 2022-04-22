@@ -11,13 +11,15 @@ public class Search {
     private String searched;
     private Map<String, String> filters;
     private ArrayList<Match> results;
+    private boolean isFall;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
-    public Search() {
+    public Search(boolean isFall) {
         db = new DBOperator();
         searched = null;
         filters = new HashMap<>();
         results = new ArrayList<>();
+        this.isFall = isFall;
     }
 
     // toString for results
@@ -31,7 +33,7 @@ public class Search {
 
     public ArrayList<Course> querySearch() {
         results.clear();
-        results = db.filterCourses(filters);
+        results = db.filterCourses(filters, isFall);
         System.out.println("AFTER FILTER");
         System.out.println(resultToString());
         applySearchedInput();

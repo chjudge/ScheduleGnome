@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class NewApp {
     public static void main(String[] args) {
         ArrayList<User> users = new ArrayList<User>();
-        Search searchTool = new Search();
+        Search searchTool = new Search(true);
 
         Scanner in = new Scanner(System.in);
 
@@ -92,7 +92,7 @@ public class NewApp {
                     }
                     return selectCurrentSchedule(in, currentUser);
                 case "new":
-                    return new Schedule(getInput("What would you like to name your new schedule?", in));
+                    return new Schedule(getInput("What would you like to name your new schedule?", in), true);
                 case "quit":
                     System.out.println("Have a great day :)");
                     return null;
