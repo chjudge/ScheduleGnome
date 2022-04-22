@@ -65,6 +65,8 @@ public class profileFXMLController {
 
 
         //use database to save profile
+
+        JavaFXApp.changeScene("savedScene.fxml");
     }
 
     @FXML
