@@ -29,7 +29,10 @@ public class savedFXMLController implements Initializable {
         JavaFXApp.changeScene("nameSchedule.fxml");
     }
 
-
+    @FXML
+    public void clickProfile(ActionEvent actionEvent) throws IOException{
+        JavaFXApp.changeScene("profileScene.fxml");
+    }
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {

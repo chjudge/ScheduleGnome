@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Search {
-    private DBOperator db;
     private String searched;
     private Map<String, String> filters;
     private ArrayList<Match> results;
@@ -15,7 +14,6 @@ public class Search {
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
     public Search(boolean isFall) {
-        db = new DBOperator();
         searched = null;
         filters = new HashMap<>();
         results = new ArrayList<>();
@@ -33,7 +31,7 @@ public class Search {
 
     public ArrayList<Course> querySearch() {
         results.clear();
-        results = db.filterCourses(filters, isFall);
+        results = JavaFXApp.getDB().filterCourses(filters, isFall);
         System.out.println("AFTER FILTER");
         System.out.println(resultToString());
         applySearchedInput();
@@ -155,9 +153,5 @@ public class Search {
 
     private void clearFilters(){
         filters.clear();
-    }
-
-    public DBOperator getDB() {
-        return db;
     }
 }

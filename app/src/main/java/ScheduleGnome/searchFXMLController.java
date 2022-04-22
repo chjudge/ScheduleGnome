@@ -96,7 +96,7 @@ public class searchFXMLController {
 
 
         departmentList = FXCollections.observableArrayList();
-        departmentList.addAll(search.getDB().getDistinctDepts());
+        departmentList.addAll(JavaFXApp.getDB().getDistinctDepts());
         departmentList.sort(String.CASE_INSENSITIVE_ORDER);
 
         departmentList.add(0, null);

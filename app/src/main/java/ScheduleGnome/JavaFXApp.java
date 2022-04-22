@@ -16,13 +16,14 @@ public class JavaFXApp extends Application {
     //private static HashMap<String, Parent> sceneMap = new HashMap<>();
     private static Scene mainScene;
 
-    //private static Search searchTool;
     private static Map<String, User> users;
     private static User currentUser;
     private static Schedule currentSchedule;
     private static Stage stg;
     public static DateTimeFormatter dtf;
     public static boolean isLogging;
+
+    private static DBOperator db;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -59,7 +60,7 @@ public class JavaFXApp extends Application {
         if (args.length>1 && args[1].equals("logger")) isLogging = true;
         else isLogging = false;
         users = new HashMap<String, User>();
-        //searchTool = new Search(currentSchedule.isFall());
+        db = new DBOperator();
         if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched");
         launch(args);
     }
@@ -102,13 +103,7 @@ public class JavaFXApp extends Application {
         currentSchedule = schedule;
     }
 
-    // public static void setScene(String name){
-    //     Parent scene = sceneMap.get(name);
-    //     if(scene != null)
-    //         mainScene.setRoot(sceneMap.get(name));
-    // }
-
-//   public static Search getSearch(){
-//        return searchTool;
-//    //}
+    public static DBOperator getDB(){
+        return db;
+    }
 }

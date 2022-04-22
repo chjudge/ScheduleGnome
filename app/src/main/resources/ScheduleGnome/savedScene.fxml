@@ -21,7 +21,7 @@
             <Font name="MT Extra" size="21.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="531.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!">
+      <Text fill="WHITE" layoutX="665.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!">
          <font>
             <Font size="14.0" />
          </font></Text>
@@ -36,5 +36,10 @@
             <Font name="Arial Nova Light" size="18.0" />
          </font>
       </Label>
+      <Button alignment="CENTER" layoutX="518.0" layoutY="35.0" mnemonicParsing="false" onAction="#clickProfile" prefHeight="52.0" prefWidth="113.0" text="Profile">
+         <font>
+            <Font name="MT Extra" size="21.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

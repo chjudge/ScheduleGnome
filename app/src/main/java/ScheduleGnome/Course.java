@@ -3,6 +3,7 @@ package ScheduleGnome;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Course extends Event {
@@ -16,6 +17,7 @@ public class Course extends Event {
     private int enrollment;
     private String professor;
     private String comments;
+    private ArrayList<Course> prereqs;
 
 
     public Course(String longTitle, LocalTime start, LocalTime end,
@@ -37,8 +39,9 @@ public class Course extends Event {
         this.creditHours = items[6] == null ? -1 : Integer.parseInt(items[6]);
         this.capacity = items[7] == null ? -1 : Integer.parseInt(items[7]);
         this.enrollment = items[8] == null ? -1 : Integer.parseInt(items[8]);
-        this.professor = items[18].isEmpty() ? items[17] : items[18] + items[16];
+        this.professor = (items[18].isEmpty() ? items[17] : items[18]) + " " + items[16];
         this.comments = items[19];
+        initializePrereqs();
     }
 
     public Course(ResultSet result) throws SQLException {
@@ -54,6 +57,7 @@ public class Course extends Event {
         enrollment = result.getInt(10);
         professor = result.getString(14);
         comments = result.getString(15);
+        initializePrereqs();
     }
 
     @Override
@@ -135,5 +139,15 @@ public class Course extends Event {
 
     public void setSection(String section) {
         this.section = section;
+    }
+
+    private void initializePrereqs() {
+        prereqs = new ArrayList<>();
+//        if(!comments.isEmpty()){
+//            int first = comments.indexOf(" ");
+//            if(first != -1){
+//
+//            }
+//        }
     }
 }
