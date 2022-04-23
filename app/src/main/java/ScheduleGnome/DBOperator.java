@@ -133,8 +133,57 @@ public class DBOperator {
 
     }
 
-    public boolean insertUser() {
+    public boolean insertUser(User user) {
+        try {
+            PreparedStatement insertUser = conn.prepareStatement(
+                    "insert into users (username, password_text, graduation_year) values (?,?,?)"
+            );
+             int i=1;
+             insertUser.setString(i++, user.getUsername());
+             insertUser.setString(i++, user.getPassword());
+             insertUser.setInt(i++, 0); //TODO: make graduation year actually update
+
+             int rows = insertUser.executeUpdate();
+             insertUser.close();
+             if (rows == 0) {
+                 System.out.println("User was not inserted");
+                 return false;
+             }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
+    }
+
+    public ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery("select * from users");
+
+
+            while(result.next()) {
+                if(result != null) {
+                    users.add(new User(
+                            result.getInt(1),
+                            result.getString(2),
+                            result.getString(3),
+                            result.getInt(4),
+                            result.getString(5)
+                    ));
+                }
+            }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     public void close() {
