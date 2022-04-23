@@ -116,8 +116,6 @@ public class DBOperator {
         return true;
     }
 
-
-
     public ArrayList<String> getDistinctDepts() {
         ArrayList<String> depts = new ArrayList<>();
         try {
@@ -163,7 +161,6 @@ public class DBOperator {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("select * from users");
 
-
             while(result.next()) {
                 if(result != null) {
                     users.add(new User(
@@ -175,7 +172,6 @@ public class DBOperator {
                     ));
                 }
             }
-
         }
         catch(SQLException e) {
             e.printStackTrace();

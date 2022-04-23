@@ -1,5 +1,6 @@
 package ScheduleGnome;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,8 @@ public class loginFXMLController {
 
     @FXML public void initialize() {
 //        JavaFXApp.getDB();
-        JavaFXApp.getDB().getUsers();
+        userList = FXCollections.observableArrayList();
+        userList.addAll(JavaFXApp.getDB().getUsers());
 
         //readAllUsers();
     }
