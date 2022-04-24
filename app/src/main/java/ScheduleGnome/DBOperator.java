@@ -137,7 +137,7 @@ public class DBOperator {
                     "insert into users (username, password_text, graduation_year) values (?,?,?)"
             );
              int i=1;
-             insertUser.setString(i++, user.getUsername());
+             insertUser.setString(i++, user.getUsername()); //Store usernames without case sensitivity
              insertUser.setString(i++, user.getPassword());
              insertUser.setInt(i++, 0); //TODO: make graduation year actually update
 

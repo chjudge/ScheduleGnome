@@ -21,18 +21,15 @@ public class loginFXMLController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
 
-    @FXML
-    ObservableList<User> userList;
-
-//    private String usersFileName = "users.txt";
-//    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<User>();
 
     @FXML public void initialize() {
-//        JavaFXApp.getDB();
-        userList = FXCollections.observableArrayList();
-        userList.addAll(JavaFXApp.getDB().getUsers());
 
-        //readAllUsers();
+        users.addAll(JavaFXApp.getDB().getUsers());
+        for(User user : users) {
+            JavaFXApp.addUser(user);
+        }
+
     }
     
     @FXML protected void loginButton(ActionEvent event) throws IOException {
@@ -59,11 +56,12 @@ public class loginFXMLController {
         if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
 
         //Storing passwords with plain text encryption algorithm
-        String newUsername = usernameField.getText();
+        String newUsername = usernameField.getText().toUpperCase();
         String newPassword = passwordField.getText();
 
         if(registerUser(newUsername, newPassword)) {
             User newUser = new User(newUsername, newPassword);
+            users.add(newUser);
             JavaFXApp.addUser(newUser);
             JavaFXApp.changeScene("savedScene.fxml");
         }

@@ -22,6 +22,7 @@ public class User {
     }
 
     public User(int id, String username, String password, int graduation_year, String major){
+        savedSchedules = new HashMap<>();
         this.id = id;
         this.username = username;
         this.password = password;
