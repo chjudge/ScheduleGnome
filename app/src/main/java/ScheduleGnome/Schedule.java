@@ -7,12 +7,15 @@ public class Schedule {
 //    final private String semester;
     final private String name;
     final private boolean isFall;
+    final private User user;
+    private int id;
     ArrayList<Event> events;
 
 
 
-    public Schedule(String name, boolean isFall){
+    public Schedule(String name, boolean isFall, User user){
 //        this.semester = setSemester();
+        this.user = user;   //TODO: change constructor to do this right
         this.name = name;
         this.isFall = isFall;
         events = new ArrayList<>();
@@ -21,6 +24,18 @@ public class Schedule {
     public void addEvent(Event e){
         if(!events.contains(e))
             events.add(e);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void deleteEvent(Event e){

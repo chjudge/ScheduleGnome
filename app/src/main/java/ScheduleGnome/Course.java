@@ -18,6 +18,7 @@ public class Course extends Event {
     private String professor;
     private String comments;
     private ArrayList<Course> prereqs;
+    private int id;
 
 
     public Course(String longTitle, LocalTime start, LocalTime end,
@@ -47,6 +48,7 @@ public class Course extends Event {
     public Course(ResultSet result) throws SQLException {
         super(result.getString(4),result.getObject(12,LocalTime.class),
                 result.getObject(13,LocalTime.class),result.getString(11));
+        id = result.getInt(1);
         year = result.getString(2);
         semester = result.getString(3);
         department = result.getString(5);
@@ -140,6 +142,8 @@ public class Course extends Event {
     public void setSection(String section) {
         this.section = section;
     }
+
+    public int getId() { return id; }
 
     private void initializePrereqs() {
         prereqs = new ArrayList<>();

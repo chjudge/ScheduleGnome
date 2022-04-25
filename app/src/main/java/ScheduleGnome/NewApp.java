@@ -92,7 +92,7 @@ public class NewApp {
                     }
                     return selectCurrentSchedule(in, currentUser);
                 case "new":
-                    return new Schedule(getInput("What would you like to name your new schedule?", in), true);
+                    return new Schedule(getInput("What would you like to name your new schedule?", in), true, currentUser);
                 case "quit":
                     System.out.println("Have a great day :)");
                     return null;

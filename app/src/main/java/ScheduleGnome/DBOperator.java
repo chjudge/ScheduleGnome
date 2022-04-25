@@ -1,8 +1,11 @@
 package ScheduleGnome;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
 import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -147,6 +150,24 @@ public class DBOperator {
                  System.out.println("User was not inserted");
                  return false;
              }
+
+             //Set user's ID
+            PreparedStatement stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+             ResultSet result = stmt.executeQuery();
+             result.next();
+             System.out.println(result.getInt(1));
+//            PreparedStatement stmt = conn.prepareStatement("select id from users where username=?");
+//             i=1;
+//             stmt.setString(i++,user.getUsername());
+//             ResultSet result = stmt.executeQuery();
+//
+//            if(result != null) {
+//                result.next();
+//                user.setId(result.getInt(1));
+//            }
+//            else {
+//                return false;
+//            }
         }
         catch(SQLException e) {
             e.printStackTrace();
@@ -201,6 +222,84 @@ public class DBOperator {
             e.printStackTrace();
         }
         return users;
+    }
+
+    public boolean addNewSchedule(Schedule schedule) {
+        try {
+            PreparedStatement insertSchedule = conn.prepareStatement(
+                    "insert into schedules (schedule_name, user_id, isFall) values (?,?,?)"
+            );
+            int i=1;
+            insertSchedule.setString(i++, schedule.getName()); //Store usernames without case sensitivity
+            insertSchedule.setInt(i++, schedule.getUser().getId());
+            insertSchedule.setBoolean(i++, schedule.isFall());
+
+            int rows = insertSchedule.executeUpdate();
+            insertSchedule.close();
+            if (rows == 0) {
+                System.out.println("Schedule was not inserted");
+                return false;
+            }
+            else {
+                PreparedStatement stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+                i=1;
+                ResultSet result = stmt.executeQuery();
+
+                if(result != null) {
+                    result.next();
+                    schedule.setId(result.getInt(1));
+                }
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean saveSchedule(Schedule schedule) {
+        try {
+
+            PreparedStatement clearSchedule = conn.prepareStatement("delete from scheduled_courses where schedule_id=?");
+            int i=1;
+            clearSchedule.setInt(i++,schedule.getId());
+            clearSchedule.executeUpdate();
+
+            ArrayList<Event> events = schedule.getEvents();
+            String sql = "insert into scheduled_courses (schedule_id, course_id) values ";
+            for (Event event : events) {
+                sql += "(";
+                sql += "?,?";
+                sql += "), ";
+            }
+            sql = sql.substring(0,sql.length()-2);
+            System.out.println(sql);
+
+            PreparedStatement insertCourses = conn.prepareStatement(sql);
+            i = 1;
+
+            for(Event event: events) {
+                insertCourses.setInt(i++, schedule.getId());
+                //TODO: Handle events,not just courses
+                if(event instanceof Course) {
+                    Course course = (Course)event;
+                    insertCourses.setInt(i++, course.getId());
+                }
+            }
+            int rows = insertCourses.executeUpdate();
+            insertCourses.close();
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public ArrayList<Schedule> readSchedules() {
+        //TODO: Read schedules from database
+        return new ArrayList<Schedule>();
     }
 
     public void close() {

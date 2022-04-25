@@ -38,6 +38,10 @@ public class User {
 
     public int getId() { return id; }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Boolean checkPassword(String toCheck){
         return this.password.equals(toCheck);
     }
@@ -51,7 +55,7 @@ public class User {
     }
 
     public Schedule addNewSchedule(String name, boolean isFall) {
-        Schedule newSched = new Schedule(name, isFall);
+        Schedule newSched = new Schedule(name, isFall, this);
         savedSchedules.put(name, newSched);
         return newSched;
     }

@@ -65,11 +65,11 @@ public class loginFXMLController {
             JavaFXApp.addUser(newUser);
             JavaFXApp.changeScene("savedScene.fxml");
         }
+
     }
 
     protected boolean registerUser(String username, String password) {
         return JavaFXApp.getDB().insertUser(new User(username, password)); //TODO: add graduation_year and major
-
     }
 
     /**

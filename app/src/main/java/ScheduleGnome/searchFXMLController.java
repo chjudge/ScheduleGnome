@@ -177,6 +177,7 @@ public class searchFXMLController {
     }
 
     public void back() throws IOException {
+
         if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
                 ": "+JavaFXApp.getCurrentUser().getUsername()+" hit the back button");
         saveSchedule();
@@ -191,19 +192,8 @@ public class searchFXMLController {
         if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
                 ": Saving "+currUsername+"'s "
                 +JavaFXApp.getCurrentSchedule().getName()+" schedule");
-        File savedSchedulesFile;
-        FileWriter fw;
-        try {
-            savedSchedulesFile = new File(savedSchedulePath + "/" + currUsername + ".txt");
-            fw = new FileWriter(savedSchedulesFile);
-            for (CalendarEvent calendarEvent : calendarEventList) {
-                Event event = calendarEvent.getEvent();
-                fw.write(event.toString());
-            }
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //TODO: Print error message better
-        }
+        //Save courses to schedule
+        JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
 
 
     }

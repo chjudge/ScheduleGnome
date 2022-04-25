@@ -39,6 +39,8 @@ public class nameScheduleController implements Initializable {
         isFall = fallToggle.isSelected();
         Schedule newSched = JavaFXApp.getCurrentUser().addNewSchedule(name, isFall);
         JavaFXApp.setCurrentSchedule(newSched);
+
+        JavaFXApp.getDB().addNewSchedule(newSched);
         if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
                 ": "+JavaFXApp.getCurrentUser().getUsername()+" created "+
                 " a new schedule named "+name);
