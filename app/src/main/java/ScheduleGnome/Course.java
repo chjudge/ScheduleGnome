@@ -2,6 +2,7 @@ package ScheduleGnome;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -149,5 +150,17 @@ public class Course extends Event {
 //
 //            }
 //        }
+    }
+
+    @Override
+    public boolean hasConflictWith(Event e) {
+        try {
+            Course c = (Course)e;
+            System.out.println("comparing as course ");
+            if (c.getNumber() == number && c.getDept().equals(department))
+                return true;
+            System.out.println("not the same course");
+        } catch (ClassCastException exc) {}
+        return super.hasConflictWith(e);
     }
 }

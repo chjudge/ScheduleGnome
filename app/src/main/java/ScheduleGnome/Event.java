@@ -72,4 +72,14 @@ public abstract class Event {
         return endTime;
     }
 
+    public boolean hasConflictWith(Event e) {
+        LocalTime eStart = e.getStartTime();
+        LocalTime eEnd = e.getEndTime();
+        if (eStart.compareTo(startTime) >= 0 && eStart.compareTo(endTime) <= 0
+                ||
+            eEnd.compareTo(startTime) >= 0 && eEnd.compareTo(endTime) <= 0)
+        { return false; }
+        return true;
+    }
+
 }
