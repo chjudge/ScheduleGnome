@@ -142,15 +142,26 @@ public class searchFXMLController {
 
     public void updateCalendar() {
         // TODO: Fill this with events
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": Updating "+JavaFXApp.getCurrentUser().getUsername()+"'s "
-                +JavaFXApp.getCurrentSchedule().getName()+" calendar");
+        JavaFXApp.Log("Updating " + JavaFXApp.getCurrentUser().getUsername()+ "'s "+
+                JavaFXApp.getCurrentSchedule().getName()+" calendar");
         calendarEventList.clear();
         int row;
         ArrayList<Integer> classes = new ArrayList<>();
         calGrid.getChildren().clear();
+        calGrid.setGridLinesVisible(true);
+        for(int i = 0; i<1; i++){
+            for(int j = 1; j<label[i].length; j++){
+                label[i][j] = new Label();
+                label[i][j].setText(startTimeList.get(j).toString());
+                calGrid.add(label[i][j], i, j);
+            }
+        }
+        calGrid.add(new Label("Monday"), 1, 0);
+        calGrid.add(new Label("Tuesday"), 2, 0);
+        calGrid.add(new Label("Wednesday"), 3, 0);
+        calGrid.add(new Label("Thursday"), 4, 0);
+        calGrid.add(new Label("Friday"), 5, 0);
 
-        System.out.println("Printing schedule");
         for(int i = 0; i < JavaFXApp.getCurrentSchedule().scheduleSize(); i++){
             Event e  = JavaFXApp.getCurrentSchedule().getEvents().get(i);
             System.out.println(e.getTitle());
@@ -182,19 +193,16 @@ public class searchFXMLController {
 
     public void back() throws IOException {
 
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": "+JavaFXApp.getCurrentUser().getUsername()+" hit the back button");
+        JavaFXApp.Log(JavaFXApp.getCurrentUser().getUsername()+" hit the back button");
         saveSchedule();
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": "+JavaFXApp.getCurrentUser().getUsername()+" saved their "+
+        JavaFXApp.Log(JavaFXApp.getCurrentUser().getUsername()+" saved their "+
                 JavaFXApp.getCurrentSchedule().getName()+" schedule");
         JavaFXApp.changeScene("savedScene.fxml");
     }
 
     private void saveSchedule() {
         String currUsername = JavaFXApp.getCurrentUser().getUsername();
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": Saving "+currUsername+"'s "
+        JavaFXApp.Log("Saving "+currUsername+"'s "
                 +JavaFXApp.getCurrentSchedule().getName()+" schedule");
         //Save courses to schedule
         JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
@@ -206,7 +214,7 @@ public class searchFXMLController {
 class SearchResult extends HBox {
     Course course;
     Label courseLabel;
-    Button addButton;
+    Label errorLabel;
     searchFXMLController controller;
 
     public SearchResult(Course course, searchFXMLController controller) {
@@ -214,14 +222,48 @@ class SearchResult extends HBox {
         this.course = course;
         this.controller = controller;
         courseLabel = new Label(course.toString());
+        errorLabel = new Label();
+        errorLabel.setStyle("-fx-font: 12 monospace;");
         courseLabel.setStyle("-fx-font: 12 monospace;");
-        addButton = new Button("+");
-        addButton.setOnAction((ActionEvent e) -> {
-            JavaFXApp.getCurrentSchedule().addEvent(course);
-            controller.updateCalendar();
-        });
-
-        this.getChildren().addAll(courseLabel, addButton);
+        Event conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
+        if (conflict==null) {
+            Button addButton = new Button("+");
+            addButton.setOnAction((ActionEvent e) -> {
+                JavaFXApp.getCurrentSchedule().addEvent(course);
+                controller.updateCalendar();
+                controller.search(e);
+            });
+            this.getChildren().addAll(courseLabel, addButton);
+        }
+        else {
+            try {
+                Course crsConflict = (Course)conflict;
+                System.out.println("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
+                if (crsConflict.getCourseCode().equals(course.getCourseCode())) {
+                    errorLabel.setText("Already in schedule");
+                    this.getChildren().addAll(courseLabel, errorLabel);
+                }
+                else {
+                    Button swapButton = new Button("Swap");
+                    swapButton.setOnAction((ActionEvent e) -> {
+                        JavaFXApp.getCurrentSchedule().deleteEvent(crsConflict);
+                        JavaFXApp.getCurrentSchedule().addEvent(course);
+                        controller.updateCalendar();
+                        controller.search(e);
+                    });
+                    String conflictCode = crsConflict.getCourseCode();
+                    String crsCode = course.getCourseCode();
+                    if (conflictCode.substring(0,conflictCode.length()-2).equals(crsCode.substring(0,crsCode.length()-2)))
+                        errorLabel.setText("  SECTION CONFLICT:\n  "+crsConflict.getCourseCode());
+                    else
+                        errorLabel.setText("  TIME CONFLICT:\n  "+crsConflict.getCourseCode());
+                    this.getChildren().addAll(courseLabel, swapButton, errorLabel);
+                }
+            } catch (ClassCastException exc) { // extracurricular
+                errorLabel.setText("  EXTRACURRICULAR:  \n"+conflict.getTitle());
+                this.getChildren().addAll(courseLabel, errorLabel);
+            }
+        }
     }
 }
 

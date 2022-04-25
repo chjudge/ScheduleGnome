@@ -69,16 +69,13 @@ public class JavaFXApp extends Application {
         if (users.get(username) != null) {
             if (users.get(username).checkPassword(password)) {
                 currentUser = users.get(username);
-                if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "
-                        +username+" successfully logged in");
+                Log(username+" successfully logged in");
                 return 1;
             }
-            if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": +"+
-                    username+" typed in wrong password");
+            Log("+"+username+" typed in wrong password");
             return 0;
         }
-        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "+
-                username+" was not in the database");
+        Log(username+" was not in the database");
         return -1;
     }
 
@@ -87,8 +84,7 @@ public class JavaFXApp extends Application {
         users.put(user.getUsername(), user);
         currentUser = user;
         // TODO: print log if user is added
-        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+
-                ": New user \""+user+"\" was added to the database");
+        Log("New user \""+user+"\" was added to the database");
     }
 
     public static User getCurrentUser() {
@@ -105,5 +101,10 @@ public class JavaFXApp extends Application {
 
     public static DBOperator getDB(){
         return db;
+    }
+
+    public static void Log(String s) {
+        if (JavaFXApp.isLogging)
+            System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+ ": " + s);
     }
 }

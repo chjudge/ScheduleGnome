@@ -68,7 +68,7 @@ public class Search {
                 }
                 if (s.equals(crs.getNumber() + "")) {
                     result.addSimilarity(crs.getNumber() + "");
-                    newRating += 3;
+                    newRating += 5;
                 }
                 int i = 8;
                 for(String t : crs.getTitle().split(" ")){
