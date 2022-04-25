@@ -155,6 +155,27 @@ public class DBOperator {
         return true;
     }
 
+    public boolean updateProfile(User user) {
+        try {
+            PreparedStatement setProfile = conn.prepareStatement(
+                    "update users set graduation_year=?, major=? where id=?"
+            );
+            int i=1;
+            setProfile.setInt(i++, user.getGraduationYear());
+            setProfile.setString(i++, user.getMajor());
+            setProfile.setInt(i++, user.getId());
+
+            int rows = setProfile.executeUpdate();
+
+            setProfile.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
     public ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
         try {

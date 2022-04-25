@@ -16,6 +16,11 @@
             <Font name="Arial Nova Light" size="47.0" />
          </font>
       </Text>
+      <Button layoutX="656.0" layoutY="142.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="31.0" prefWidth="113.0" text="New">
+         <font>
+            <Font name="Arial Nova Light" size="22.0" />
+         </font>
+      </Button>
       <Button alignment="CENTER" layoutX="654.0" layoutY="34.0" mnemonicParsing="false" onAction="#logout" prefHeight="52.0" prefWidth="113.0" text="Logout">
          <font>
             <Font name="MT Extra" size="21.0" />
@@ -25,11 +30,6 @@
          <font>
             <Font size="14.0" />
          </font></Text>
-      <Button layoutX="656.0" layoutY="142.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="31.0" prefWidth="113.0" text="New">
-         <font>
-            <Font name="Arial Nova Light" size="22.0" />
-         </font>
-      </Button>
       <ListView fx:id="listView" layoutX="116.0" layoutY="182.0" prefHeight="232.0" prefWidth="229.0" />
       <Label layoutX="162.0" layoutY="161.0" prefHeight="23.0" prefWidth="138.0" text="Saved Schedules" textAlignment="CENTER">
          <font>

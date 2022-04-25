@@ -35,13 +35,18 @@ public class profileFXMLController {
         gradYearList = FXCollections.observableArrayList();
 
         //check profile for grad year
-        gradYearList.add(null);
+        int graduationYear = JavaFXApp.getCurrentUser().getGraduationYear();
+
+//            gradYearList.add(null);
+
 
         for (int i = 0; i < 4; i++) {
             gradYearList.add(2022 + i);
         }
 
         gradYear.setItems(gradYearList);
+        if(graduationYear != 0)
+            gradYear.setValue(graduationYear);
     }
 
     private void loadMajors() {
@@ -49,22 +54,21 @@ public class profileFXMLController {
         departmentList.addAll(JavaFXApp.getDB().getDistinctDepts());
         departmentList.sort(String.CASE_INSENSITIVE_ORDER);
 
-        departmentList.add(0, null);
-
-        //get current profile and check if it has a major
-
         major.setItems(departmentList);
+
+        major.setValue(JavaFXApp.getCurrentUser().getMajor());
     }
 
     @FXML
     public void saveProfile(ActionEvent event) throws IOException {
-        //check if major is null
+        User user = JavaFXApp.getCurrentUser();
 
-        //check if graduation year is null
+        if(this.gradYear.getValue() != null)
+            user.setGraduationYear(this.gradYear.getValue());
 
+        user.setMajor(this.major.getValue());
 
-
-        //use database to save profile
+        JavaFXApp.getDB().updateProfile(user);
 
         JavaFXApp.changeScene("savedScene.fxml");
     }
