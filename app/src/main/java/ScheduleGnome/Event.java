@@ -19,11 +19,11 @@ public abstract class Event {
 
     public Event(String title, String m, String t, String w, String r, String f, String b, String e) {
         this.title = title;
-        LocalTime start = LocalTime.of(0,0), end = LocalTime.of(0,0);
+        LocalTime start = LocalTime.of(0, 0), end = LocalTime.of(0, 0);
 
         dates = "";
         for (String day : new String[]{m, t, w, r, f}) {
-            dates =dates.concat(day == null ? "" : day);
+            dates = dates.concat(day == null ? "" : day);
         }
 
         DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.US);
@@ -31,7 +31,7 @@ public abstract class Event {
         try {
             start = b == null ? null : LocalTime.parse(b, df);
         } catch (java.time.format.DateTimeParseException ex) {
-            if(!b.isBlank()) {
+            if (!b.isBlank()) {
                 b = "0" + b;
                 start = LocalTime.parse(b, df);
             }
@@ -39,7 +39,7 @@ public abstract class Event {
         try {
             end = e == null ? null : LocalTime.parse(e, df);
         } catch (java.time.format.DateTimeParseException ex) {
-            if(!e.isBlank()) {
+            if (!e.isBlank()) {
                 e = "0" + e;
                 end = LocalTime.parse(e, df);
             }
@@ -52,7 +52,7 @@ public abstract class Event {
     @Override
     public String toString() {
         return title + ", from " + startTime + " to " + endTime +
-        " on " + getDatesString();
+                " on " + getDatesString();
     }
 
     public String getDatesString() {
@@ -70,6 +70,25 @@ public abstract class Event {
 
     public LocalTime getEndTime() {
         return endTime;
+    }
+
+    public boolean hasConflictWith(Event e) {
+        LocalTime eStart = e.getStartTime();
+        LocalTime eEnd = e.getEndTime();
+
+        for (String day : e.getDatesString().split("")) {
+            if (dates.contains(day)) {
+                if (eStart.compareTo(startTime) >= 0 && eStart.compareTo(endTime) <= 0
+                        ||
+                        eEnd.compareTo(startTime) >= 0 && eEnd.compareTo(endTime) <= 0) {
+                    System.out.println("Conflict: " + this + " and " + e);
+                    return true;
+                }
+            }
+        }
+
+
+        return false;
     }
 
 }

@@ -22,8 +22,24 @@ public class Schedule {
     }
 
     public void addEvent(Event e){
-        if(!events.contains(e))
+        if(!events.contains(e) && !hasConflicts(e)) {
+            System.out.println("adding " + e.getTitle());
             events.add(e);
+        }
+    }
+    // LOL!
+    private boolean hasConflicts(Event e) {
+        try {
+            Course c = (Course)e;
+            for (Event event : events) {
+                if (c.hasConflictWith(event)) return true;
+            }
+        } catch (ClassCastException exc) {
+            for (Event event : events) {
+                if (e.hasConflictWith(event)) return true;
+            }
+        }
+        return false;
     }
 
     public User getUser() {
