@@ -60,6 +60,7 @@ public class User {
         return newSched;
     }
 
+
     public Schedule getSchedule(String name) {
         return savedSchedules.getOrDefault(name, null);
     }

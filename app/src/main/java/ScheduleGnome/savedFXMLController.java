@@ -43,12 +43,16 @@ public class savedFXMLController implements Initializable {
                 ": Loading saved schedules page");
         savedNames = new ArrayList<>();
         savedNames.addAll(JavaFXApp.getCurrentUser().savedSchedules.keySet());
+        for(String savedName : savedNames) {
+            System.out.println(savedName);
+        }
         listView.getItems().addAll(savedNames);
 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 try {
+                    JavaFXApp.setCurrentSchedule(JavaFXApp.getCurrentUser().savedSchedules.get(newValue));
                     JavaFXApp.changeScene("searchScheduleScene.fxml");
                 } catch (IOException e) {
                     e.printStackTrace();

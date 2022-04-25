@@ -94,7 +94,6 @@ public class searchFXMLController {
         search = new Search(JavaFXApp.getCurrentSchedule().isFall());
         searchResultList = FXCollections.observableArrayList();
 
-
         departmentList = FXCollections.observableArrayList();
         departmentList.addAll(JavaFXApp.getDB().getDistinctDepts());
         departmentList.sort(String.CASE_INSENSITIVE_ORDER);
@@ -131,7 +130,10 @@ public class searchFXMLController {
             }
         }
 
-        // TODO: Fill this with events
+//        // TODO: Fill this with events
+//        for(Event event : JavaFXApp.getCurrentSchedule().events) {
+//            calendarEventList.add(new CalendarEvent(event, this));
+//        }
 
         updateCalendar();
     }
@@ -148,8 +150,10 @@ public class searchFXMLController {
         ArrayList<Integer> classes = new ArrayList<>();
         calGrid.getChildren().clear();
 
+        System.out.println("Printing schedule");
         for(int i = 0; i < JavaFXApp.getCurrentSchedule().scheduleSize(); i++){
             Event e  = JavaFXApp.getCurrentSchedule().getEvents().get(i);
+            System.out.println(e.getTitle());
             row = e.getStartTime().getHour();
 
             //determines which columns the course should be in

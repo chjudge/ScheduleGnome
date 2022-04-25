@@ -119,6 +119,44 @@ public class DBOperator {
         return true;
     }
 
+    public boolean loadSchedules(User user) {
+        try{
+            PreparedStatement getSchedules = conn.prepareStatement("select * from schedules where user_id=?");
+            int i=1;
+            getSchedules.setInt(i++,user.getId());
+            ResultSet result = getSchedules.executeQuery();
+            while(result.next()) {
+                int schedId = result.getInt(1);
+                Schedule sched = user.addNewSchedule(result.getString(2), result.getBoolean(4));
+                sched.setId(schedId);
+                //Fill schedule with courses
+                PreparedStatement getCourses = conn.prepareStatement("select * from scheduled_courses where schedule_id=?");
+                int j=1;
+                getCourses.setInt(j++,schedId);
+                ResultSet courseResults = getCourses.executeQuery();
+                while(courseResults.next()) {
+                    //Get all the course information from the course table
+                    PreparedStatement getCourseFromId = conn.prepareStatement("select * from course where id=?");
+                    getCourseFromId.setInt(1, courseResults.getInt(2));
+                    ResultSet courseFromId = getCourseFromId.executeQuery();
+
+                    //Add the course to schedule
+                    courseFromId.next();
+                    sched.addEvent(
+                            new Course(courseFromId)
+                    );
+                }
+
+            }
+            getSchedules.close();
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
     public ArrayList<String> getDistinctDepts() {
         ArrayList<String> depts = new ArrayList<>();
         try {
@@ -287,7 +325,9 @@ public class DBOperator {
                     insertCourses.setInt(i++, course.getId());
                 }
             }
-            int rows = insertCourses.executeUpdate();
+            if(events.size() > 0) {
+                int rows = insertCourses.executeUpdate();
+            }
             insertCourses.close();
 
         }

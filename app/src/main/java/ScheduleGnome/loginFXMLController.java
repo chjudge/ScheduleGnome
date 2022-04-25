@@ -45,6 +45,7 @@ public class loginFXMLController {
                 break;
             case 1:
                 actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());
+                loadUserSchedules(JavaFXApp.getCurrentUser());
                 JavaFXApp.changeScene("savedScene.fxml");
                 break;
             default:
@@ -70,6 +71,18 @@ public class loginFXMLController {
 
     protected boolean registerUser(String username, String password) {
         return JavaFXApp.getDB().insertUser(new User(username, password)); //TODO: add graduation_year and major
+    }
+
+    protected void loadUserSchedules(User user) {
+        JavaFXApp.getDB().loadSchedules(user);
+        System.out.println("Printing user schedule:\n---------\n");
+        for(Schedule schedule : JavaFXApp.getCurrentUser().getSavedSchedules().values()) {
+            System.out.println(schedule.getName());
+            for(Event event : schedule.events) {
+                System.out.println(event.getTitle());
+            }
+            System.out.println();
+        }
     }
 
     /**
