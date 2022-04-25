@@ -60,17 +60,28 @@ public class loginFXMLController {
         String newUsername = usernameField.getText().toUpperCase();
         String newPassword = passwordField.getText();
 
-        User newUser = registerUser(newUsername, newPassword);
-        if(newUser != null) {
-            users.add(newUser);
-            JavaFXApp.addUser(newUser);
-            if(JavaFXApp.login(newUsername, newPassword) == 1) {
-                System.out.println("Current user:" + JavaFXApp.getCurrentUser().getId());
-                System.out.println("Current user:" + JavaFXApp.getCurrentUser().getUsername());
+        boolean duplicateUsername = false;
+        for(User user: users) {
+            if(user.getUsername().equals(newUsername)) {
+                duplicateUsername = true;
             }
-            JavaFXApp.changeScene("savedScene.fxml");
         }
 
+        if(duplicateUsername) {
+            actiontarget.setText("Username taken.");
+        }
+        else {
+            User newUser = registerUser(newUsername, newPassword);
+            if (newUser != null) {
+                users.add(newUser);
+                JavaFXApp.addUser(newUser);
+                if (JavaFXApp.login(newUsername, newPassword) == 1) {
+                    System.out.println("Current user:" + JavaFXApp.getCurrentUser().getId());
+                    System.out.println("Current user:" + JavaFXApp.getCurrentUser().getUsername());
+                }
+                JavaFXApp.changeScene("savedScene.fxml");
+            }
+        }
     }
 
     protected User registerUser(String username, String password) {
