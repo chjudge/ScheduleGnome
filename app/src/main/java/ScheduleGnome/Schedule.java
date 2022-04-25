@@ -24,7 +24,7 @@ public class Schedule {
             events.add(e);
         }
     }
-
+    // LOL!
     private boolean hasConflicts(Event e) {
         try {
             Course c = (Course)e;
