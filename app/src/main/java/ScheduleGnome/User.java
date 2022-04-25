@@ -18,7 +18,7 @@ public class User {
         savedSchedules = new HashMap<>();
         this.username = username;
         this.password = password;
-
+        graduation_year = 0;
     }
 
     public User(int id, String username, String password, int graduation_year, String major){
@@ -35,6 +35,8 @@ public class User {
     }
 
     public String getPassword() { return password; }
+
+    public int getId() { return id; }
 
     public Boolean checkPassword(String toCheck){
         return this.password.equals(toCheck);
@@ -66,9 +68,17 @@ public class User {
         StringBuilder sb = new StringBuilder();
         int i = 1;
         for (String key : savedSchedules.keySet()) {
-            sb.append(("Schedule " + i + ": " + key + "\n"));
+            sb.append("Schedule ").append(i).append(": ").append(key).append("\n");
             i++;
         }
         return sb.toString();
     }
+
+    public String getMajor() { return major; }
+
+    public int getGraduationYear() { return graduation_year; }
+
+    public void setMajor(String major) { this.major = major; }
+
+    public void setGraduationYear(int year) { this.graduation_year = year; }
 }
