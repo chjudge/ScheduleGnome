@@ -57,7 +57,6 @@ public class savedFXMLController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }

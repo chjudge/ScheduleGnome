@@ -100,7 +100,15 @@ public class JavaFXApp extends Application {
     }
 
     public static DBOperator getDB(){
-        return db;
+        if(db.checkConnection()) {
+            return db;
+        } else {
+            System.out.println("DB connection failed");
+                db.close();
+
+            db = new DBOperator();
+            return db;
+        }
     }
 
     public static void Log(String s) {

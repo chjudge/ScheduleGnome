@@ -112,7 +112,7 @@ public class searchFXMLController {
         startTimeList.add(null);
         endTimeList.add(null);
 
-        for (int i = 8; i < 16; i++) {
+        for (int i = 8; i < 20; i++) {
             startTimeList.add(LocalTime.of(i, 0));
             endTimeList.add(LocalTime.of(i, 0));
         }

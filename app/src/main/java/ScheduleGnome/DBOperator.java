@@ -353,4 +353,12 @@ public class DBOperator {
         }
     }
 
+    public boolean checkConnection(){
+        try {
+            return conn.isValid(2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
