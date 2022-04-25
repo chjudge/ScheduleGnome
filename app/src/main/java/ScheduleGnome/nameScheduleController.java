@@ -45,6 +45,7 @@ public class nameScheduleController implements Initializable {
         if(!duplicateName) {
             isFall = fallToggle.isSelected();
             Schedule newSched = JavaFXApp.getCurrentUser().addNewSchedule(name, isFall);
+            System.out.println("Current user ID:" + JavaFXApp.getCurrentUser().getId());
             JavaFXApp.setCurrentSchedule(newSched);
 
             JavaFXApp.getDB().addNewSchedule(newSched);

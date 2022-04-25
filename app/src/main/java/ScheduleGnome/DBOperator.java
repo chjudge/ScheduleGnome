@@ -209,6 +209,7 @@ public class DBOperator {
             PreparedStatement stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
              ResultSet result = stmt.executeQuery();
              result.next();
+             user.setId(result.getInt(1));
              System.out.println(result.getInt(1));
 //            PreparedStatement stmt = conn.prepareStatement("select id from users where username=?");
 //             i=1;
@@ -287,6 +288,8 @@ public class DBOperator {
             insertSchedule.setString(i++, schedule.getName()); //Store usernames without case sensitivity
             insertSchedule.setInt(i++, schedule.getUser().getId());
             insertSchedule.setBoolean(i++, schedule.isFall());
+
+            System.out.println(schedule.getUser().getId());
 
             int rows = insertSchedule.executeUpdate();
             insertSchedule.close();

@@ -60,17 +60,27 @@ public class loginFXMLController {
         String newUsername = usernameField.getText().toUpperCase();
         String newPassword = passwordField.getText();
 
-        if(registerUser(newUsername, newPassword)) {
-            User newUser = new User(newUsername, newPassword);
+        User newUser = registerUser(newUsername, newPassword);
+        if(newUser != null) {
             users.add(newUser);
             JavaFXApp.addUser(newUser);
+            if(JavaFXApp.login(newUsername, newPassword) == 1) {
+                System.out.println("Current user:" + JavaFXApp.getCurrentUser().getId());
+                System.out.println("Current user:" + JavaFXApp.getCurrentUser().getUsername());
+            }
             JavaFXApp.changeScene("savedScene.fxml");
         }
 
     }
 
-    protected boolean registerUser(String username, String password) {
-        return JavaFXApp.getDB().insertUser(new User(username, password)); //TODO: add graduation_year and major
+    protected User registerUser(String username, String password) {
+        User user = new User(username, password);
+        if(JavaFXApp.getDB().insertUser(user)) //TODO: add graduation_year and major
+        {
+            return user;
+        }
+        return null;
+
     }
 
     protected void loadUserSchedules(User user) {
