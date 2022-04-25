@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScheduleGnome.CompareFXMLController">
+   <children>
+      <SplitPane dividerPositions="0.5" layoutX="16.0" layoutY="12.0" orientation="VERTICAL" prefHeight="434.0" prefWidth="622.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <GridPane fx:id="calGrid1" gridLinesVisible="true" layoutX="-1.0" prefHeight="250.0" prefWidth="622.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="101.0" text="        Monday" textAlignment="CENTER" GridPane.columnIndex="1" />
+                        <Label prefHeight="17.0" prefWidth="109.0" text="       Tuesday" GridPane.columnIndex="2" />
+                        <Label prefHeight="17.0" prefWidth="108.0" text="     Wednesday" GridPane.columnIndex="3" />
+                        <Label prefHeight="17.0" prefWidth="101.0" text="       Thursday" GridPane.columnIndex="4" />
+                        <Label prefHeight="17.0" prefWidth="118.0" text="         Friday" GridPane.columnIndex="5" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <GridPane fx:id="calGrid2" gridLinesVisible="true" prefHeight="249.0" prefWidth="620.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <ChoiceBox fx:id="schedule1" layoutX="641.0" layoutY="110.0" onInputMethodTextChanged="#updateFirstCal" prefWidth="150.0" />
+      <Button layoutX="726.0" layoutY="19.0" mnemonicParsing="false" onAction="#clickHome" text="Home" />
+      <ChoiceBox fx:id="schedule2" layoutX="642.0" layoutY="298.0" prefWidth="150.0" />
+      <Button layoutX="641.0" layoutY="151.0" mnemonicParsing="false" onAction="#updateFirstCal" text="View" />
+      <Button layoutX="205.0" layoutY="-30.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="642.0" layoutY="341.0" mnemonicParsing="false" onAction="#updateSecondCal" text="View" />
+   </children>
+</AnchorPane>

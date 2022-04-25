@@ -5,6 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +20,7 @@ public class savedFXMLController implements Initializable {
     private ListView<String> listView;
     @FXML
     private ArrayList<String> savedNames;
+
 
 
     @FXML
@@ -54,6 +56,10 @@ public class savedFXMLController implements Initializable {
 
             }
         });
+    }
+
+    public void compareSchedules(ActionEvent actionEvent) throws IOException {
+        JavaFXApp.changeScene("compareSchedules.fxml");
     }
 
 

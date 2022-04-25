@@ -123,8 +123,8 @@ public class searchFXMLController {
 
         calendarEventList = FXCollections.observableArrayList();
 
-        for(int i = 0; i<1; i++){//column
-            for(int j = 1; j<label[i].length; j++){//row
+        for(int i = 0; i<1; i++){
+            for(int j = 1; j<label[i].length; j++){
                 label[i][j] = new Label();
                 label[i][j].setText(startTimeList.get(j).toString());
                 calGrid.add(label[i][j], i, j);
