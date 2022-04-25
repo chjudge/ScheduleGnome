@@ -112,7 +112,7 @@ public class searchFXMLController {
         startTimeList.add(null);
         endTimeList.add(null);
 
-        for (int i = 8; i < 16; i++) {
+        for (int i = 8; i < 20; i++) {
             startTimeList.add(LocalTime.of(i, 0));
             endTimeList.add(LocalTime.of(i, 0));
         }
@@ -129,6 +129,8 @@ public class searchFXMLController {
                 calGrid.add(label[i][j], i, j);
             }
         }
+
+        calGrid.add(new Label("Monday"), 2, 0);
 
 //        // TODO: Fill this with events
 //        for(Event event : JavaFXApp.getCurrentSchedule().events) {
@@ -148,7 +150,6 @@ public class searchFXMLController {
         calendarEventList.clear();
         int row;
         ArrayList<Integer> classes = new ArrayList<>();
-        calGrid.getChildren().clear();
 
         System.out.println("Printing schedule");
         for(int i = 0; i < JavaFXApp.getCurrentSchedule().scheduleSize(); i++){
