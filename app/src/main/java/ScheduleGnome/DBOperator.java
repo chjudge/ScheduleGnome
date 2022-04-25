@@ -157,6 +157,22 @@ public class DBOperator {
         return true;
     }
 
+    public ArrayList<String> getAllTitles(boolean isFall) {
+        ArrayList<String> titles = new ArrayList<>();
+        try {
+            PreparedStatement stmt = conn.prepareStatement("select distinct title from course where semester = ?");
+            if (isFall) stmt.setString(1,"Fall");
+            else stmt.setString(1,"Spring");
+            ResultSet result = stmt.executeQuery();
+            while (result.next()) {
+                titles.add(result.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return titles;
+    }
+
     public ArrayList<String> getDistinctDepts() {
         ArrayList<String> depts = new ArrayList<>();
         try {

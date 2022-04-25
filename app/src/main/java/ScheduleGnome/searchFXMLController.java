@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-
+import org.controlsfx.control.textfield.TextFields;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -89,8 +89,7 @@ public class searchFXMLController {
     }
 
     public void initialize() {
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": Loading search page");
+        JavaFXApp.Log("Loading search!");
         search = new Search(JavaFXApp.getCurrentSchedule().isFall());
         searchResultList = FXCollections.observableArrayList();
 
@@ -135,6 +134,12 @@ public class searchFXMLController {
 //            calendarEventList.add(new CalendarEvent(event, this));
 //        }
 
+
+        ArrayList<String> titles = JavaFXApp.getDB().getAllTitles(JavaFXApp.getCurrentSchedule().isFall());
+
+        //titles.addAll(departmentList);
+
+        TextFields.bindAutoCompletion(searchField,titles);
         updateCalendar();
     }
 

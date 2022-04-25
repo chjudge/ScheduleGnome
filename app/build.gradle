@@ -33,11 +33,13 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.controlsfx:controlsfx:11.1.1'
 }
 
 application {
     // Define the main class for the application.
     mainClass = 'ScheduleGnome.JavaFXApp'
+    applicationDefaultJvmArgs = ["--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED"]
 }
 
 jar {
