@@ -157,13 +157,11 @@ public class Course extends Event {
     }
 
     @Override
-    public boolean hasConflictWith(Event e) {
+    public int hasConflictWith(Event e) {
         try {
             Course c = (Course)e;
-            System.out.println("comparing as course ");
             if (c.getNumber() == number && c.getDept().equals(department))
-                return true;
-            System.out.println("not the same course");
+                return 2;
         } catch (ClassCastException exc) {}
         return super.hasConflictWith(e);
     }
