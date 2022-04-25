@@ -36,17 +36,24 @@ public class nameScheduleController implements Initializable {
 
     public void create(ActionEvent actionEvent) throws IOException {
         name = textField.getText();
-        isFall = fallToggle.isSelected();
-        Schedule newSched = JavaFXApp.getCurrentUser().addNewSchedule(name, isFall);
-        JavaFXApp.setCurrentSchedule(newSched);
+        boolean duplicateName = false;
+        for(String scheduleName : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {
+            if(name.equals(scheduleName)) {
+                duplicateName = true;
+            }
+        }
+        if(!duplicateName) {
+            isFall = fallToggle.isSelected();
+            Schedule newSched = JavaFXApp.getCurrentUser().addNewSchedule(name, isFall);
+            JavaFXApp.setCurrentSchedule(newSched);
 
-        JavaFXApp.getDB().addNewSchedule(newSched);
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": "+JavaFXApp.getCurrentUser().getUsername()+" created "+
-                " a new schedule named "+name);
-        JavaFXApp.changeScene("searchScheduleScene.fxml");
-        Pane pane = new Pane();
-
+            JavaFXApp.getDB().addNewSchedule(newSched);
+            if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now()) +
+                    ": " + JavaFXApp.getCurrentUser().getUsername() + " created " +
+                    " a new schedule named " + name);
+            JavaFXApp.changeScene("searchScheduleScene.fxml");
+            Pane pane = new Pane();
+        }
     }
 
     public void cancel(ActionEvent actionEvent) throws IOException{
