@@ -7,6 +7,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +26,8 @@ public class nameScheduleController implements Initializable {
     @FXML
     RadioButton springToggle;
 
+    @FXML private Text actiontarget;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
@@ -35,6 +38,10 @@ public class nameScheduleController implements Initializable {
     }
 
     public void create(ActionEvent actionEvent) throws IOException {
+        if(textField.getText().isBlank()) {
+            actiontarget.setText("Enter a schedule name");
+            return;
+        }
         name = textField.getText();
         boolean duplicateName = false;
         for(String scheduleName : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {

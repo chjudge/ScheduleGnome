@@ -28,6 +28,10 @@
     -fx-background-color: #a9a9a9;
 }
 
+#loginButton:focused {
+    -fx-background-color: #a9a9a9;
+}
+
 #registerButton {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-background-color: #D3D3D3;
@@ -42,6 +46,10 @@
 }
 
 #registerButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#registerButton:focused {
     -fx-background-color: #a9a9a9;
 }
 
@@ -284,4 +292,116 @@
 
 .combo-box-base:disabled {
     -fx-opacity: .4;
+}
+
+/*
+    ---------
+    Name Page
+    ---------
+ */
+
+#nameHeader {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#textField {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+
+#nameCreateButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+#nameCreateButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#nameCancelButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+#nameCancelButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#nameText {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+#fallToggle {
+    -fx-text-fill: #3a5240;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#springToggle {
+    -fx-text-fill: #3a5240;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+/*
+    ------------
+    Profile Page
+    ------------
+ */
+#profileCancelButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileCancelButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#profileSaveButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileSaveButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#profileText {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
 }
