@@ -10,11 +10,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScheduleGnome.savedFXMLController">
    <children>
-      <Rectangle arcWidth="5.0" fill="#9a1a29" height="121.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
-      <Text fill="WHITE" layoutX="18.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GCC Scheduling" wrappingWidth="367.55731201171875">
-         <font>
-            <Font name="Arial Nova Light" size="47.0" />
-         </font>
+      <Rectangle id="savedHeader" arcWidth="5.0" height="121.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Text id="headerText" fill="WHITE" layoutX="18.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grove City College" wrappingWidth="500">
       </Text>
       <Button layoutX="656.0" layoutY="142.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="31.0" prefWidth="113.0" text="New">
          <font>

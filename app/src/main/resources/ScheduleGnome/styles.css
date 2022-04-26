@@ -1,3 +1,9 @@
+/*
+ -----------------
+    Login Scene
+ -----------------
+ */
+
 #loginButton {
     /*-fx-background-color: #c1dbc8; !* Green *!*/
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
@@ -40,8 +46,10 @@
 }
 
 #rectangle {
-    -fx-background-color: #deebdd;
+    -fx-background-color: #D1E3CF;
     -fx-padding: 30px;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 4px;
 }
 
 #welcomeTitle {
@@ -51,8 +59,6 @@
     -fx-alignment: right;
     -fx-font-size: 55px;
     -fx-fill: #48634f;
-    /*-fx-stroke: #324d39;*/
-    /*-fx-stroke-width: 2px;*/
     -fx-font-weight: 900;
 }
 
@@ -83,4 +89,20 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #48634f;
+}
+
+/*
+ -----------------
+    Saved Scene
+ -----------------
+ */
+
+#savedHeader {
+    -fx-fill: "#48634f";
+    -fx-font-family: "Bookman Old Style";
+}
+#headerText {
+    -fx-font-family: "Bookman Old Style";
+    -fx-font-weight: bold;
+    -fx-font-size: 45px;
 }
