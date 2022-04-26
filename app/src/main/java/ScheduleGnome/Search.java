@@ -80,7 +80,7 @@ public class Search {
                     }
                     else if (t.contains(s)) {
                         newRating += 1;
-                    }
+                    } //
                 }
             }
             result.setRating(newRating);
