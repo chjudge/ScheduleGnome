@@ -43,6 +43,8 @@ public class searchFXMLController {
     @FXML
     GridPane calGrid;
     private Label[][] label = new Label[6][14];
+    @FXML
+    private Button delete;
 
 
     @FXML
@@ -209,6 +211,15 @@ public class searchFXMLController {
                 +JavaFXApp.getCurrentSchedule().getName()+" schedule");
         //Save courses to schedule
         JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
+    }
+
+    public void delete(ActionEvent actionEvent) throws IOException{
+        JavaFXApp.getCurrentUser().getSavedSchedules().remove(JavaFXApp.getCurrentSchedule().getName());
+        JavaFXApp.changeScene("savedScene.fxml");
+    }
+
+    public void addOwn(ActionEvent actionEvent) throws IOException{
+        JavaFXApp.changeScene("addOwnEvent.fxml");
     }
 }
 

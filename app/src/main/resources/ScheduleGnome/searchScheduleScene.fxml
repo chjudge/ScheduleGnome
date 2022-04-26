@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScheduleGnome.searchFXMLController">
    <columnConstraints>
@@ -23,7 +24,7 @@
    <children>
       <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="450.0" prefWidth="800.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <items>
-            <GridPane fx:id="calGrid" alignment="CENTER" disable="true" gridLinesVisible="true" layoutX="73.0" layoutY="125.0">
+            <GridPane fx:id="calGrid" alignment="CENTER" disable="true" gridLinesVisible="true" layoutX="73.0" layoutY="125.0" minHeight="214.0" prefHeight="214.0" prefWidth="797.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,27 +34,33 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Monday" GridPane.columnIndex="1" />
-                  <Label text="Tuesday" GridPane.columnIndex="2" />
-                  <Label text="Wednesday" GridPane.columnIndex="3" />
-                  <Label text="Thursday" GridPane.columnIndex="4" />
-                  <Label text="Friday" GridPane.columnIndex="5" />
+                  <Label text="Monday" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Tuesday" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Wednesday" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label text="Thursday" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label text="Friday" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Pane>
                <children>
-                  <GridPane id="searchContainer" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="800.0">
+                  <GridPane maxWidth="-Infinity" minHeight="225.0" minWidth="-Infinity" prefHeight="290.0" prefWidth="786.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20001831054688" minWidth="10.0" prefWidth="139.20001831054688" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.99998779296874" minWidth="10.0" prefWidth="174.5999755859375" />
@@ -86,6 +93,7 @@
                               <Insets right="10.0" />
                            </GridPane.margin></ComboBox>
                         <ComboBox fx:id="startTimeChoice" onAction="#search" prefWidth="150.0" promptText="Starts After" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Button mnemonicParsing="false" onAction="#addOwn" prefHeight="25.0" prefWidth="89.0" text="+ Own Event" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                </children>
@@ -96,6 +104,14 @@
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
+      </Button>
+      <Button fx:id="delete" minHeight="15.0" mnemonicParsing="false" onAction="#delete" prefHeight="15.0" prefWidth="51.0" text="Delete" textAlignment="CENTER" textFill="#378ca1">
+         <GridPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial Nova Light" size="9.0" />
+         </font>
       </Button>
    </children>
 </GridPane>
