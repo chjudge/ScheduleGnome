@@ -218,8 +218,8 @@ public class DBOperator {
 //
 //            if(result != null) {
 //                result.next();
-//                user.setId(result.getInt(1));
-//            }
+//                user.setId(result.getInt());
+//            } load
 //            else {
 //                return false;
 //            }
@@ -318,36 +318,74 @@ public class DBOperator {
     public boolean saveSchedule(Schedule schedule) {
         try {
 
-            PreparedStatement clearSchedule = conn.prepareStatement("delete from scheduled_courses where schedule_id=?");
+            PreparedStatement clearScheduledCourses = conn.prepareStatement("delete from scheduled_courses where schedule_id=?");
             int i=1;
-            clearSchedule.setInt(i++,schedule.getId());
-            clearSchedule.executeUpdate();
+            clearScheduledCourses.setInt(i++,schedule.getId());
+            clearScheduledCourses.executeUpdate();
+            PreparedStatement clearScheduledEvents = conn.prepareStatement("delete from scheduled_events where schedule_id=?");
+            i=1;
+            clearScheduledEvents.setInt(i++,schedule.getId());
+            clearScheduledEvents.executeUpdate();
 
-            ArrayList<Event> events = schedule.getEvents();
-            String sql = "insert into scheduled_courses (schedule_id, course_id) values ";
-            for (Event event : events) {
-                sql += "(";
-                sql += "?,?";
-                sql += "), ";
+            ArrayList<Event> events = new ArrayList<>();
+            ArrayList<Course> courses = new ArrayList<>();
+
+            ArrayList<Event> allEvents = schedule.getEvents();
+            for(Event event : allEvents) {
+                if(event instanceof Course) {
+                    Course course = (Course) event;
+                    courses.add(course);
+                }
+                else {
+                    events.add(event);
+                }
+
             }
-            sql = sql.substring(0,sql.length()-2);
-            System.out.println(sql);
 
-            PreparedStatement insertCourses = conn.prepareStatement(sql);
+            //Insert courses
+            String courseSql = "insert into scheduled_courses (schedule_id, course_id) values ";
+            for (Course course : courses) {
+                courseSql += "(";
+                courseSql += "?,?";
+                courseSql += "), ";
+            }
+            courseSql = courseSql.substring(0,courseSql.length()-2);
+
+            PreparedStatement insertCourses = conn.prepareStatement(courseSql);
             i = 1;
 
-            for(Event event: events) {
+            for(Course course: courses) {
                 insertCourses.setInt(i++, schedule.getId());
-                //TODO: Handle events,not just courses
-                if(event instanceof Course) {
-                    Course course = (Course)event;
-                    insertCourses.setInt(i++, course.getId());
-                }
+                insertCourses.setInt(i++, course.getId());
             }
-            if(events.size() > 0) {
+
+            String eventSql = "insert into scheduled_events (schedule_id, title, dates, beginTime, endTime) values ";
+            for(Event event: events) {
+                eventSql += "(";
+                eventSql += "?,?,?,?,?";
+                eventSql += "), ";
+            }
+            eventSql = eventSql.substring(0,eventSql.length()-2);
+
+            PreparedStatement insertEvents = conn.prepareStatement(eventSql);
+
+            i=1;
+            for(Event event : events) {
+                insertEvents.setInt(i++, schedule.getId());
+                insertEvents.setString(i++, event.getTitle());
+                insertEvents.setString(i++, event.getDatesString());
+                insertEvents.setTime(i++, Time.valueOf(event.getStartTime()));
+                insertEvents.setTime(i++, Time.valueOf(event.getEndTime()));
+            }
+
+            if(courses.size() > 0) {
                 int rows = insertCourses.executeUpdate();
             }
+            if(events.size() > 0) {
+                int rows = insertEvents.executeUpdate();
+            }
             insertCourses.close();
+            insertEvents.close();
 
         }
         catch(SQLException e) {
@@ -356,9 +394,30 @@ public class DBOperator {
         return true;
     }
 
-    public ArrayList<Schedule> readSchedules() {
-        //TODO: Read schedules from database
-        return new ArrayList<Schedule>();
+    public boolean deleteSchedule(Schedule schedule) {
+        //Remove courses from scheduled_courses
+        //Remove events from scheduled_events
+        //Remove schedule from schedules
+
+        try {
+            PreparedStatement deleteCourses = conn.prepareStatement("delete from scheduled_courses where schedule_id=?");
+            deleteCourses.setInt(1,schedule.getId());
+
+            PreparedStatement deleteEvents = conn.prepareStatement("delete from scheduled_events where schedule_id=?");
+            deleteEvents.setInt(1,schedule.getId());
+
+            PreparedStatement deleteSchedule = conn.prepareStatement("delete from schedule where schedule_id=?");
+            deleteEvents.setInt(1,schedule.getId());
+
+            deleteCourses.executeUpdate();
+            deleteCourses.executeUpdate();
+            deleteSchedule.executeUpdate();
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public void close() {
