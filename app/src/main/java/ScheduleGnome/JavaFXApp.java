@@ -61,6 +61,7 @@ public class JavaFXApp extends Application {
         dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         if (args.length>1 && args[1].equals("logger")) isLogging = true;
         else isLogging = false;
+        isLogging = true;
         users = new HashMap<String, User>();
         db = new DBOperator();
         if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched");

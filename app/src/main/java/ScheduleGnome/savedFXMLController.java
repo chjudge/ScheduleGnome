@@ -15,6 +15,14 @@ import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -22,18 +30,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class savedFXMLController implements Initializable {
-
-
     @FXML
-    private ListView<String> listView;
+    private TilePane scheduleTilePane;
     @FXML
     private ArrayList<String> savedNames;
-    @FXML
-    private GridView<ScheduleBox> grid;
-    @FXML
-    private ObservableList<Schedule> obsvSched;
-
-
 
     @FXML
     public void clickNew(ActionEvent actionEvent) throws IOException{
@@ -51,48 +51,17 @@ public class savedFXMLController implements Initializable {
     public void initialize (URL url, ResourceBundle resourceBundle) {
         //Load in schedules
         JavaFXApp.Log("Loading saved schedules page");
-//        obsvSched = FXCollections.observableArrayList();
-//        grid = new GridView<>();
-//        grid.setCellFactory(new Callback<GridView<Schedule>, GridCell<Schedule>>() {
-//            @Override
-//            public GridCell<Schedule> call(GridView<Schedule> param) {
-//                return new ScheduleCell<>();
-//            }
-//        });
-
-
-
-//        obsvSched.addAll(JavaFXApp.getCurrentUser().savedSchedules.values());
-//
-//        ObservableList<ScheduleBox> boxes = FXCollections.observableArrayList();
-//
-//        for (Schedule s :
-//                obsvSched) {
-//            boxes.add(new ScheduleBox(s));
-//        }
-//
-//        grid.setItems(boxes);
-        
-
         savedNames = new ArrayList<>();
         savedNames.addAll(JavaFXApp.getCurrentUser().savedSchedules.keySet());
         for(String savedName : savedNames) {
             System.out.println(savedName);
         }
 
-        listView.getItems().addAll(savedNames);
 
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                try {
-                    JavaFXApp.setCurrentSchedule(JavaFXApp.getCurrentUser().savedSchedules.get(newValue));
-                    JavaFXApp.changeScene("searchScheduleScene.fxml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        for (Schedule schedule : JavaFXApp.getCurrentUser().savedSchedules.values()) {
+            scheduleTilePane.getChildren().add(new ScheduleBox(schedule));
+        }
+
     }
 
     public void compareSchedules(ActionEvent actionEvent) throws IOException {
@@ -101,41 +70,37 @@ public class savedFXMLController implements Initializable {
 
     public void logout(ActionEvent actionEvent) throws IOException {
         JavaFXApp.changeScene("loginScene.fxml");
-
     }
+}
 
-    class ScheduleBox extends HBox{
+class ScheduleBox extends AnchorPane {
+    Schedule schedule;
+    Label scheduleLabel;
+    Button removeButton;
 
-        Schedule sched;
-        Label schedLabel;
-        Label semesterLabel;
-        Button removeButton;
+    public ScheduleBox(Schedule schedule) {
+        super();
+        this.schedule = schedule;
+        scheduleLabel = new Label(schedule.getName()); // TODO: For now
+        scheduleLabel.setMaxWidth(100);
 
-        public ScheduleBox(Schedule sched) {
-            super();
-            this.sched = sched;
-            schedLabel = new Label(sched.getName() + (sched.isFall() ? "\nFall" : "\nSpring"));
-            removeButton = new Button("x");
-            removeButton.setOnAction((ActionEvent e) -> {
-                // TODO: DELETE SCHEDULE
-            });
+        removeButton = new Button("x");
+        removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
+        removeButton.setOnAction((ActionEvent e) -> {
+            JavaFXApp.Log("Removing schedule: " + schedule.getName());
+            //JavaFXApp.getCurrentSchedule().deleteEvent(event);
+            //controller.updateCalendar();
+        });
 
-            this.getChildren().addAll(schedLabel, removeButton);
-        }
-    }
+        //button top right
+        AnchorPane.setRightAnchor(removeButton, 1.0);
+        AnchorPane.setTopAnchor(removeButton, 1.0);
 
-    class ScheduleCell<Sched> extends GridCell<Sched> {
-        @Override
-        protected void updateItem(Sched item, boolean empty){
-            super.updateItem(item, empty);
-            if(empty){
-                setGraphic(null);
-            }
-            else {
-                setGraphic(new ScheduleBox((ScheduleGnome.Schedule) item));
-            }
-        }
+        //schedule label bottom left
+        AnchorPane.setLeftAnchor(scheduleLabel, 1.0);
+        AnchorPane.setBottomAnchor(scheduleLabel, 1.0);
 
-
+        this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0;");
+        this.getChildren().addAll(scheduleLabel, removeButton);
     }
 }

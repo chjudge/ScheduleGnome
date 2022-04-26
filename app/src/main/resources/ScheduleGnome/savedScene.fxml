@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -27,7 +28,6 @@
          <font>
             <Font size="14.0" />
          </font></Text>
-      <ListView fx:id="listView" layoutX="116.0" layoutY="182.0" prefHeight="232.0" prefWidth="229.0" />
       <Label id="schedulesLabel" layoutX="125.0" layoutY="145.0" prefHeight="23.0" prefWidth="400.0" text="SAVED SCHEDULES">
 
       </Label>
@@ -37,5 +37,10 @@
          </font>
       </Button>
       <Button id="compareButton" layoutX="520.0" layoutY="141.0" mnemonicParsing="false" onAction="#compareSchedules" text="Compare " />
+      <TilePane fx:id="scheduleTilePane" focusTraversable="true" hgap="15.0" layoutY="188.0" prefHeight="262.0" prefRows="2" prefTileHeight="75.0" prefTileWidth="100.0" prefWidth="506.0" tileAlignment="TOP_LEFT" vgap="50.0">
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </TilePane>
    </children>
 </AnchorPane>
