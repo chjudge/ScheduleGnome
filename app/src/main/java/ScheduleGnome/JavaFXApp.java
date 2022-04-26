@@ -31,12 +31,13 @@ public class JavaFXApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         
         // Scene loginScene = new Scene(root, 800, 450);
-        //mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
         // sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
         // sceneMap.put("saved", FXMLLoader.load(getClass().getResource("savedScene.fxml")));
         // sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
 
         mainScene = new Scene(root, 800, 450);
+        mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched main scene");
@@ -53,6 +54,7 @@ public class JavaFXApp extends Application {
                         currentUser.getUsername()+" changed scene to "+fxml);
         Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
         stg.getScene().setRoot(pane);
+
     }
 
     public static void main(String[] args) {

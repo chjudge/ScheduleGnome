@@ -1,0 +1,218 @@
+/*
+ -----------------
+    Login Scene
+ -----------------
+ */
+
+#actiontarget {
+    -fx-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#loginButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#loginButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#registerButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#registerButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#body {
+    -fx-background-image: url('gnomeBackground.png');
+    -fx-background-size: 100% 100%;
+    -fx-background-color: #dfebe2;
+}
+
+#rectangle {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#welcomeTitle {
+    -fx-font-smoothing-type: lcd;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Bookman Old Style";
+    -fx-alignment: right;
+    -fx-font-size: 55px;
+    -fx-fill: white;
+    -fx-font-weight: 900;
+}
+
+#usernameField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+#passwordField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#passwordField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#passwordLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/*
+ -----------------
+    Saved Scene
+ -----------------
+ */
+
+#savedHeader {
+    -fx-fill: "#48634f";
+    -fx-font-family: "Bookman Old Style";
+}
+#headerText {
+    -fx-font-family: "Bookman Old Style";
+    -fx-font-weight: bold;
+    -fx-font-size: 45px;
+}
+
+#savedBackground {
+    -fx-background-color: #e3ebe1;
+}
+
+#schedulesLabel {
+    -fx-padding: 5px;
+    -fx-text-fill: #48634f;
+    -fx-font-weight: 400;
+    -fx-font-weight: bold;
+    -fx-font-size: 16pt;
+    -fx-text-alignment: left;
+}
+
+#logoutButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+#logoutButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#newButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#newButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#compareButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#compareButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+/*
+    ------------
+    Search page
+    ------------
+ */
+#searchContainer {
+    -fx-background-color: #5c8065;
+}
+
+#endTimeChoice {
+    -fx-end-margin: 0 5 0 0;
+}
+
+#searchField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#searchField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+}

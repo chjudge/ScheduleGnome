@@ -20,8 +20,8 @@ public class CompareFXMLController {
     GridPane calGrid1;
     @FXML
     GridPane calGrid2;
-    private Label[][] label = new Label[6][9];
-    private Label[][] label2 = new Label[6][9];
+    private Label[][] label = new Label[6][14];
+    private Label[][] label2 = new Label[6][13];
     @FXML
     ObservableList<LocalTime> startTimeList;
     @FXML
@@ -43,32 +43,40 @@ public class CompareFXMLController {
             //setting up schedule 1
             startTimeList = FXCollections.observableArrayList();
             startTimeList.add(null);
-            for (int i = 8; i < 16; i++) {
+            for (int i = 8; i < 22; i++) {
                 startTimeList.add(LocalTime.of(i, 0));
             }
 
             for (int i = 0; i < 1; i++) {
-                for (int j = 1; j < label2[i].length; j++) {
-                    if (j > calGrid2.getRowCount() - 1 && calGrid2.getRowCount() > 0) {
-                        calGrid2.addRow(calGrid2.getRowCount());
+                for (int j = 1; j < label[i].length; j++) {
+                    if (j > calGrid1.getRowCount() - 1 && calGrid1.getRowCount() > 0) {
+                        calGrid1.addRow(calGrid1.getRowCount());
                     }
-                    label2[i][j] = new Label();
-                    label2[i][j].setText(startTimeList.get(j).toString());
-                    calGrid1.add(label2[i][j], i, j);
+                    label[i][j] = new Label();
+                    if (startTimeList.get(j).getHour() > 12) {
+                        label[i][j].setText(startTimeList.get(j).minusHours(12).toString());
+                    }
+                    else {
+                        label[i][j].setText(startTimeList.get(j).toString());
+                    }
+                    calGrid1.add(label[i][j], i, j);
                 }
             }
 
             //setting up schedule 2
             for (int i = 0; i < 1; i++) {
-                for (int j = 1; j < label[i].length; j++) {
+                for (int j = 0; j < label2[i].length; j++) {
                     if (j > calGrid2.getRowCount() - 1 && calGrid2.getRowCount() > 0) {
                         calGrid2.addRow(calGrid2.getRowCount());
-                        RowConstraints row = new RowConstraints();
-                       row.setMaxHeight(calGrid2.getRowCount());
                     }
-                    label[i][j] = new Label();
-                    label[i][j].setText(startTimeList.get(j).toString());
-                    calGrid2.add(label[i][j], i, j);
+                    label2[i][j] = new Label();
+                    if (startTimeList.get(j+1).getHour() > 12) {
+                        label2[i][j].setText(startTimeList.get(j+1).minusHours(12).toString());
+                    }
+                    else {
+                        label2[i][j].setText(startTimeList.get(j+1).toString());
+                    }
+                    calGrid2.add(label2[i][j], i, j);
                 }
 
             }
@@ -78,6 +86,13 @@ public class CompareFXMLController {
 
         @FXML
         public void updateFirstCal(ActionEvent actionEvent){
+            for(int i = 1; i< 6; i++){
+                for(int j = 1; j<14; j++){
+                    if(!(label[i][j] == null)){
+                        label[i][j].setText("");
+                    }
+                }
+            }
            Schedule schedule = JavaFXApp.getCurrentUser().savedSchedules.get(schedule1.getValue()) ;
 
             int row;
@@ -117,6 +132,13 @@ public class CompareFXMLController {
         }
     @FXML
     public void updateSecondCal(ActionEvent actionEvent){
+        for(int i = 1; i< 6; i++){
+            for(int j = 0; j<13; j++){
+                if(!(label2[i][j] == null)){
+                    label2[i][j].setText("");
+                }
+            }
+        }
         Schedule schedule = JavaFXApp.getCurrentUser().savedSchedules.get(schedule2.getValue()) ;
 
         int row;

@@ -42,7 +42,7 @@ public class searchFXMLController {
     ObservableList<SearchResult> searchResultList;
     @FXML
     GridPane calGrid;
-    private Label[][] label = new Label[6][9];
+    private Label[][] label = new Label[6][14];
 
 
     @FXML
@@ -111,7 +111,7 @@ public class searchFXMLController {
         startTimeList.add(null);
         endTimeList.add(null);
 
-        for (int i = 8; i < 20; i++) {
+        for (int i = 8; i < 22; i++) {
             startTimeList.add(LocalTime.of(i, 0));
             endTimeList.add(LocalTime.of(i, 0));
         }
@@ -132,7 +132,7 @@ public class searchFXMLController {
 
         //titles.addAll(departmentList);
 
-        TextFields.bindAutoCompletion(searchField,titles);
+//        TextFields.bindAutoCompletion(searchField,titles);
         updateCalendar();
     }
 
@@ -150,7 +150,12 @@ public class searchFXMLController {
         for(int i = 0; i<1; i++){
             for(int j = 1; j<label[i].length; j++){
                 label[i][j] = new Label();
-                label[i][j].setText(startTimeList.get(j).toString());
+                if (startTimeList.get(j).getHour() > 12) {
+                    label[i][j].setText(startTimeList.get(j).minusHours(12).toString());
+                }
+                else {
+                    label[i][j].setText(startTimeList.get(j).toString());
+                }
                 calGrid.add(label[i][j], i, j);
             }
         }
@@ -204,8 +209,6 @@ public class searchFXMLController {
                 +JavaFXApp.getCurrentSchedule().getName()+" schedule");
         //Save courses to schedule
         JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
-
-
     }
 }
 
