@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 public class savedFXMLController implements Initializable {
 
 
-//    @FXML
-//    private ListView<String> listView;
+    @FXML
+    private ListView<String> listView;
     @FXML
     private ArrayList<String> savedNames;
     @FXML
@@ -51,8 +51,8 @@ public class savedFXMLController implements Initializable {
     public void initialize (URL url, ResourceBundle resourceBundle) {
         //Load in schedules
         JavaFXApp.Log("Loading saved schedules page");
-        obsvSched = FXCollections.observableArrayList();
-        grid = new GridView<>();
+//        obsvSched = FXCollections.observableArrayList();
+//        grid = new GridView<>();
 //        grid.setCellFactory(new Callback<GridView<Schedule>, GridCell<Schedule>>() {
 //            @Override
 //            public GridCell<Schedule> call(GridView<Schedule> param) {
@@ -62,16 +62,16 @@ public class savedFXMLController implements Initializable {
 
 
 
-        obsvSched.addAll(JavaFXApp.getCurrentUser().savedSchedules.values());
-        
-        ObservableList<ScheduleBox> boxes = FXCollections.observableArrayList();
-
-        for (Schedule s :
-                obsvSched) {
-            boxes.add(new ScheduleBox(s));
-        }
-
-        grid.setItems(boxes);
+//        obsvSched.addAll(JavaFXApp.getCurrentUser().savedSchedules.values());
+//
+//        ObservableList<ScheduleBox> boxes = FXCollections.observableArrayList();
+//
+//        for (Schedule s :
+//                obsvSched) {
+//            boxes.add(new ScheduleBox(s));
+//        }
+//
+//        grid.setItems(boxes);
         
 
         savedNames = new ArrayList<>();
@@ -80,19 +80,19 @@ public class savedFXMLController implements Initializable {
             System.out.println(savedName);
         }
 
-        //listView.getItems().addAll(savedNames);
+        listView.getItems().addAll(savedNames);
 
-//        grid.().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                try {
-//                    JavaFXApp.setCurrentSchedule(JavaFXApp.getCurrentUser().savedSchedules.get(newValue));
-//                    JavaFXApp.changeScene("searchScheduleScene.fxml");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    JavaFXApp.setCurrentSchedule(JavaFXApp.getCurrentUser().savedSchedules.get(newValue));
+                    JavaFXApp.changeScene("searchScheduleScene.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void compareSchedules(ActionEvent actionEvent) throws IOException {
