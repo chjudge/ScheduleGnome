@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Search {
@@ -41,7 +42,7 @@ public class Search {
         if (hasSearchedQuery()) {
             for (int i = results.size() - 1; i >= 0; i--) {
                 Match result = results.get(i);
-                if (result.getRating() > 6) {
+                if (result.getRating() > 0) {
                     break;
                 }
                 results.remove(result);
@@ -70,24 +71,17 @@ public class Search {
                     result.addSimilarity(crs.getNumber() + "");
                     newRating += 5;
                 }
-                int i = 8;
-                for(String t : crs.getTitle().split(" ")){
-                    if(t.toLowerCase().startsWith(s)){
-                        newRating += i;
+                String[] titles = crs.getTitle().split(" ");
+
+                for(String t : crs.getTitle().toLowerCase().split(" ")){
+
+                    if(crs.getTitle().toLowerCase().startsWith(t) && t.startsWith(s)){
+                        newRating += 5;
                     }
-                    i-=2;
+                    else if (t.contains(s)) {
+                        newRating += 1;
+                    }
                 }
-               if(crs.getSection().equals("A")){
-                   newRating += 4;
-               }
-               if(crs.getDept().toLowerCase().equals(s)){
-                   newRating += 2;
-               }
-
-
-              newRating += crs.getCapacity()/20;
-
-
             }
             result.setRating(newRating);
         }

@@ -128,13 +128,6 @@ public class searchFXMLController {
                 calGrid.add(label[i][j], i, j);
             }
         }
-
-//        // TODO: Fill this with events
-//        for(Event event : JavaFXApp.getCurrentSchedule().events) {
-//            calendarEventList.add(new CalendarEvent(event, this));
-//        }
-
-
         ArrayList<String> titles = JavaFXApp.getDB().getAllTitles(JavaFXApp.getCurrentSchedule().isFall());
 
         //titles.addAll(departmentList);
