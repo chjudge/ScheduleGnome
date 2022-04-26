@@ -86,6 +86,13 @@ public class CompareFXMLController {
 
         @FXML
         public void updateFirstCal(ActionEvent actionEvent){
+            for(int i = 1; i< 6; i++){
+                for(int j = 1; j<14; j++){
+                    if(!(label[i][j] == null)){
+                        label[i][j].setText("");
+                    }
+                }
+            }
            Schedule schedule = JavaFXApp.getCurrentUser().savedSchedules.get(schedule1.getValue()) ;
 
             int row;
@@ -125,6 +132,13 @@ public class CompareFXMLController {
         }
     @FXML
     public void updateSecondCal(ActionEvent actionEvent){
+        for(int i = 1; i< 6; i++){
+            for(int j = 0; j<13; j++){
+                if(!(label2[i][j] == null)){
+                    label2[i][j].setText("");
+                }
+            }
+        }
         Schedule schedule = JavaFXApp.getCurrentUser().savedSchedules.get(schedule2.getValue()) ;
 
         int row;
