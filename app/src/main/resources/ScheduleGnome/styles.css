@@ -1,0 +1,86 @@
+#loginButton {
+    /*-fx-background-color: #c1dbc8; !* Green *!*/
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #5c8065;
+    -fx-border: none;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#loginButton:hover {
+    -fx-background-color: #48634f;
+}
+
+#registerButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #5c8065; /* Green */
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#registerButton:hover {
+    -fx-background-color: #48634f;
+}
+
+#body {
+    -fx-background-image: url('gnomeBackground.png');
+    -fx-background-size: 100% 100%;
+    -fx-background-color: #dfebe2;
+}
+
+#rectangle {
+    -fx-background-color: #deebdd;
+    -fx-padding: 30px;
+}
+
+#welcomeTitle {
+    -fx-font-smoothing-type: lcd;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Bookman Old Style";
+    -fx-alignment: right;
+    -fx-font-size: 55px;
+    -fx-fill: #48634f;
+    /*-fx-stroke: #324d39;*/
+    /*-fx-stroke-width: 2px;*/
+    -fx-font-weight: 900;
+}
+
+#usernameField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+#passwordField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#passwordField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #48634f;
+}
+
+#passwordLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #48634f;
+}
