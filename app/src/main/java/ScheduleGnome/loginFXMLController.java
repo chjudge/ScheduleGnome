@@ -33,15 +33,16 @@ public class loginFXMLController {
     }
     
     @FXML protected void loginButton(ActionEvent event) throws IOException {
-        if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
+        if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+            actiontarget.setText("Enter a username and password.");
+            return;
+        }
 
         int response = JavaFXApp.login(usernameField.getText().toUpperCase(), passwordField.getText());
         switch (response) {
             case -1:
-                actiontarget.setText("Sorry, there is no user named " + usernameField.getText());
-                break;
             case 0:
-                actiontarget.setText("Sorry, your password is incorrect");
+                actiontarget.setText("Incorrect username or password.");
                 break;
             case 1:
                 actiontarget.setText("Logged in as " + JavaFXApp.getCurrentUser().getUsername());

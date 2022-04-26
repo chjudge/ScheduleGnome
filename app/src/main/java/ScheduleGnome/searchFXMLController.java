@@ -216,8 +216,6 @@ public class searchFXMLController {
                 +JavaFXApp.getCurrentSchedule().getName()+" schedule");
         //Save courses to schedule
         JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
-
-
     }
 }
 

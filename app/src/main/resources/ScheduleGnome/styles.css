@@ -4,6 +4,13 @@
  -----------------
  */
 
+#actiontarget {
+    -fx-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
 #loginButton {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-background-color: #D3D3D3;
@@ -108,7 +115,7 @@
 }
 
 #savedBackground {
-    -fx-background-color: #dfebe2;
+    -fx-background-color: #e3ebe1;
 }
 
 #schedulesLabel {
@@ -151,4 +158,61 @@
 }
 #logoutButton:hover {
     -fx-background-color: #a9a9a9;
+}
+
+#newButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#newButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#compareButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#compareButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+/*
+    ------------
+    Search page
+    ------------
+ */
+#searchContainer {
+    -fx-background-color: #5c8065;
+}
+
+#endTimeChoice {
+    -fx-end-margin: 0 5 0 0;
+}
+
+#searchField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#searchField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
 }

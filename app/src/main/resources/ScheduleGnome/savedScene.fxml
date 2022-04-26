@@ -36,6 +36,6 @@
             <Font name="MT Extra" size="21.0" />
          </font>
       </Button>
-      <Button id="compareButton" layoutX="494.0" layoutY="148.0" mnemonicParsing="false" onAction="#compareSchedules" prefHeight="36.0" prefWidth="125.0" text="Compare Schedules " />
+      <Button id="compareButton" layoutX="520.0" layoutY="141.0" mnemonicParsing="false" onAction="#compareSchedules" text="Compare " />
    </children>
 </AnchorPane>
