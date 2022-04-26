@@ -55,7 +55,11 @@ public class loginFXMLController {
     }
 
     @FXML protected void registerButton(ActionEvent event) throws IOException {
-        if(usernameField.getText().isBlank() || passwordField.getText().isBlank()) return;
+        if(usernameField.getText().isBlank() || passwordField.getText().isBlank())
+        {
+            actiontarget.setText("Enter a username and password.");
+            return;
+        }
 
         //Storing passwords with plain text encryption algorithm
         String newUsername = usernameField.getText().toUpperCase();
