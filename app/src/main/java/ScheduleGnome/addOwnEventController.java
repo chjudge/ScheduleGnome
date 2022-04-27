@@ -71,6 +71,12 @@ public class addOwnEventController {
             return;
         }
 
+        if(startTimeChoice.getValue().isAfter(endTimeChoice.getValue()) ||
+            startTimeChoice.getValue().equals(endTimeChoice.getValue())) {
+            eventactiontarget.setText("Choose a valid start and end time of event.");
+            return;
+        }
+
         //Add fields to Event
         String dates="";
         if(monday.isSelected()) {
@@ -90,6 +96,10 @@ public class addOwnEventController {
         }
         Extracurriculars exc = new Extracurriculars(titleText, startTimeChoice.getValue(),
                 endTimeChoice.getValue(), dates);
+        if(JavaFXApp.getCurrentSchedule().hasConflicts(exc) != null) {
+            eventactiontarget.setText("Extracurricular conflicts with existing event.");
+            return;
+        }
         JavaFXApp.getCurrentSchedule().addEvent(exc);
         JavaFXApp.changeScene("searchScheduleScene.fxml");
 
