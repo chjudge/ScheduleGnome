@@ -78,7 +78,7 @@
                         <Insets left="15.0" right="20.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="searchField" onAction="#search" promptText="Search for courses" GridPane.columnSpan="2147483647">
+                        <TextField fx:id="searchField" promptText="Search for courses" GridPane.columnSpan="2147483647">
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin>

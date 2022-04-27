@@ -8,12 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-import org.controlsfx.control.textfield.TextFields;
-import java.io.File;
-import java.io.FileWriter;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.event.KeyEvent;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -49,14 +48,14 @@ public class searchFXMLController {
 
 
     @FXML
-    static ObservableList<CalendarEvent> calendarEventList; // TODO Need to make some for MTWRF
+    static ObservableList<CalendarEvent> calendarEventList;
 
     Search search;
 
     private String savedSchedulePath = "./src/main/savedSchedules";
 
     @FXML
-    protected void search(ActionEvent event) {
+    protected void search() {
         String searched = searchField.getText();
         //if (searched.isBlank()) return;
         System.out.println(searched);
@@ -78,16 +77,9 @@ public class searchFXMLController {
 
         ArrayList<Course> results = search.querySearch();
         System.out.println(results.size() + " results");
-
         for (Course course : results) {
             searchResultList.add(new SearchResult(course, this));
         }
-
-        // for (Course course : searchResultList) {
-        //     System.out.println(course);
-        // }
-
-
         searchList.setItems(searchResultList);
     }
 
@@ -95,6 +87,15 @@ public class searchFXMLController {
         JavaFXApp.Log("Loading search!");
         search = new Search(JavaFXApp.getCurrentSchedule().isFall());
         searchResultList = FXCollections.observableArrayList();
+
+        // Dynamic search
+        searchField.textProperty().addListener(
+                (obj, oldVal, newVal) -> {
+                    if  (newVal.length() < oldVal.length() ||
+                    newVal.endsWith(" ")) return;
+                    search();
+                }
+        );
 
         departmentList = FXCollections.observableArrayList();
         departmentList.addAll(JavaFXApp.getDB().getDistinctDepts());
@@ -105,8 +106,6 @@ public class searchFXMLController {
         System.out.println(departmentList.toString());
 
         departmentChoice.setItems(departmentList);
-
-
 
         startTimeList = FXCollections.observableArrayList();
         endTimeList = FXCollections.observableArrayList();
@@ -131,10 +130,7 @@ public class searchFXMLController {
                 calGrid.add(label[i][j], i, j);
             }
         }
-        ArrayList<String> titles = JavaFXApp.getDB().getAllTitles(JavaFXApp.getCurrentSchedule().isFall());
-
-        //titles.addAll(departmentList);
-
+//        ArrayList<String> titles = JavaFXApp.getDB().getAllTitles(JavaFXApp.getCurrentSchedule().isFall());
 //        TextFields.bindAutoCompletion(searchField,titles);
         updateCalendar();
     }
@@ -142,7 +138,6 @@ public class searchFXMLController {
 
 
     public void updateCalendar() {
-        // TODO: Fill this with events
         JavaFXApp.Log("Updating " + JavaFXApp.getCurrentUser().getUsername()+ "'s "+
                 JavaFXApp.getCurrentSchedule().getName()+" calendar");
         calendarEventList.clear();
@@ -198,7 +193,6 @@ public class searchFXMLController {
     }
 
     public void back() throws IOException {
-
         JavaFXApp.Log(JavaFXApp.getCurrentUser().getUsername()+" hit the back button");
         saveSchedule();
         JavaFXApp.Log(JavaFXApp.getCurrentUser().getUsername()+" saved their "+
@@ -249,7 +243,7 @@ class SearchResult extends HBox {
             addButton.setOnAction((ActionEvent e) -> {
                 JavaFXApp.getCurrentSchedule().addEvent(course);
                 controller.updateCalendar();
-                controller.search(e);
+                controller.search();
             });
             this.getChildren().addAll(courseLabel, addButton);
         }
@@ -267,7 +261,7 @@ class SearchResult extends HBox {
                         JavaFXApp.getCurrentSchedule().deleteEvent(crsConflict);
                         JavaFXApp.getCurrentSchedule().addEvent(course);
                         controller.updateCalendar();
-                        controller.search(e);
+                        controller.search();
                     });
                     String conflictCode = crsConflict.getCourseCode();
                     String crsCode = course.getCourseCode();

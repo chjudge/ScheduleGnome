@@ -98,6 +98,7 @@ class ScheduleBox extends AnchorPane {
             try {
                 JavaFXApp.changeScene("searchScheduleScene.fxml");
             } catch (IOException ex) {
+                ex.printStackTrace();
                 JavaFXApp.Log("Error changing scene");
             }
         });
