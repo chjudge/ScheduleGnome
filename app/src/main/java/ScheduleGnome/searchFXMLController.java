@@ -130,8 +130,6 @@ public class searchFXMLController {
                 calGrid.add(label[i][j], i, j);
             }
         }
-//        ArrayList<String> titles = JavaFXApp.getDB().getAllTitles(JavaFXApp.getCurrentSchedule().isFall());
-//        TextFields.bindAutoCompletion(searchField,titles);
         updateCalendar();
     }
 
@@ -309,21 +307,15 @@ class SearchResult extends HBox {
     private Button createConflictButton(Course conflicted) {
         Button b = new Button("Swap");
         b.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        b.setEffect(new DropShadow());
-                        highlightConflict("red");
-                    }
+                e -> {
+                    b.setEffect(new DropShadow());
+                    highlightConflict("red");
                 });
 
         b.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        b.setEffect(null);
-                        highlightConflict("black");
-                    }
+                e -> {
+                    b.setEffect(null);
+                    highlightConflict("black");
                 });
         return b;
     }

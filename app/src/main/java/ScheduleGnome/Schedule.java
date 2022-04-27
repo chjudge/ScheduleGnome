@@ -103,30 +103,6 @@ public class Schedule {
     }
 
 
-//  not doing semesters for now
-//    public String getSemester() {
-//        return semester;
-//    }
-
-//    public String setSemester() {
-//
-//    }
-
-    void downloadSchedule(){
-
-    }
-
-
-
-   Calendar getCalendar(){
-       Calendar cal = new Calendar(this);
-        return cal;
-    }
-
-//don't have reference numbers
-//   void getRefNums(){
-//
-//    }
 
 
 }

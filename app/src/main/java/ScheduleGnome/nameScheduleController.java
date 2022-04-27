@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class nameScheduleController implements Initializable {
-    private String name;
-    private boolean isFall;
     @FXML
     TextField textField;
 
@@ -42,15 +40,16 @@ public class nameScheduleController implements Initializable {
             actiontarget.setText("Enter a schedule name");
             return;
         }
-        name = textField.getText();
+        String name = textField.getText();
         boolean duplicateName = false;
         for(String scheduleName : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {
-            if(name.equals(scheduleName)) {
+            if (name.equals(scheduleName)) {
                 duplicateName = true;
+                break;
             }
         }
         if(!duplicateName) {
-            isFall = fallToggle.isSelected();
+            boolean isFall = fallToggle.isSelected();
             Schedule newSched = JavaFXApp.getCurrentUser().addNewSchedule(name, isFall);
             System.out.println("Current user ID:" + JavaFXApp.getCurrentUser().getId());
             JavaFXApp.setCurrentSchedule(newSched);

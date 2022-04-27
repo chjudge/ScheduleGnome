@@ -25,7 +25,7 @@ public class Search {
     public String resultToString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < results.size(); i++) {
-            sb.append((i + " " + results.get(i).getCourse().toString() + "\n"));
+            sb.append(i).append(" ").append(results.get(i).getCourse().toString()).append("\n");
         }
         return sb.toString();
     }
@@ -90,8 +90,7 @@ public class Search {
 
     public boolean hasSearchedQuery() {
         if (searched == null) return false;
-        if (searched.isBlank()) return false;
-        return true;
+        return !searched.isBlank();
     }
 
     // GETTERS N' SETTERS

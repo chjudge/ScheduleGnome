@@ -23,7 +23,7 @@ public class Course extends Event {
 
 
     public Course(String longTitle, LocalTime start, LocalTime end,
-            String dates, int enrollment, int capacity) {
+                  String dates, int enrollment, int capacity) {
         super(longTitle, start, end, dates);
         this.enrollment = enrollment;
         this.capacity = capacity;
@@ -47,8 +47,8 @@ public class Course extends Event {
     }
 
     public Course(ResultSet result) throws SQLException {
-        super(result.getString(4),result.getObject(12,LocalTime.class),
-                result.getObject(13,LocalTime.class),result.getString(11));
+        super(result.getString(4), result.getObject(12, LocalTime.class),
+                result.getObject(13, LocalTime.class), result.getString(11));
         id = result.getInt(1);
         year = result.getString(2);
         semester = result.getString(3);
@@ -81,7 +81,7 @@ public class Course extends Event {
     public String toString() {
 
         return String.format("%-40s%-25s\n%-40s%-25s%-5s", getTitle(), getStartTime() + " - " + getEndTime(), getCourseCode(),
-                getDatesString(),  enrollment + "/" + capacity);
+                getDatesString(), enrollment + "/" + capacity);
     }
 
     public String getCourseCode() {
@@ -144,25 +144,25 @@ public class Course extends Event {
         this.section = section;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     private void initializePrereqs() {
         prereqs = new ArrayList<>();
 //        if(!comments.isEmpty()){
 //            int first = comments.indexOf(" ");
-//            if(first != -1){
 //
-//            }
-//        }
     }
 
     @Override
     public int hasConflictWith(Event e) {
-        try {
-            Course c = (Course)e;
+        if (e instanceof Course) {
+
+            Course c = (Course) e;
             if (c.getNumber() == number && c.getDept().equals(department))
                 return 2;
-        } catch (ClassCastException exc) {}
+        }
         return super.hasConflictWith(e);
     }
 }

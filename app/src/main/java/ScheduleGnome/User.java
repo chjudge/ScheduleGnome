@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class User {
     Map<String, Schedule> savedSchedules;
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
     private int id;
     private String major;   //TODO: add major functionality
     private int graduation_year; //TODO: add graduation year functionality
@@ -55,9 +55,7 @@ public class User {
     }
 
     public boolean isRecommended(Course course) {
-        if(course.getCourseCode().contains(major) && (course.getNumber() / 100) == 2027 - graduation_year)
-            return true;
-        return false;
+        return course.getCourseCode().contains(major) && (course.getNumber() / 100) == 2027 - graduation_year;
     }
 
     public Schedule addNewSchedule(String name, boolean isFall) {

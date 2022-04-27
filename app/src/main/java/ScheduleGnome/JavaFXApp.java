@@ -13,8 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class JavaFXApp extends Application {
-    //private static HashMap<String, Parent> sceneMap = new HashMap<>();
-    private static Scene mainScene;
 
     private static Map<String, User> users;
     private static User currentUser;
@@ -29,18 +27,11 @@ public class JavaFXApp extends Application {
     public void start(Stage stage) throws Exception {
         stg = stage;
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
-        
-        // Scene loginScene = new Scene(root, 800, 450);
 
-        // sceneMap.put("login", FXMLLoader.load(getClass().getResource("loginScene.fxml")));
-        // sceneMap.put("saved", FXMLLoader.load(getClass().getResource("savedScene.fxml")));
-        // sceneMap.put("search", FXMLLoader.load(getClass().getResource("searchScheduleScene.fxml")));
-
-        mainScene = new Scene(root, 800, 450);
+        Scene mainScene = new Scene(root, 800, 450);
         mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        // loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
-        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched main scene");
+        Log("Launched main scene");
 
         stage.setTitle("ScheduleGnome");
         stage.setScene(mainScene);
@@ -59,8 +50,7 @@ public class JavaFXApp extends Application {
 
     public static void main(String[] args) {
         dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        if (args.length>1 && args[1].equals("logger")) isLogging = true;
-        else isLogging = false;
+        isLogging = args.length > 1 && args[1].equals("logger");
         isLogging = true;
         users = new HashMap<String, User>();
         db = new DBOperator();

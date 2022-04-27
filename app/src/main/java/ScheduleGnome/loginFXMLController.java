@@ -70,8 +70,9 @@ public class loginFXMLController {
 
         boolean duplicateUsername = false;
         for(User user: users) {
-            if(user.getUsername().equals(newUsername)) {
+            if (user.getUsername().equals(newUsername)) {
                 duplicateUsername = true;
+                break;
             }
         }
 

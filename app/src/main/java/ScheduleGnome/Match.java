@@ -3,7 +3,7 @@ package ScheduleGnome;
 import java.util.ArrayList;
 
 public class Match {
-    private Course crs;
+    private final Course crs;
     private int rating; // Will be used for a comparator
     private ArrayList<String> similarities;
 
@@ -33,7 +33,7 @@ public class Match {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(crs.getTitle() + ": similarities => " + similarities.toString() + ", Rating => " + rating);
+        sb.append(crs.getTitle()).append(": similarities => ").append(similarities.toString()).append(", Rating => ").append(rating);
         return sb.toString();
     }
 }

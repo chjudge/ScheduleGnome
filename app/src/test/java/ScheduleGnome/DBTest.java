@@ -24,12 +24,4 @@ public class DBTest {
         assertEquals(CONNECTION_STRING, conn.getMetaData().getURL());
     }
 
-//    @Test
-//    void insertCourse() {
-//        Course crs = new Course(new String[] { "2020","10","ACCT","201","A",
-//                "PRINCIPLES OF ACCOUNTING I","3","30","30","M","","W","","F","9:00:00 AM",
-//                "9:50:00 AM","Stone","Jennifer","Nicole","Online materials fee" });
-//            DBOperator db = new DBOperator();
-//            db.insertCourse(crs);
-//    }
 }
