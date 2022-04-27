@@ -17,15 +17,35 @@
             <Font name="Arial Nova Light" size="36.0" />
          </font>
       </Text>
-      <TextField layoutX="52.0" layoutY="178.0" promptText="Title" />
-      <ComboBox fx:id="startTimeChoice" layoutX="53.0" layoutY="246.0" prefWidth="150.0" promptText="Start TIme" />
-      <ComboBox fx:id="endTimeChoice" layoutX="48.0" layoutY="316.0" prefWidth="150.0" promptText="End TIme" />
-      <CheckBox layoutX="429.0" layoutY="180.0" mnemonicParsing="false" text="Monday" />
-      <CheckBox layoutX="429.0" layoutY="219.0" mnemonicParsing="false" text="Tuesday" />
-      <CheckBox layoutX="430.0" layoutY="263.0" mnemonicParsing="false" text="Wednesday" />
-      <CheckBox layoutX="430.0" layoutY="301.0" mnemonicParsing="false" text="Thursday" />
-      <CheckBox layoutX="434.0" layoutY="344.0" mnemonicParsing="false" text="Friday" />
-      <Button layoutX="55.0" layoutY="408.0" mnemonicParsing="false" onAction="#add" text="Add" />
+      <TextField layoutX="222.0" layoutY="179.0" prefHeight="37.0" prefWidth="441.0" promptText="Enter extracurricular title..." />
+      <ComboBox fx:id="startTimeChoice" layoutX="222.0" layoutY="252.0" prefWidth="150.0" promptText="Start Time" />
+      <ComboBox fx:id="endTimeChoice" layoutX="513.0" layoutY="252.0" prefWidth="150.0" promptText="End TIme" />
+      <CheckBox layoutX="52.0" layoutY="216.0" mnemonicParsing="false" text="Monday">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+      <CheckBox layoutX="52.0" layoutY="255.0" mnemonicParsing="false" text="Tuesday">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+      <CheckBox layoutX="52.0" layoutY="295.0" mnemonicParsing="false" text="Wednesday">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+      <CheckBox layoutX="52.0" layoutY="336.0" mnemonicParsing="false" text="Thursday">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+      <CheckBox layoutX="52.0" layoutY="377.0" mnemonicParsing="false" text="Friday">
+         <font>
+            <Font size="14.0" />
+         </font></CheckBox>
+      <Button layoutX="716.0" layoutY="185.0" mnemonicParsing="false" onAction="#add" text="Add" />
       <Button layoutX="715.0" layoutY="48.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Text layoutX="47.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Days of event">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
