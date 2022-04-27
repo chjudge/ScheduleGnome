@@ -89,6 +89,10 @@ public class Schedule {
 
     public boolean isFall() { return isFall; }
 
+    public String getSemester() {
+        return isFall ? "Fall" : "Spring";
+    }
+
 
 //  not doing semesters for now
 //    public String getSemester() {

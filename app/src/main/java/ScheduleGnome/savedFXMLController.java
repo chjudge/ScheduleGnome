@@ -74,6 +74,7 @@ public class savedFXMLController implements Initializable {
 class ScheduleBox extends AnchorPane {
     Schedule schedule;
     Label scheduleLabel;
+    Label semesterLabel;
     Button removeButton;
 
     public ScheduleBox(Schedule schedule, savedFXMLController controller) {
@@ -81,16 +82,18 @@ class ScheduleBox extends AnchorPane {
         this.schedule = schedule;
         scheduleLabel = new Label(schedule.getName()); // TODO: For now
         scheduleLabel.setMaxWidth(100);
+        scheduleLabel.setTextFill(Color.WHITE);
+
+        semesterLabel = new Label(schedule.getSemester());
+        semesterLabel.setTextFill(Color.WHITE);
 
         removeButton = new Button("x");
-        removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
+        //removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.Log("Removing schedule: " + schedule.getName());
             JavaFXApp.getCurrentUser().getSavedSchedules().remove(schedule.getName());
             JavaFXApp.getDB().deleteSchedule(schedule);
             controller.getTilePane().getChildren().remove(this);
-            //JavaFXApp.getCurrentSchedule().deleteEvent(event);
-            //controller.updateCalendar();
         });
 
         this.setOnMouseClicked((MouseEvent e) -> {
@@ -105,15 +108,19 @@ class ScheduleBox extends AnchorPane {
 
 
         //button top right
-        AnchorPane.setRightAnchor(removeButton, 1.0);
-        AnchorPane.setTopAnchor(removeButton, 1.0);
+        AnchorPane.setRightAnchor(removeButton, -6.0);
+        AnchorPane.setTopAnchor(removeButton, -6.0);
 
         //schedule label bottom left
-        AnchorPane.setLeftAnchor(scheduleLabel, 1.0);
-        AnchorPane.setBottomAnchor(scheduleLabel, 1.0);
+        AnchorPane.setLeftAnchor(scheduleLabel, 3.0);
+        AnchorPane.setBottomAnchor(scheduleLabel, 3.0);
+
+        //semester label top left
+        AnchorPane.setLeftAnchor(semesterLabel, 3.0);
+        AnchorPane.setTopAnchor(semesterLabel, 3.0);
 
         this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0;");
-        this.getChildren().addAll(scheduleLabel, removeButton);
+        this.getChildren().addAll(scheduleLabel, semesterLabel, removeButton);
 
 
     }
