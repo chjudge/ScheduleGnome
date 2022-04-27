@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -46,7 +47,7 @@ public class searchFXMLController {
     GridPane calGrid;
     private Label[][] label = new Label[6][14];
     @FXML
-    private Button delete;
+    Tooltip tooltip;
 
 
     @FXML
@@ -154,6 +155,7 @@ public class searchFXMLController {
                     label[i][j].setText(startTimeList.get(j).toString());
                 }
                 calGrid.add(label[i][j], i, j);
+
             }
         }
         calGrid.add(new Label("Monday"), 1, 0);
@@ -184,8 +186,13 @@ public class searchFXMLController {
                 label[aClass][row - 7] = new Label();
                 label[aClass][row - 7].setText(e.getTitle());
                 label[aClass][row - 7].setWrapText(true);
+                int tRow = row-7;
 
                 calGrid.add(label[aClass][row - 7], aClass, row - 7);
+                label[aClass][row - 7].setOnMouseEntered((MouseEvent mE)->{
+                    tooltip = new Tooltip(e.getTitle());
+                    label[aClass][tRow].setTooltip(tooltip);
+                });
             }
             classes.clear();
         }
