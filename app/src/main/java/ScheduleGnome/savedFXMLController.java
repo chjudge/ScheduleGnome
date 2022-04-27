@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
@@ -92,6 +93,16 @@ class ScheduleBox extends AnchorPane {
             //controller.updateCalendar();
         });
 
+        this.setOnMouseClicked((MouseEvent e) -> {
+            JavaFXApp.setCurrentSchedule(schedule);
+            try {
+                JavaFXApp.changeScene("searchScheduleScene.fxml");
+            } catch (IOException ex) {
+                JavaFXApp.Log("Error changing scene");
+            }
+        });
+
+
         //button top right
         AnchorPane.setRightAnchor(removeButton, 1.0);
         AnchorPane.setTopAnchor(removeButton, 1.0);
@@ -102,5 +113,7 @@ class ScheduleBox extends AnchorPane {
 
         this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0;");
         this.getChildren().addAll(scheduleLabel, removeButton);
+
+
     }
 }
