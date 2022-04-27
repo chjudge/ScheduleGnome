@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -80,11 +80,9 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <ChoiceBox fx:id="schedule1" layoutX="706.0" layoutY="110.0" onInputMethodTextChanged="#updateFirstCal" prefHeight="25.0" prefWidth="85.0" />
       <Button layoutX="726.0" layoutY="19.0" mnemonicParsing="false" onAction="#clickHome" text="Home" />
-      <ChoiceBox fx:id="schedule2" layoutX="707.0" layoutY="299.0" prefHeight="25.0" prefWidth="87.0" />
-      <Button layoutX="707.0" layoutY="147.0" mnemonicParsing="false" onAction="#updateFirstCal" text="View" />
       <Button layoutX="205.0" layoutY="-30.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="705.0" layoutY="341.0" mnemonicParsing="false" onAction="#updateSecondCal" text="View" />
+      <ComboBox fx:id="schedule1" layoutX="705.0" layoutY="68.0" onAction="#updateFirstCal" prefHeight="25.0" prefWidth="85.0" />
+      <ComboBox fx:id="schedule2" layoutX="709.0" layoutY="234.0" onAction="#updateSecondCal" prefHeight="25.0" prefWidth="77.0" />
    </children>
 </AnchorPane>
