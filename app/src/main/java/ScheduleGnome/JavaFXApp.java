@@ -64,7 +64,7 @@ public class JavaFXApp extends Application {
         isLogging = true;
         users = new HashMap<String, User>();
         db = new DBOperator();
-        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": Launched");
+        Log("Launched");
         launch(args);
     }
 

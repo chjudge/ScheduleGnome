@@ -49,14 +49,12 @@ public class DBOperator {
                 }
             }
             if (!filters.isEmpty()) sql = sql.substring(0,sql.length()-4); // Remove final and
-            System.out.println(sql);
             PreparedStatement filterQuery = conn.prepareStatement(sql);
             int i = 1;
             if (isFall) filterQuery.setString(i++,"Fall");
             else filterQuery.setString(i++,"Spring");
             for (String key : filters.keySet()) {
                 if (key.contains("Time")) {
-                    System.out.println("Time thing: " + filters.get(key));
                     filterQuery.setTime(i++,Time.valueOf(LocalTime.parse(filters.get(key))));
                 }
                 else if (key.equals("credits")) {
@@ -66,7 +64,6 @@ public class DBOperator {
                     filterQuery.setString(i++,filters.get(key));
                 }
             }
-            System.out.println("After setting: " + filterQuery.toString());
             ResultSet result = filterQuery.executeQuery();
             ArrayList<Match> filteredResults = new ArrayList<>();
             while (result.next()) {
@@ -215,7 +212,18 @@ public class DBOperator {
              ResultSet result = stmt.executeQuery();
              result.next();
              user.setId(result.getInt(1));
-             System.out.println(result.getInt(1));
+//            PreparedStatement stmt = conn.prepareStatement("select id from users where username=?");
+//             i=1;
+//             stmt.setString(i++,user.getUsername());
+//             ResultSet result = stmt.executeQuery();
+//
+//            if(result != null) {
+//                result.next();
+//                user.setId(result.getInt());
+//            } load
+//            else {
+//                return false;
+//            }
         }
         catch(SQLException e) {
             e.printStackTrace();
@@ -282,7 +290,6 @@ public class DBOperator {
             insertSchedule.setInt(i++, schedule.getUser().getId());
             insertSchedule.setBoolean(i++, schedule.isFall());
 
-            System.out.println(schedule.getUser().getId());
 
             int rows = insertSchedule.executeUpdate();
             insertSchedule.close();
@@ -399,7 +406,7 @@ public class DBOperator {
             PreparedStatement deleteEvents = conn.prepareStatement("delete from scheduled_events where schedule_id=?");
             deleteEvents.setInt(1,schedule.getId());
 
-            PreparedStatement deleteSchedule = conn.prepareStatement("delete from schedules where schedule_id=?");
+            PreparedStatement deleteSchedule = conn.prepareStatement("delete from schedules where id=?");
             deleteSchedule.setInt(1,schedule.getId());
 
             deleteCourses.executeUpdate();

@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.KeyEvent;
 
@@ -57,8 +56,7 @@ public class searchFXMLController {
     @FXML
     protected void search() {
         String searched = searchField.getText();
-        //if (searched.isBlank()) return;
-        System.out.println(searched);
+        //if (searched.isBlank()) return;\
 
 
         searchResultList.clear();
@@ -73,10 +71,8 @@ public class searchFXMLController {
         if (endTimeChoice.getValue() != null)
             search.setEndTime(endTimeChoice.getValue().toString());
 
-        System.out.println("search query: " + searched);
-
         ArrayList<Course> results = search.querySearch();
-        System.out.println(results.size() + " results");
+
         for (Course course : results) {
             searchResultList.add(new SearchResult(course, this));
         }
@@ -211,10 +207,6 @@ public class searchFXMLController {
     public void delete(ActionEvent actionEvent) throws IOException{
         JavaFXApp.getDB().deleteSchedule(JavaFXApp.getCurrentSchedule());
         JavaFXApp.getCurrentUser().getSavedSchedules().remove(JavaFXApp.getCurrentSchedule().getName());
-        System.out.println("Printing all schedules:\n---------\n");
-        for(String schedule : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {
-            System.out.println(schedule);
-        }
         JavaFXApp.changeScene("savedScene.fxml");
     }
 
@@ -250,7 +242,7 @@ class SearchResult extends HBox {
         else {
             try {
                 Course crsConflict = (Course)conflict;
-                System.out.println("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
+               JavaFXApp.Log("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
                 if (crsConflict.getCourseCode().equals(course.getCourseCode())) {
                     errorLabel.setText("Already in schedule");
                     this.getChildren().addAll(courseLabel, errorLabel);

@@ -7,16 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -54,13 +51,9 @@ public class savedFXMLController implements Initializable {
         JavaFXApp.Log("Loading saved schedules page");
         savedNames = new ArrayList<>();
         savedNames.addAll(JavaFXApp.getCurrentUser().savedSchedules.keySet());
-        for(String savedName : savedNames) {
-            System.out.println(savedName);
-        }
-
 
         for (Schedule schedule : JavaFXApp.getCurrentUser().savedSchedules.values()) {
-            scheduleTilePane.getChildren().add(new ScheduleBox(schedule));
+            scheduleTilePane.getChildren().add(new ScheduleBox(schedule, this));
         }
 
     }
@@ -72,6 +65,10 @@ public class savedFXMLController implements Initializable {
     public void logout(ActionEvent actionEvent) throws IOException {
         JavaFXApp.changeScene("loginScene.fxml");
     }
+
+    public TilePane getTilePane() {
+        return scheduleTilePane;
+    }
 }
 
 class ScheduleBox extends AnchorPane {
@@ -79,7 +76,7 @@ class ScheduleBox extends AnchorPane {
     Label scheduleLabel;
     Button removeButton;
 
-    public ScheduleBox(Schedule schedule) {
+    public ScheduleBox(Schedule schedule, savedFXMLController controller) {
         super();
         this.schedule = schedule;
         scheduleLabel = new Label(schedule.getName()); // TODO: For now
@@ -89,6 +86,9 @@ class ScheduleBox extends AnchorPane {
         removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.Log("Removing schedule: " + schedule.getName());
+            JavaFXApp.getCurrentUser().getSavedSchedules().remove(schedule.getName());
+            JavaFXApp.getDB().deleteSchedule(schedule);
+            controller.getTilePane().getChildren().remove(this);
             //JavaFXApp.getCurrentSchedule().deleteEvent(event);
             //controller.updateCalendar();
         });

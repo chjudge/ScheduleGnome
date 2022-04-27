@@ -122,7 +122,7 @@
     -fx-font-size: 45px;
 }
 
-#savedBackground {
+.savedBackground {
     -fx-background-color: #e3ebe1;
 }
 
