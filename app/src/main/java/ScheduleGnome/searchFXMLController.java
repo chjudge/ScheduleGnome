@@ -217,6 +217,10 @@ public class searchFXMLController {
     public void delete(ActionEvent actionEvent) throws IOException{
         JavaFXApp.getDB().deleteSchedule(JavaFXApp.getCurrentSchedule());
         JavaFXApp.getCurrentUser().getSavedSchedules().remove(JavaFXApp.getCurrentSchedule().getName());
+        System.out.println("Printing all schedules:\n---------\n");
+        for(String schedule : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {
+            System.out.println(schedule);
+        }
         JavaFXApp.changeScene("savedScene.fxml");
     }
 

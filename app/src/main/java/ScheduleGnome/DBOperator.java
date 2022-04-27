@@ -406,8 +406,8 @@ public class DBOperator {
             PreparedStatement deleteEvents = conn.prepareStatement("delete from scheduled_events where schedule_id=?");
             deleteEvents.setInt(1,schedule.getId());
 
-            PreparedStatement deleteSchedule = conn.prepareStatement("delete from schedule where schedule_id=?");
-            deleteEvents.setInt(1,schedule.getId());
+            PreparedStatement deleteSchedule = conn.prepareStatement("delete from schedules where schedule_id=?");
+            deleteSchedule.setInt(1,schedule.getId());
 
             deleteCourses.executeUpdate();
             deleteCourses.executeUpdate();

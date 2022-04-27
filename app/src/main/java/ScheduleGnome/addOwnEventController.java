@@ -29,16 +29,15 @@ public class addOwnEventController {
 
     //add event to schedule
     public void add(ActionEvent actionEvent){
+        if (title.getText().isBlank()) {
+            return;
+        }
         eTitle = title.getText();
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
         JavaFXApp.changeScene("searchScheduleScene.fxml");
     }
-
-
-
-
 
     public void initialize(){
         startTimeList = FXCollections.observableArrayList();

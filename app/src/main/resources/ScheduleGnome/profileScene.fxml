@@ -21,5 +21,6 @@
       <Button id="profileCancelButton" layoutX="627.0" layoutY="41.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
       <ComboBox fx:id="gradYear" layoutX="325.0" layoutY="214.0" prefWidth="150.0" promptText="Graduation Year" />
       <ComboBox fx:id="major" layoutX="325.0" layoutY="254.0" prefWidth="150.0" promptText="Department/Major" />
+      <Text fx:id="actiontarget" fill="#656565" layoutX="251.0" layoutY="306.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>
