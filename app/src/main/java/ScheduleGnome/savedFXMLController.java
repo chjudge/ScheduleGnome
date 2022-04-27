@@ -1,6 +1,7 @@
 package ScheduleGnome;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -120,6 +121,23 @@ class ScheduleBox extends AnchorPane {
 
         this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0; " +
                 "-fx-border-width: 2px; -fx-border-color: #5c8065; -fx-border-radius: 10");
+        this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setStyle("-fx-background-radius: 10;-fx-background-insets: 0, 0 1 1 0; " +
+                        "-fx-border-width: 2px; -fx-border-color: #5c8065; -fx-border-radius: 10; -fx-background-color: #5c8065");
+            }
+        });
+
+        this.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0; " +
+                        "-fx-border-width: 2px; -fx-border-color: #5c8065; -fx-border-radius: 10");
+            }
+        });
+
         this.getChildren().addAll(scheduleLabel, semesterLabel, creditsLabel, removeButton);
 
 
