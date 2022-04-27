@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -25,9 +26,9 @@ public class CompareFXMLController {
     @FXML
     ObservableList<LocalTime> startTimeList;
     @FXML
-    ChoiceBox<String> schedule1;
+    ComboBox<String> schedule1;
     @FXML
-    ChoiceBox<String> schedule2;
+    ComboBox<String> schedule2;
     @FXML
     private ObservableList<String> savedNames = FXCollections.observableArrayList();
 
