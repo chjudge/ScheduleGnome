@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -26,18 +27,72 @@ public class addOwnEventController {
     String eTitle;
 
     @FXML
-    Text excErrorMsg;
+    CheckBox monday;
+    @FXML
+    CheckBox tuesday;
+    @FXML
+    CheckBox wednesday;
+    @FXML
+    CheckBox thursday;
+    @FXML
+    CheckBox friday;
 
-    //get text title textField
-//    eTitle = title.getText();
+    @FXML private Text eventactiontarget;
+
 
     //add event to schedule
-    public void add(ActionEvent actionEvent){
+    public void add(ActionEvent actionEvent) throws IOException{
         if (title.getText().isBlank()) {
-            excErrorMsg.setText("Enter an event name.");
+            eventactiontarget.setText("Enter an event name.");
             return;
         }
-        eTitle = title.getText();
+        //Check for duplicate extracurriculars
+        String titleText = title.getText().toUpperCase();
+        boolean duplicate = false;
+        for(Event event : JavaFXApp.getCurrentSchedule().getEvents()) {
+            if(event instanceof Extracurriculars) {
+                if(event.getTitle().equals(titleText)) {
+                    duplicate=true;
+                }
+            }
+        }
+        if(duplicate) {
+            eventactiontarget.setText("Event already exists.");
+            return;
+        }
+        if(!monday.isSelected() && !tuesday.isSelected() && !wednesday.isSelected() &&
+                !thursday.isSelected() && !friday.isSelected()) {
+            eventactiontarget.setText("Select days of event.");
+            return;
+        }
+
+        if(startTimeChoice.getValue() == null || endTimeChoice.getValue() == null) {
+            eventactiontarget.setText("Set start and end time of event.");
+            return;
+        }
+
+        //Add fields to Event
+        String dates="";
+        if(monday.isSelected()) {
+            dates += "M";
+        }
+        if(tuesday.isSelected()) {
+            dates += "T";
+        }
+        if(wednesday.isSelected()) {
+            dates += "W";
+        }
+        if(thursday.isSelected()) {
+            dates += "R";
+        }
+        if(friday.isSelected()) {
+            dates += "F";
+        }
+        Extracurriculars exc = new Extracurriculars(titleText, startTimeChoice.getValue(),
+                endTimeChoice.getValue(), dates);
+        JavaFXApp.getCurrentSchedule().addEvent(exc);
+        JavaFXApp.changeScene("searchScheduleScene.fxml");
+
     }
 
     public void back(ActionEvent actionEvent) throws IOException {

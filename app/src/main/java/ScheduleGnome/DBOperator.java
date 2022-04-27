@@ -142,11 +142,16 @@ public class DBOperator {
 
                     //Add the course to schedule
                     courseFromId.next();
-                    sched.addEvent(
-                            new Course(courseFromId)
-                    );
+                    sched.addEvent(new Course(courseFromId));
                 }
 
+                PreparedStatement getExtracurriculars = conn.prepareStatement("select * from scheduled_events where schedule_id=?");
+                getExtracurriculars.setInt(1,schedId);
+                ResultSet excResults = getExtracurriculars.executeQuery();
+                while(excResults.next()) {
+                    Extracurriculars exc = new Extracurriculars(excResults);
+                    sched.addEvent(exc);
+                }
             }
             getSchedules.close();
         }
@@ -211,18 +216,6 @@ public class DBOperator {
              result.next();
              user.setId(result.getInt(1));
              System.out.println(result.getInt(1));
-//            PreparedStatement stmt = conn.prepareStatement("select id from users where username=?");
-//             i=1;
-//             stmt.setString(i++,user.getUsername());
-//             ResultSet result = stmt.executeQuery();
-//
-//            if(result != null) {
-//                result.next();
-//                user.setId(result.getInt());
-//            } load
-//            else {
-//                return false;
-//            }
         }
         catch(SQLException e) {
             e.printStackTrace();
