@@ -93,6 +93,15 @@ public class Schedule {
         return isFall ? "Fall" : "Spring";
     }
 
+    public int totalCredits(){
+        int total = 0;
+        for (Event event : events) {
+            if(event instanceof Course)
+                total += ((Course) event).getCreditHours();
+        }
+        return total;
+    }
+
 
 //  not doing semesters for now
 //    public String getSemester() {

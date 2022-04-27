@@ -75,6 +75,7 @@ class ScheduleBox extends AnchorPane {
     Schedule schedule;
     Label scheduleLabel;
     Label semesterLabel;
+    Label creditsLabel;
     Button removeButton;
 
     public ScheduleBox(Schedule schedule, savedFXMLController controller) {
@@ -86,6 +87,9 @@ class ScheduleBox extends AnchorPane {
 
         semesterLabel = new Label(schedule.getSemester());
         semesterLabel.setTextFill(Color.WHITE);
+
+        creditsLabel = new Label(schedule.totalCredits() + " credits");
+        creditsLabel.setTextFill(Color.WHITE);
 
         removeButton = new Button("x");
         //removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
@@ -115,12 +119,16 @@ class ScheduleBox extends AnchorPane {
         AnchorPane.setLeftAnchor(scheduleLabel, 3.0);
         AnchorPane.setBottomAnchor(scheduleLabel, 3.0);
 
-        //semester label top left
+        //semester label center left
         AnchorPane.setLeftAnchor(semesterLabel, 3.0);
-        AnchorPane.setTopAnchor(semesterLabel, 3.0);
+        AnchorPane.setTopAnchor(semesterLabel, 20.0);
+
+        //credits label top left
+        AnchorPane.setTopAnchor(creditsLabel, 3.0);
+        AnchorPane.setLeftAnchor(creditsLabel, 3.0);
 
         this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0;");
-        this.getChildren().addAll(scheduleLabel, semesterLabel, removeButton);
+        this.getChildren().addAll(scheduleLabel, semesterLabel, creditsLabel, removeButton);
 
 
     }

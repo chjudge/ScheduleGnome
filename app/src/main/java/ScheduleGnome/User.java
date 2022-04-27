@@ -54,6 +54,12 @@ public class User {
 
     }
 
+    public boolean isRecommended(Course course) {
+        if(course.getCourseCode().contains(major) && (course.getNumber() / 100) == 2027 - graduation_year)
+            return true;
+        return false;
+    }
+
     public Schedule addNewSchedule(String name, boolean isFall) {
         Schedule newSched = new Schedule(name, isFall, this);
         savedSchedules.put(name, newSched);

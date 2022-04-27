@@ -229,6 +229,7 @@ class SearchResult extends HBox {
     Course course;
     Event conflict;
     Label courseLabel;
+    Label recommendLabel;
     Label errorLabel;
     Label[][] calLabels;
     searchFXMLController controller;
@@ -240,8 +241,14 @@ class SearchResult extends HBox {
         this.conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
         this.calLabels = calLabels;
         courseLabel = new Label(course.toString());
+
+        //check if the course should be recommended
+        String recString = JavaFXApp.getCurrentUser().isRecommended(course) ? "Suggested" : "";
+        recommendLabel = new Label(String.format("%10s",recString));
+
         errorLabel = new Label();
         errorLabel.setStyle("-fx-font: 12 monospace;");
+        recommendLabel.setStyle("-fx-font: 12 monospace;");
         courseLabel.setStyle("-fx-font: 12 monospace;");
         Event conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
         if (conflict==null) {
@@ -251,7 +258,7 @@ class SearchResult extends HBox {
                 controller.updateCalendar();
                 controller.search();
             });
-            this.getChildren().addAll(courseLabel, addButton);
+            this.getChildren().addAll(courseLabel, recommendLabel, addButton);
         }
         else {
             try {
@@ -259,7 +266,7 @@ class SearchResult extends HBox {
                 JavaFXApp.Log("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
                 if (crsConflict.getCourseCode().equals(course.getCourseCode())) {
                     errorLabel.setText("Already in schedule");
-                    this.getChildren().addAll(courseLabel, errorLabel);
+                    this.getChildren().addAll(courseLabel, recommendLabel, errorLabel);
                 }
                 else {
                     Button swapButton = createConflictButton(crsConflict);
@@ -291,7 +298,7 @@ class SearchResult extends HBox {
                         });
                         errorLabel.setText("  TIME CONFLICT:\n  "+crsConflict.getCourseCode());
                     }
-                    this.getChildren().addAll(courseLabel, swapButton, errorLabel);
+                    this.getChildren().addAll(courseLabel, recommendLabel, swapButton, errorLabel);
                 }
             } catch (ClassCastException exc) { // extracurricular
                 errorLabel.setText("  EXTRACURRICULAR:  \n"+conflict.getTitle());
