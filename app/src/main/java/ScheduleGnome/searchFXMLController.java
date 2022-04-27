@@ -281,16 +281,17 @@ class SearchResult extends HBox {
                                 controller.updateCalendar();
                                 controller.search();
                             } else {
+                                //JavaFXApp.Log("manually resolve conflict: " + conflicting.getTitle());
                                 highlightConflict(conflicting.getTitle(),"red");
 
                                 DialogPane dialogPane = new DialogPane();
 
                                 dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
                                 dialogPane.setContentText("Cannot automatically swap courses, conflicts with other courses.\nWould you like to replace " + conflicting.getTitle() + "\nwith " + course.getTitle() + "?");
-                                dialogPane.setHeaderText("Conflict");
 
                                 Dialog<ButtonType> dialog = new Dialog<>();
                                 dialog.setDialogPane(dialogPane);
+                                dialog.setTitle("Conflict");
 
                                 dialog.showAndWait().ifPresent(response -> {
                                     if (response == ButtonType.OK) {
@@ -300,6 +301,7 @@ class SearchResult extends HBox {
                                         controller.search();
                                     } else {
                                         JavaFXApp.getCurrentSchedule().addEvent(crsConflict);
+                                        highlightConflict(conflicting.getTitle(),"black");
                                     }
                                 });
 

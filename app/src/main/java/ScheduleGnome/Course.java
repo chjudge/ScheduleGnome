@@ -92,16 +92,8 @@ public class Course extends Event {
         return enrollment;
     }
 
-    public void setEnrollment(int enrollment) {
-        this.enrollment = enrollment;
-    }
-
     public int getCapacity() {
         return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     public String getDept() {
@@ -132,16 +124,8 @@ public class Course extends Event {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public String getSection() {
         return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
     }
 
     public int getId() {
@@ -150,9 +134,11 @@ public class Course extends Event {
 
     private void initializePrereqs() {
         prereqs = new ArrayList<>();
-//        if(!comments.isEmpty()){
-//            int first = comments.indexOf(" ");
-//
+        //parse course codes from comments string
+        String[] prereqsStrings = comments.split("\\s+");
+        for (String prereqString : prereqsStrings) {
+
+        }
     }
 
     @Override

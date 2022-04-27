@@ -53,6 +53,7 @@ public class savedFXMLController implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        JavaFXApp.logout();
         JavaFXApp.changeScene("loginScene.fxml");
     }
 
@@ -95,7 +96,7 @@ class ScheduleBox extends AnchorPane {
         this.setOnMouseClicked((MouseEvent e) -> {
             JavaFXApp.setCurrentSchedule(schedule);
             try {
-                JavaFXApp.changeScene("searchScheduleScene.fxml");
+                JavaFXApp.changeSceneAndTitle("searchScheduleScene.fxml", schedule.getName());
             } catch (IOException ex) {
                 ex.printStackTrace();
                 JavaFXApp.Log("Error changing scene");

@@ -55,6 +55,8 @@ public class User {
     }
 
     public boolean isRecommended(Course course) {
+        if(graduation_year == 0 || major == null)
+            return false;
         return course.getCourseCode().contains(major) && (course.getNumber() / 100) == 2027 - graduation_year;
     }
 

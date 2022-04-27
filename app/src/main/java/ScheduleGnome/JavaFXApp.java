@@ -33,7 +33,7 @@ public class JavaFXApp extends Application {
 
         Log("Launched main scene");
 
-        stage.setTitle("ScheduleGnome");
+        stage.setTitle("ScheduleGnome | Login");
         stage.setScene(mainScene);
         stage.setResizable(false);
         stage.show();
@@ -41,11 +41,17 @@ public class JavaFXApp extends Application {
     }
 
     public static void changeScene(String fxml) throws IOException {
-        if (isLogging) System.out.println(dtf.format(LocalDateTime.now())+": "+
-                        currentUser.getUsername()+" changed scene to "+fxml);
+        stg.setTitle("ScheduleGnome" + " | " + (currentUser == null ? "Login" : currentUser.getUsername()));
         Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
         stg.getScene().setRoot(pane);
+    }
 
+    public static void changeSceneAndTitle(String fxml, String title) throws IOException {
+
+        stg.setTitle(stg.getTitle() + " | " + title);
+        Log(currentUser.getUsername()+" changed scene to "+fxml);
+        Parent pane = FXMLLoader.load(JavaFXApp.class.getResource(fxml));
+        stg.getScene().setRoot(pane);
     }
 
     public static void main(String[] args) {
@@ -78,6 +84,11 @@ public class JavaFXApp extends Application {
         currentUser = user;
         // TODO: print log if user is added
         Log("New user \""+user+"\" was added to the database");
+    }
+
+    public static void logout() {
+        currentUser = null;
+        Log("Logged out");
     }
 
     public static User getCurrentUser() {
