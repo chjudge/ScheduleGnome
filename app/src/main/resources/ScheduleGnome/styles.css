@@ -405,3 +405,61 @@
     -fx-fill: #3a5240;
     -fx-font-weight: bold;
 }
+
+/*
+    ----------------------
+    Extracurriculars Page
+    ----------------------
+ */
+#extracurricularHeader {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#excCancel {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#excAdd {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#excDays {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+#excTitle {
+    -fx-font-smoothing-type: lcd;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bookman Old Style";
+    -fx-font-size: 55px;
+}
+
+#excErrorMsg {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
