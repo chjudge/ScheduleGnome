@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.time.LocalTime;
@@ -24,12 +25,16 @@ public class addOwnEventController {
     ComboBox<LocalTime> endTimeChoice;
     String eTitle;
 
+    @FXML
+    Text excErrorMsg;
+
     //get text title textField
 //    eTitle = title.getText();
 
     //add event to schedule
     public void add(ActionEvent actionEvent){
         if (title.getText().isBlank()) {
+            excErrorMsg.setText("Enter an event name.");
             return;
         }
         eTitle = title.getText();
