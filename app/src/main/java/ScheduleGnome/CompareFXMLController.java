@@ -3,12 +3,11 @@ package ScheduleGnome;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
@@ -31,6 +30,9 @@ public class CompareFXMLController {
     ComboBox<String> schedule2;
     @FXML
     private ObservableList<String> savedNames = FXCollections.observableArrayList();
+    @FXML
+    Tooltip tooltip;
+
 
 
     public void initialize() {
@@ -124,8 +126,13 @@ public class CompareFXMLController {
                         label[aClass][row - 7] = new Label();
                         label[aClass][row - 7].setText(e.getTitle());
                         label[aClass][row - 7].setWrapText(true);
+                        int tRow = row - 7;
 
                         calGrid1.add(label[aClass][row - 7], aClass, row - 7);
+                        label[aClass][row - 7].setOnMouseEntered((MouseEvent mE)->{
+                            tooltip = new Tooltip(e.getTitle());
+                            label[aClass][tRow].setTooltip(tooltip);
+                        });
                     }
                     classes.clear();
                 }
@@ -170,8 +177,15 @@ public class CompareFXMLController {
                     label2[aClass][row - 7] = new Label();
                     label2[aClass][row - 7].setText(e.getTitle());
                     label2[aClass][row - 7].setWrapText(true);
+                    int tRow = row - 7;
+
 
                     calGrid2.add(label2[aClass][row - 7], aClass, row - 7);
+                    label2[aClass][row - 7].setOnMouseEntered((MouseEvent mE)->{
+                      tooltip = new Tooltip(e.getTitle());
+                        label2[aClass][tRow].setTooltip(tooltip);
+                    });
+
                 }
                 classes.clear();
             }
