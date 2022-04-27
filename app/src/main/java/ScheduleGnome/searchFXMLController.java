@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import org.controlsfx.control.PopOver;
 
 import java.awt.event.KeyEvent;
 
@@ -46,7 +47,7 @@ public class searchFXMLController {
     ObservableList<SearchResult> searchResultList;
     @FXML
     GridPane calGrid;
-    private Label[][] label = new Label[6][14];
+    Label[][] label = new Label[6][14];
     @FXML
     Tooltip tooltip;
 
@@ -79,7 +80,7 @@ public class searchFXMLController {
         ArrayList<Course> results = search.querySearch();
 
         for (Course course : results) {
-            searchResultList.add(new SearchResult(course, this, label));
+            searchResultList.add(new SearchResult(course, this));
         }
         searchList.setItems(searchResultList);
     }
@@ -230,17 +231,16 @@ class SearchResult extends HBox {
     Course course;
     Event conflict;
     Label courseLabel;
-    Label recommendLabel;
     Label errorLabel;
     Label[][] calLabels;
     searchFXMLController controller;
+    Label recommendLabel;
 
-    public SearchResult(Course course, searchFXMLController controller, Label[][] calLabels) {
+    public SearchResult(Course course, searchFXMLController controller) {
         super();
         this.course = course;
         this.controller = controller;
         this.conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
-        this.calLabels = calLabels;
         courseLabel = new Label(course.toString());
 
         //check if the course should be recommended
@@ -346,9 +346,9 @@ class SearchResult extends HBox {
     private void highlightConflict(String title, String cssColor) {
         for (int i = 1; i < 6; i++) {
             for (int j = 1; j < 14; j++) {
-                Label l = calLabels[i][j];
-                if (l != null && l.getText().equals(title))
-                    l.setStyle("-fx-text-fill: " + cssColor + ";");
+                Label l = controller.label[i][j];
+                if (l != null && l.getText().equals(conflict.getTitle()))
+                    l.setStyle("-fx-text-fill: "+cssColor+";");
             }
         }
     }
