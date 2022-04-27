@@ -3,8 +3,11 @@ package ScheduleGnome;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
@@ -74,7 +77,7 @@ public class searchFXMLController {
         ArrayList<Course> results = search.querySearch();
 
         for (Course course : results) {
-            searchResultList.add(new SearchResult(course, this));
+            searchResultList.add(new SearchResult(course, this, label));
         }
         searchList.setItems(searchResultList);
     }
@@ -217,14 +220,18 @@ public class searchFXMLController {
 
 class SearchResult extends HBox {
     Course course;
+    Event conflict;
     Label courseLabel;
     Label errorLabel;
+    Label[][] calLabels;
     searchFXMLController controller;
 
-    public SearchResult(Course course, searchFXMLController controller) {
+    public SearchResult(Course course, searchFXMLController controller, Label[][] calLabels) {
         super();
         this.course = course;
         this.controller = controller;
+        this.conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
+        this.calLabels = calLabels;
         courseLabel = new Label(course.toString());
         errorLabel = new Label();
         errorLabel.setStyle("-fx-font: 12 monospace;");
@@ -242,30 +249,76 @@ class SearchResult extends HBox {
         else {
             try {
                 Course crsConflict = (Course)conflict;
-               JavaFXApp.Log("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
+                JavaFXApp.Log("CONFLICT: " + crsConflict.getCourseCode() + " CRS: " + course.getCourseCode());
                 if (crsConflict.getCourseCode().equals(course.getCourseCode())) {
                     errorLabel.setText("Already in schedule");
                     this.getChildren().addAll(courseLabel, errorLabel);
                 }
                 else {
-                    Button swapButton = new Button("Swap");
-                    swapButton.setOnAction((ActionEvent e) -> {
-                        JavaFXApp.getCurrentSchedule().deleteEvent(crsConflict);
-                        JavaFXApp.getCurrentSchedule().addEvent(course);
-                        controller.updateCalendar();
-                        controller.search();
-                    });
+                    Button swapButton = createConflictButton(crsConflict);
                     String conflictCode = crsConflict.getCourseCode();
                     String crsCode = course.getCourseCode();
-                    if (conflictCode.substring(0,conflictCode.length()-2).equals(crsCode.substring(0,crsCode.length()-2)))
+                    if (conflictCode.substring(0,conflictCode.length()-2).equals(crsCode.substring(0,crsCode.length()-2))) {
+                        swapButton.setOnAction((ActionEvent e) -> {
+                            Schedule currSched = JavaFXApp.getCurrentSchedule();
+                            currSched.deleteEvent(crsConflict);
+                            if (currSched.hasConflicts(course) == null) {
+                                JavaFXApp.getCurrentSchedule().addEvent(course);
+                                controller.updateCalendar();
+                                controller.search();
+                            }
+                            else {
+                                JavaFXApp.getCurrentSchedule().addEvent(crsConflict);
+                                errorLabel.setText("   INVALID SWAP");
+                                errorLabel.setStyle("-fx-text-fill: red;");
+                            }
+                        });
                         errorLabel.setText("  SECTION CONFLICT:\n  "+crsConflict.getCourseCode());
-                    else
+                    }
+                    else {
+                        swapButton.setOnAction((ActionEvent e) -> {
+                            JavaFXApp.getCurrentSchedule().deleteEvent(crsConflict);
+                            JavaFXApp.getCurrentSchedule().addEvent(course);
+                            controller.updateCalendar();
+                            controller.search();
+                        });
                         errorLabel.setText("  TIME CONFLICT:\n  "+crsConflict.getCourseCode());
+                    }
                     this.getChildren().addAll(courseLabel, swapButton, errorLabel);
                 }
             } catch (ClassCastException exc) { // extracurricular
                 errorLabel.setText("  EXTRACURRICULAR:  \n"+conflict.getTitle());
                 this.getChildren().addAll(courseLabel, errorLabel);
+            }
+        }
+    }
+    private Button createConflictButton(Course conflicted) {
+        Button b = new Button("Swap");
+        b.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        b.setEffect(new DropShadow());
+                        highlightConflict("red");
+                    }
+                });
+
+        b.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        b.setEffect(null);
+                        highlightConflict("black");
+                    }
+                });
+        return b;
+    }
+    private void highlightConflict(String cssColor) {
+        for (int i = 1; i < 6; i++) {
+            for (int j = 1; j < 14; j++) {
+                Label l = calLabels[i][j];
+                if (l != null && l.getText().equals(conflict.getTitle()))
+                    l.setStyle("-fx-text-fill: "+cssColor+";");
             }
         }
     }
