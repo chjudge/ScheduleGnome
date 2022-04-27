@@ -24,6 +24,6 @@
       <Button id="nameCancelButton" layoutX="663.0" layoutY="43.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
       <RadioButton fx:id="springToggle" layoutX="330.0" layoutY="318.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="Spring" />
       <RadioButton fx:id="fallToggle" layoutX="248.0" layoutY="318.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="56.0" selected="true" text="Fall" />
-      <Text fx:id="actiontarget" fill="#656565" layoutX="251.0" layoutY="306.0" textAlignment="CENTER" />
+      <Text fx:id="nameactiontarget" fill="#48634f" layoutX="251.0" layoutY="306.0" textAlignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 16pt" />
    </children>
 </AnchorPane>

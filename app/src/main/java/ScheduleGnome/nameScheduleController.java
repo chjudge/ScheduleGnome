@@ -24,7 +24,7 @@ public class nameScheduleController implements Initializable {
     @FXML
     RadioButton springToggle;
 
-    @FXML private Text actiontarget;
+    @FXML private Text nameactiontarget;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,7 +37,7 @@ public class nameScheduleController implements Initializable {
 
     public void create(ActionEvent actionEvent) throws IOException {
         if(textField.getText().isBlank()) {
-            actiontarget.setText("Enter a schedule name");
+            nameactiontarget.setText("Enter a schedule name");
             return;
         }
         String name = textField.getText();
@@ -45,6 +45,7 @@ public class nameScheduleController implements Initializable {
         for(String scheduleName : JavaFXApp.getCurrentUser().getSavedSchedules().keySet()) {
             if (name.equals(scheduleName)) {
                 duplicateName = true;
+                nameactiontarget.setText("Schedule name already exists.");
                 break;
             }
         }

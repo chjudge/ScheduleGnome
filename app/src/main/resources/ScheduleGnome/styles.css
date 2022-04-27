@@ -185,6 +185,23 @@
     -fx-background-color: #3a5240;
 }
 
+#btn-close {
+    -fx-background-radius: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #D3D3D3FF;
+    -fx-border-radius: 50%;
+    -fx-cursor: pointer;
+    -fx-text-fill: white;
+    -fx-stroke: #7d7d7d;
+    -fx-stroke-width: 5px;
+
+}
+
+#btn-close:hover {
+     -fx-background-color: #a9a9a9;
+ }
+
+
 #compareButton:hover {
     -fx-background-color: #3a5240;
 }
@@ -463,3 +480,4 @@
     -fx-fill: #3a5240;
     -fx-font-weight: bold;
 }
+

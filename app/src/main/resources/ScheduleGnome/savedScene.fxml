@@ -39,7 +39,7 @@
       </Button>
       <Button id="compareButton" layoutX="520.0" layoutY="141.0" mnemonicParsing="false" onAction="#compareSchedules" text="Compare " />
       <ScrollPane hbarPolicy="NEVER" layoutY="200.0" prefWidth="800.0" styleClass="savedBackground">
-         <TilePane fx:id="scheduleTilePane" focusTraversable="true" hgap="15.0" minHeight="40.0" prefColumns="6" prefRows="2" prefTileHeight="75.0" prefTileWidth="100.0" prefWidth="800.0" styleClass="savedBackground" tileAlignment="TOP_LEFT" vgap="50.0">
+         <TilePane fx:id="scheduleTilePane" focusTraversable="true" hgap="15.0" minHeight="40.0" prefColumns="6" prefRows="2" prefTileHeight="75.0" prefTileWidth="100.0" prefWidth="800.0" styleClass="savedBackground" tileAlignment="TOP_LEFT" vgap="50.0" >
             <padding>
                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </padding>

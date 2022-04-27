@@ -105,7 +105,7 @@
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="delete" minHeight="15.0" mnemonicParsing="false" onAction="#delete" prefHeight="23.0" prefWidth="51.0" text="Delete" textAlignment="CENTER" textFill="#378ca1">
+      <Button fx:id="delete" minHeight="15.0" mnemonicParsing="false" onAction="#delete" prefHeight="31.0" prefWidth="57.0" text="Delete" textAlignment="CENTER" textFill="#378ca1">
          <GridPane.margin>
             <Insets left="10.0" top="10.0" />
          </GridPane.margin>

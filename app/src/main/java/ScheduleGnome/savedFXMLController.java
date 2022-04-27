@@ -73,6 +73,7 @@ class ScheduleBox extends AnchorPane {
         scheduleLabel = new Label(schedule.getName()); // TODO: For now
         scheduleLabel.setMaxWidth(100);
         scheduleLabel.setTextFill(Color.WHITE);
+        scheduleLabel.setStyle("-fx-font-weight: bold");
 
         semesterLabel = new Label(schedule.getSemester());
         semesterLabel.setTextFill(Color.WHITE);
@@ -81,6 +82,7 @@ class ScheduleBox extends AnchorPane {
         creditsLabel.setTextFill(Color.WHITE);
 
         removeButton = new Button("x");
+        removeButton.setId("btn-close");
         //removeButton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-color: transparent;");
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.Log("Removing schedule: " + schedule.getName());
@@ -116,7 +118,8 @@ class ScheduleBox extends AnchorPane {
         AnchorPane.setTopAnchor(creditsLabel, 3.0);
         AnchorPane.setLeftAnchor(creditsLabel, 3.0);
 
-        this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0;");
+        this.setStyle("-fx-background-radius: 10;-fx-background-color: #48634f;-fx-background-insets: 0, 0 1 1 0; " +
+                "-fx-border-width: 2px; -fx-border-color: #5c8065; -fx-border-radius: 10");
         this.getChildren().addAll(scheduleLabel, semesterLabel, creditsLabel, removeButton);
 
 
