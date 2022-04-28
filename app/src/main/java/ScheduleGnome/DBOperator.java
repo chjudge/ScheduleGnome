@@ -243,7 +243,7 @@ public class DBOperator {
             PreparedStatement stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
              ResultSet result = stmt.executeQuery();
              result.next();
-             user.setId(result.getInt(1));s
+             user.setId(result.getInt(1));
         }
         catch(SQLException e) {
             e.printStackTrace();
