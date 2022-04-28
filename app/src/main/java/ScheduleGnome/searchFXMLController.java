@@ -3,23 +3,20 @@ package ScheduleGnome;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
-
-import java.awt.event.KeyEvent;
 
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class searchFXMLController {
     @FXML
@@ -48,8 +45,6 @@ public class searchFXMLController {
     @FXML
     GridPane calGrid;
     Label[][] label = new Label[6][14];
-    @FXML
-    Tooltip tooltip;
 
 
     @FXML
@@ -183,18 +178,39 @@ public class searchFXMLController {
             if (e.getDatesString().contains("F")) {
                 classes.add(5);
             }
+            int tRow = row - 7;
             //creates labels for the added course
             for (Integer aClass : classes) {
-                label[aClass][row - 7] = new Label();
-                label[aClass][row - 7].setText(e.getTitle());
-                label[aClass][row - 7].setWrapText(true);
-                int tRow = row - 7;
+                label[aClass][tRow] = new Label();
+                label[aClass][tRow].setText(e.getTitle());
+                label[aClass][tRow].setWrapText(true);
 
-                calGrid.add(label[aClass][row - 7], aClass, row - 7);
-                label[aClass][row - 7].setOnMouseEntered((MouseEvent mE) -> {
-                    tooltip = new Tooltip(e.getTitle());
-                    label[aClass][tRow].setTooltip(tooltip);
+                JavaFXApp.Log("Adding " + label[aClass][tRow].getText() + " to " + aClass + " " + tRow);
+
+                PopOver popOver = new PopOver(new CalendarEvent(e, this));
+
+
+                label[aClass][tRow].setOnMouseEntered( me -> {
+                    System.out.println("Mouse Entered" + e.getTitle());
+                    popOver.show(label[aClass][tRow]);
                 });
+                label[aClass][tRow].setOnMouseExited( me -> {
+                    System.out.println("Mouse Exited" + e.getTitle());
+                    popOver.hide();
+                });
+
+                System.out.println(label[aClass][tRow].getOnMouseEntered().toString());
+
+                calGrid.add(new CalendarEvent(e, this), aClass, tRow);
+
+//                calGrid.add(label[aClass][tRow], aClass, row - 7);
+
+            }
+
+            for(Node n : calGrid.getChildren() ){
+                if(n instanceof Label) {
+
+                }
             }
             classes.clear();
         }
@@ -216,12 +232,6 @@ public class searchFXMLController {
         JavaFXApp.getDB().saveSchedule(JavaFXApp.getCurrentSchedule());
     }
 
-    public void delete(ActionEvent actionEvent) throws IOException {
-        JavaFXApp.getDB().deleteSchedule(JavaFXApp.getCurrentSchedule());
-        JavaFXApp.getCurrentUser().getSavedSchedules().remove(JavaFXApp.getCurrentSchedule().getName());
-        JavaFXApp.changeScene("savedScene.fxml");
-    }
-
     public void addOwn(ActionEvent actionEvent) throws IOException {
         JavaFXApp.changeScene("addOwnEvent.fxml");
     }
@@ -232,7 +242,6 @@ class SearchResult extends HBox {
     Event conflict;
     Label courseLabel;
     Label errorLabel;
-    Label[][] calLabels;
     searchFXMLController controller;
     Label recommendLabel;
 
@@ -254,6 +263,11 @@ class SearchResult extends HBox {
         Event conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
         if (conflict == null) {
             Button addButton = new Button("+");
+            if(course.hasPrerequisite()) {
+                Tooltip t = new Tooltip("Requires:\n" + course.getComments());
+                t.setShowDelay(Duration.millis(0));
+                addButton.setTooltip(t);
+            }
             addButton.setOnAction((ActionEvent e) -> {
                 JavaFXApp.getCurrentSchedule().addEvent(course);
                 controller.updateCalendar();
@@ -370,6 +384,7 @@ class CalendarEvent extends HBox {
         removeButton = new Button("x");
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().deleteEvent(event);
+            JavaFXApp.getDB().deleteEvent(event, JavaFXApp.getCurrentSchedule());
             controller.updateCalendar();
         });
 

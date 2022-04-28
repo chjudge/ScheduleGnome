@@ -33,11 +33,7 @@ public class Search {
     public ArrayList<Course> querySearch() {
         results.clear();
         results = JavaFXApp.getDB().filterCourses(filters, isFall);
-        System.out.println("AFTER FILTER");
-        System.out.println(resultToString());
         applySearchedInput();
-        System.out.println("AFTER SEARCHED");
-        System.out.println(resultToString());
         results.sort(new MatchComparator());
         if (hasSearchedQuery()) {
             for (int i = results.size() - 1; i >= 0; i--) {

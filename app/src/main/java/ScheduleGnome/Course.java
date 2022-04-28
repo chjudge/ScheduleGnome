@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Course extends Event {
@@ -18,7 +19,7 @@ public class Course extends Event {
     private int enrollment;
     private String professor;
     private String comments;
-    private ArrayList<Course> prereqs;
+    private boolean hasPrerequisite;
     private int id;
 
 
@@ -133,12 +134,16 @@ public class Course extends Event {
     }
 
     private void initializePrereqs() {
-        prereqs = new ArrayList<>();
         //parse course codes from comments string
-        String[] prereqsStrings = comments.split("\\s+");
-        for (String prereqString : prereqsStrings) {
-
+        if(comments == null) return;
+        //check if comments string containes a three digit number
+        if(comments.matches(".*\\d{3}.*") || comments.toLowerCase().contains("standing") || comments.toLowerCase().contains("status")) {
+            hasPrerequisite = true;
         }
+    }
+
+    public boolean hasPrerequisite() {
+        return hasPrerequisite;
     }
 
     @Override
