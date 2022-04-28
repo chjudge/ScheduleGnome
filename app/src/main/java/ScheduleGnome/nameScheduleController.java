@@ -28,8 +28,7 @@ public class nameScheduleController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now())+
-                ": Loading name schedule page");
+        JavaFXApp.Log("Loading name schedule page");
         semesterBttns = new ToggleGroup();
         fallToggle.setToggleGroup(semesterBttns);
         springToggle.setToggleGroup(semesterBttns);
@@ -56,10 +55,9 @@ public class nameScheduleController implements Initializable {
             JavaFXApp.setCurrentSchedule(newSched);
 
             JavaFXApp.getDB().addNewSchedule(newSched);
-            if (JavaFXApp.isLogging) System.out.println(JavaFXApp.dtf.format(LocalDateTime.now()) +
-                    ": " + JavaFXApp.getCurrentUser().getUsername() + " created " +
+            JavaFXApp.Log(JavaFXApp.getCurrentUser().getUsername() + " created " +
                     " a new schedule named " + name);
-            JavaFXApp.changeScene("searchScheduleScene.fxml");
+            JavaFXApp.changeSceneAndTitle("searchScheduleScene.fxml", newSched.getName());
             Pane pane = new Pane();
         }
     }

@@ -190,25 +190,25 @@ public class searchFXMLController {
                 PopOver popOver = new PopOver(new CalendarEvent(e, this));
 
 
-                label[aClass][tRow].setOnMouseEntered( me -> {
+                label[aClass][tRow].setOnMouseEntered(me -> {
                     System.out.println("Mouse Entered" + e.getTitle());
                     popOver.show(label[aClass][tRow]);
                 });
-                label[aClass][tRow].setOnMouseExited( me -> {
-                    System.out.println("Mouse Exited" + e.getTitle());
-                    popOver.hide();
-                });
+                label[aClass][tRow].setOnMouseClicked(me -> {
+                    System.out.println("Mouse Clicked" + e.getTitle());
+                            popOver.hide();
+                        });
 
                 System.out.println(label[aClass][tRow].getOnMouseEntered().toString());
 
-                calGrid.add(new CalendarEvent(e, this), aClass, tRow);
+                //calGrid.add(new CalendarEvent(e, this), aClass, tRow);
 
-//                calGrid.add(label[aClass][tRow], aClass, row - 7);
+                calGrid.add(label[aClass][tRow], aClass, row - 7);
 
             }
 
-            for(Node n : calGrid.getChildren() ){
-                if(n instanceof Label) {
+            for (Node n : calGrid.getChildren()) {
+                if (n instanceof Label) {
 
                 }
             }
@@ -234,6 +234,10 @@ public class searchFXMLController {
 
     public void addOwn(ActionEvent actionEvent) throws IOException {
         JavaFXApp.changeScene("addOwnEvent.fxml");
+    }
+
+    public void test(MouseEvent me) {
+        JavaFXApp.Log("Test grid button pressed");
     }
 }
 
@@ -263,7 +267,7 @@ class SearchResult extends HBox {
         Event conflict = JavaFXApp.getCurrentSchedule().hasConflicts(course);
         if (conflict == null) {
             Button addButton = new Button("+");
-            if(course.hasPrerequisite()) {
+            if (course.hasPrerequisite()) {
                 Tooltip t = new Tooltip("Requires:\n" + course.getComments());
                 t.setShowDelay(Duration.millis(0));
                 addButton.setTooltip(t);
@@ -296,7 +300,7 @@ class SearchResult extends HBox {
                                 controller.search();
                             } else {
                                 //JavaFXApp.Log("manually resolve conflict: " + conflicting.getTitle());
-                                highlightConflict(conflicting.getTitle(),"red");
+                                highlightConflict(conflicting.getTitle(), "red");
 
                                 DialogPane dialogPane = new DialogPane();
 
@@ -315,7 +319,7 @@ class SearchResult extends HBox {
                                         controller.search();
                                     } else {
                                         JavaFXApp.getCurrentSchedule().addEvent(crsConflict);
-                                        highlightConflict(conflicting.getTitle(),"black");
+                                        highlightConflict(conflicting.getTitle(), "black");
                                     }
                                 });
 
@@ -348,13 +352,13 @@ class SearchResult extends HBox {
         b.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> {
                     b.setEffect(new DropShadow());
-                    highlightConflict(conflict.getTitle(),"red");
+                    highlightConflict(conflict.getTitle(), "red");
                 });
 
         b.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> {
                     b.setEffect(null);
-                    highlightConflict(conflict.getTitle(),"black");
+                    highlightConflict(conflict.getTitle(), "black");
                 });
         return b;
     }
@@ -364,7 +368,7 @@ class SearchResult extends HBox {
             for (int j = 1; j < 14; j++) {
                 Label l = controller.label[i][j];
                 if (l != null && l.getText().equals(conflict.getTitle()))
-                    l.setStyle("-fx-text-fill: "+cssColor+";");
+                    l.setStyle("-fx-text-fill: " + cssColor + ";");
             }
         }
     }
@@ -389,9 +393,20 @@ class CalendarEvent extends HBox {
         });
 
         this.getChildren().addAll(eventLabel, removeButton);
+
+        this.setOnMouseClicked(controller::test);
+
     }
 
     public Event getEvent() {
         return event;
+    }
+}
+
+class CalendarLine {
+    CalendarEvent[] events;
+
+    public CalendarLine(CalendarEvent[] events) {
+        this.events = events;
     }
 }
