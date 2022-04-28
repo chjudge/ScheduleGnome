@@ -311,6 +311,47 @@
     -fx-opacity: .4;
 }
 
+#searchExcButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 5px 5px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+}
+
+#searchBackButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 5px 5px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+}
+
+#searchExcButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#searchBackButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#searchBar:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#searchBar {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
 /*
     ---------
     Name Page

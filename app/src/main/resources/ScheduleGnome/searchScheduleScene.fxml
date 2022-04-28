@@ -52,11 +52,26 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Monday" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Tuesday" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="Wednesday" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Label text="Thursday" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Label text="Friday" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Label text="Monday" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label text="Tuesday" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label text="Wednesday" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label text="Thursday" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label text="Friday" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                </children>
             </GridPane>
             <Pane>
@@ -79,7 +94,7 @@
                         <Insets left="15.0" right="20.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="searchField" promptText="Search for courses" GridPane.columnSpan="2147483647">
+                        <TextField id="searchBar" fx:id="searchField" promptText="Search for courses" GridPane.columnSpan="2147483647">
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin>
@@ -94,24 +109,24 @@
                               <Insets right="10.0" />
                            </GridPane.margin></ComboBox>
                         <ComboBox fx:id="startTimeChoice" onAction="#search" prefWidth="150.0" promptText="Starts After" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <Button mnemonicParsing="false" onAction="#addOwn" prefHeight="24.0" prefWidth="110.0" text="+ Extracurricular" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Button id="searchExcButton" mnemonicParsing="false" onAction="#addOwn" prefHeight="21.0" prefWidth="110.0" text="+ Extracurricular" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                </children>
             </Pane>
         </items>
       </SplitPane>
-      <Button fx:id="backButton" minWidth="53.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="53.0" text="Back" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Button id="searchBackButton" fx:id="backButton" minWidth="53.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="53.0" text="Back" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button id="searchDeleteButton" fx:id="delete" minHeight="15.0" mnemonicParsing="false" onAction="#delete" prefHeight="31.0" prefWidth="57.0" text="Delete" textAlignment="CENTER" textFill="#378ca1">
+      <Button id="searchDeleteButton" fx:id="delete" minHeight="15.0" mnemonicParsing="false" onAction="#delete" prefHeight="33.0" prefWidth="78.0" text="Delete" textAlignment="CENTER" textFill="WHITE">
          <GridPane.margin>
             <Insets left="10.0" top="10.0" />
          </GridPane.margin>
          <font>
-            <Font name="Arial Nova Light" size="9.0" />
+            <Font name="System Bold" size="11.0" />
          </font>
       </Button>
    </children>
