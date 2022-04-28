@@ -190,6 +190,38 @@ public class DBOperator {
 
     }
 
+    public boolean deleteEvent(Event event, Schedule schedule) {
+        try{
+            int rows;
+            if(event instanceof Course) {
+                Course course = (Course)event;
+                PreparedStatement deleteCourse = conn.prepareStatement("delete from scheduled_courses  where schedule_id=? and course_id=?");
+                int i = 1;
+                deleteCourse.setInt(i++, schedule.getId());
+                deleteCourse.setInt(i++, course.getId());
+
+                rows = deleteCourse.executeUpdate();
+                deleteCourse.close();
+            }
+            else {
+                PreparedStatement deleteEvent = conn.prepareStatement("delete from scheduled_events  where schedule_id=? and title=?");
+                int i=1;
+                deleteEvent.setInt(i++, schedule.getId());
+                deleteEvent.setString(i++, event.getTitle());
+
+                rows = deleteEvent.executeUpdate();
+                deleteEvent.close();
+            }
+            if(rows == 0) {
+                return false;
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     public boolean insertUser(User user) {
         try {
             PreparedStatement insertUser = conn.prepareStatement(
@@ -211,19 +243,7 @@ public class DBOperator {
             PreparedStatement stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
              ResultSet result = stmt.executeQuery();
              result.next();
-             user.setId(result.getInt(1));
-//            PreparedStatement stmt = conn.prepareStatement("select id from users where username=?");
-//             i=1;
-//             stmt.setString(i++,user.getUsername());
-//             ResultSet result = stmt.executeQuery();
-//
-//            if(result != null) {
-//                result.next();
-//                user.setId(result.getInt());
-//            } load
-//            else {
-//                return false;
-//            }
+             user.setId(result.getInt(1));s
         }
         catch(SQLException e) {
             e.printStackTrace();
