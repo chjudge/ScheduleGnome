@@ -3,24 +3,18 @@ package ScheduleGnome;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.io.FileNotFoundException;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ParseCourses {
-    private static Reader reader;
     private static CSVReader csvReader;
-    private static final String COURSES = "courses.csv";
+    private static final String COURSES = "new_courses.csv";
 
     public ParseCourses() {
-
-    
-            reader = new InputStreamReader((getClass().getResourceAsStream(COURSES)));
+        Reader reader = new InputStreamReader((Objects.requireNonNull(getClass().getResourceAsStream(COURSES))));
             csvReader = new CSVReader(reader);
         
     }

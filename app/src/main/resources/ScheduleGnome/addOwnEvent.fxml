@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #e3ebe1" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScheduleGnome.addOwnEventController">
+   <children>
+      <Rectangle id="extracurricularHeader" arcWidth="5.0" fill="#48634f" height="122.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="828.0" />
+      <Text id="excTitle" fill="white" layoutX="35.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Extracurricular" wrappingWidth="607.4632110595703">
+      </Text>
+      <TextField fx:id="title" layoutX="192.0" layoutY="178.0" prefHeight="37.0" prefWidth="444.0" promptText="Enter extracurricular title..." />
+      <ComboBox fx:id="startTimeChoice" layoutX="192.0" layoutY="260.0" prefWidth="150.0" promptText="Start Time" />
+      <ComboBox fx:id="endTimeChoice" layoutX="486.0" layoutY="260.0" prefWidth="150.0" promptText="End TIme" />
+      <CheckBox fx:id="monday" layoutX="52.0" layoutY="216.0" mnemonicParsing="false" text="Monday" textFill="#595959">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="tuesday" layoutX="52.0" layoutY="255.0" mnemonicParsing="false" text="Tuesday" textFill="#595959">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></CheckBox>
+      <CheckBox fx:id="wednesday" layoutX="52.0" layoutY="295.0" mnemonicParsing="false" text="Wednesday" textFill="#595959">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="thursday" layoutX="52.0" layoutY="336.0" mnemonicParsing="false" text="Thursday" textFill="#595959">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></CheckBox>
+      <CheckBox fx:id="friday" layoutX="52.0" layoutY="377.0" mnemonicParsing="false" text="Friday" textFill="#595959">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <Button id="excAdd" layoutX="666.0" layoutY="169.0" mnemonicParsing="false" onAction="#add" prefHeight="56.0" prefWidth="113.0" text="Add" />
+      <Button id="excCancel" layoutX="666.0" layoutY="33.0" mnemonicParsing="false" onAction="#back" text="Cancel" />
+      <Text id="excDays" layoutX="47.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Days of event">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="eventactiontarget" fill="#48634f" layoutX="201.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

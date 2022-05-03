@@ -11,5 +11,7 @@ Saving schedules to persist upon exiting the
 application will also need to be pushed
 (Trouble formatting the json => class currently)
 
+Second Sprint in development
+
 
 

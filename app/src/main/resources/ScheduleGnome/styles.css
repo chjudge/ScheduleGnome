@@ -1,0 +1,545 @@
+/*
+ -----------------
+    Login Scene
+ -----------------
+ */
+
+#actiontarget {
+    -fx-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#loginButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#loginButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#loginButton:focused {
+    -fx-background-color: #a9a9a9;
+}
+
+#registerButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#registerButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#registerButton:focused {
+    -fx-background-color: #a9a9a9;
+}
+
+#body {
+    -fx-background-image: url('gnomeBackground.png');
+    -fx-background-size: 100% 100%;
+    -fx-background-color: #dfebe2;
+}
+
+#rectangle {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#welcomeTitle {
+    -fx-font-smoothing-type: lcd;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Bookman Old Style";
+    -fx-alignment: right;
+    -fx-font-size: 55px;
+    -fx-fill: white;
+    -fx-font-weight: 900;
+}
+
+#usernameField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+#passwordField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#passwordField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#usernameLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#passwordLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/*
+ -----------------
+    Saved Scene
+ -----------------
+ */
+
+#savedHeader {
+    -fx-fill: "#48634f";
+    -fx-font-family: "Bookman Old Style";
+}
+#headerText {
+    -fx-font-family: "Bookman Old Style";
+    -fx-font-weight: bold;
+    -fx-font-size: 45px;
+}
+
+.savedBackground {
+    -fx-background-color: #e3ebe1;
+}
+
+#schedulesLabel {
+    -fx-padding: 5px;
+    -fx-text-fill: #48634f;
+    -fx-font-weight: 400;
+    -fx-font-weight: bold;
+    -fx-font-size: 16pt;
+    -fx-text-alignment: left;
+}
+
+#logoutButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+#logoutButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#newButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#newButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#btn-close {
+    -fx-background-radius: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #D3D3D3FF;
+    -fx-border-radius: 50%;
+    -fx-cursor: pointer;
+    -fx-text-fill: white;
+    -fx-stroke: #7d7d7d;
+    -fx-stroke-width: 5px;
+
+}
+
+#btn-close:hover {
+     -fx-background-color: #a9a9a9;
+ }
+
+
+#compareButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#compareButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+/*
+    ------------
+    Search page
+    ------------
+ */
+#searchContainer {
+    -fx-background-color: #5c8065;
+}
+
+#endTimeChoice {
+    -fx-end-margin: 0 5 0 0;
+}
+
+#searchField {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#searchField:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+.combo-box .list-cell
+{
+    -fx-background: white;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    /*-fx-cell-size: 1.66667em;*/
+}
+
+.combo-box:hover
+{
+    -fx-background-color: #D3D3D3;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: white, white;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+
+    /* No alternate highlighting */
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+.combo-box-base
+{
+    -fx-background-color: white, white, white, white;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing
+{
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 6.4, 4, 5, 3;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+#searchExcButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 5px 5px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+}
+
+#searchBackButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 5px 5px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+}
+
+#searchExcButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#searchBackButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#searchBar:focused {
+    -fx-border-color: #48634f;
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+#searchBar {
+    -fx-background-color: #a9a9a9 , white , white;
+}
+
+/*
+    ---------
+    Name Page
+    ---------
+ */
+
+#nameHeader {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#textField {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+
+#nameCreateButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+#nameCreateButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#nameCancelButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+#nameCancelButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#nameText {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+#fallToggle {
+    -fx-text-fill: #3a5240;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#springToggle {
+    -fx-text-fill: #3a5240;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+/*
+    ------------
+    Profile Page
+    ------------
+ */
+#profileCancelButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileCancelButton:hover {
+    -fx-background-color: #a9a9a9;
+}
+
+#profileSaveButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#profileSaveButton:hover {
+    -fx-background-color: #3a5240;
+}
+
+#profileText {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+/*
+    ----------------------
+    Extracurriculars Page
+    ----------------------
+ */
+#extracurricularHeader {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-padding: 20 30 10 30;
+    -fx-border-color: #5c8065;
+    -fx-border-width: 5px;
+}
+
+#excCancel {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #D3D3D3;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: #545454;
+    -fx-padding: 15px 32px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#excAdd {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#excDays {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+#excTitle {
+    -fx-font-smoothing-type: lcd;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bookman Old Style";
+    -fx-font-size: 55px;
+}
+
+#excErrorMsg {
+    -fx-fill: #3a5240;
+    -fx-font-weight: bold;
+}
+
+/*
+    ------------
+    Compare Page
+    ------------
+ */
+#compareHomeButton {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #48634f;
+    -fx-font-weight: bold;
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+}
+
+#compareHomeButton:hover {
+    -fx-background-color: #3a5240;
+}

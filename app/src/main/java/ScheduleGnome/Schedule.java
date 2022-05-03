@@ -5,20 +5,57 @@ import java.util.ArrayList;
 public class Schedule {
 
 //    final private String semester;
-    final private String schedule_id;
+    final private String name;
+    final private boolean isFall;
+    final private User user;
+    private int id;
     ArrayList<Event> events;
 
 
 
-    public Schedule(String schedule_id){
+    public Schedule(String name, boolean isFall, User user){
 //        this.semester = setSemester();
-        this.schedule_id = schedule_id;
+        this.user = user;   //TODO: change constructor to do this right
+        this.name = name;
+        this.isFall = isFall;
         events = new ArrayList<>();
     }
 
     public void addEvent(Event e){
-        if(!events.contains(e))
+        if(!events.contains(e) && hasConflicts(e)==null) {
+            System.out.println("adding " + e.getTitle());
             events.add(e);
+        }
+    }
+    // LOL!
+    public Event hasConflicts(Event e) {
+        try {
+            Course c = (Course)e;
+            int ret;
+            for (Event event : events) {
+                ret = c.hasConflictWith(event);
+                if (ret != 0) return event;
+            }
+        } catch (ClassCastException exc) {
+            int ret;
+            for (Event event : events) {
+                ret = e.hasConflictWith(event);
+                if (ret != 0) return event;
+            }
+        }
+        return null;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void deleteEvent(Event e){
@@ -42,39 +79,30 @@ public class Schedule {
         return events.size();
     }
 
-    public String getID(){
-        return schedule_id;
+    public String getName(){
+        return name;
     }
 
     public ArrayList<Event> getEvents() {
         return events;
     }
 
+    public boolean isFall() { return isFall; }
 
-//  not doing semesters for now
-//    public String getSemester() {
-//        return semester;
-//    }
+    public String getSemester() {
+        return isFall ? "Fall" : "Spring";
+    }
 
-//    public String setSemester() {
-//
-//    }
-
-    void downloadSchedule(){
-
+    public int totalCredits(){
+        int total = 0;
+        for (Event event : events) {
+            if(event instanceof Course)
+                total += ((Course) event).getCreditHours();
+        }
+        return total;
     }
 
 
-
-   Calendar getCalendar(){
-       Calendar cal = new Calendar(this);
-        return cal;
-    }
-
-//don't have reference numbers
-//   void getRefNums(){
-//
-//    }
 
 
 }

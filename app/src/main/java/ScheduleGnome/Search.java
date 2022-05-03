@@ -4,63 +4,51 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Search {
-    private Data data;
-    private int NUM_COURSES;
     private String searched;
     private Map<String, String> filters;
-
-//    private ArrayList<String> depts;
-//    // private ArrayList<String> professor; // Web scraper needed
-//    private ArrayList<Integer> creditHrs;
-//    private ArrayList<DayOfWeek[]> dates;
-//    private ArrayList<LocalTime> startTimes;
-//    private ArrayList<LocalTime> endTimes;
     private ArrayList<Match> results;
+    private boolean isFall;
 
     // TODO: JavaFX buttons will call your Search class's setters to set filters
-    public Search() {
-        filters = new HashMap<>();
-        data = new Data();
-        NUM_COURSES = data.courses.size();
+    public Search(boolean isFall) {
         searched = null;
-//        depts = new ArrayList<>();
-//        professor = new ArrayList<>();
-//        creditHrs = new ArrayList<>();
-//        dates = new ArrayList<>();
-//        startTimes = new ArrayList<>();
-//        endTimes = new ArrayList<>();
-//        results = new ArrayList<>();
+        filters = new HashMap<>();
+        results = new ArrayList<>();
+        this.isFall = isFall;
     }
 
     // toString for results
     public String resultToString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < results.size(); i++) {
-            sb.append((i + " " + results.get(i).getCourse().toString() + "\n"));
+            sb.append(i).append(" ").append(results.get(i).getCourse().toString()).append("\n");
         }
         return sb.toString();
     }
 
     public ArrayList<Course> querySearch() {
         results.clear();
-        results = applyFilters();
+        results = JavaFXApp.getDB().filterCourses(filters, isFall);
         applySearchedInput();
         results.sort(new MatchComparator());
-        for (int i = results.size()-1; i>=0; i--) {
-            Match result = results.get(i);
-            if (result.getRating() > 0) {
-                break;
+        if (hasSearchedQuery()) {
+            for (int i = results.size() - 1; i >= 0; i--) {
+                Match result = results.get(i);
+                if (result.getRating() > 0) {
+                    break;
+                }
+                results.remove(result);
             }
-            results.remove(result);
         }
-        clearFilters();
         return getResults();
     }
 
-    // TODO: IFFY way to do this. Might need to rethink
+
+
     public ArrayList<Match> applySearchedInput() {
         if (!hasSearchedQuery()) return results;
         for (Match result : results) {
@@ -70,120 +58,35 @@ public class Search {
             for (String s : searched.split(" ")) {
                 if (s.isEmpty()) continue;
                 // Check for building
-                if (crs.getBuilding()!=null && s.equals(crs.getBuilding().toLowerCase())) {
-                    result.addSimilarity((crs.getBuilding()));
-                    newRating++;
-                }
+
                 if (s.equals(crs.getDept().toLowerCase())) {
                     result.addSimilarity(crs.getDept());
                     newRating += 3;
                 }
-                if (s.equals(crs.getCode())) {
-                    result.addSimilarity(crs.getCode());
-                    newRating += 3;
+                if (s.equals(crs.getNumber() + "")) {
+                    result.addSimilarity(crs.getNumber() + "");
+                    newRating += 5;
                 }
-                for (String t : crs.getTitle().split(" ")) {
-                    if (t.length() < 3 || s.length() < 3) continue;
-                    if (t.toLowerCase().contains(s)) {
-                        result.addSimilarity(t);
-                        newRating++;
-                    }
-                }
+                String[] titles = crs.getTitle().split(" ");
 
+                for(String t : crs.getTitle().toLowerCase().split(" ")){
+
+                    if(crs.getTitle().toLowerCase().startsWith(t) && t.startsWith(s)){
+                        newRating += 5;
+                    }
+                    else if (t.contains(s)) {
+                        newRating += 1;
+                    } //
+                }
             }
             result.setRating(newRating);
         }
         return results;
     }
 
-    public ArrayList<Match> applyFilters() {
-        if (hasFilters()) {
-            for (int i = 0; i < NUM_COURSES; i++) {
-                Course curr = data.courses.get(i);
-                int rate = isMatch(curr);
-                if (rate > 0) { // Add in if matches user query as well
-                    Match newMatch = new Match(curr, rate);
-                    results.add(newMatch);
-                }
-            }
-        }
-        else {
-            for (int i = 0; i < NUM_COURSES; i++) {
-                Course curr = data.courses.get(i);
-                Match newMatch = new Match(curr, 0);
-                results.add(newMatch);
-            }
-        }
-        return results;
-    }
-
-    public int isMatch(Course crs) {
-        int rating = 0;
-        // Apply department filter
-        DeptIf:
-        if (!depts.isEmpty()) {
-            for (String dept : depts) {
-                if (crs.getCourseCode().contains(dept)) {
-                    rating++; // Found a match
-                    break DeptIf;
-                }
-            }
-            return -1;
-        }
-        // Apply start time filter
-        StartIf:
-        if (!startTimes.isEmpty()) {
-            for (LocalTime startTime : startTimes) {
-                if (crs.getStartTime() != null && crs.getStartTime().compareTo(startTime) >= 0) {
-                    rating++; // Found a match
-                    break StartIf;
-                }
-            }
-            return -1;
-        }
-        EndIf:
-        if (!endTimes.isEmpty()) {
-            for (LocalTime endTime : endTimes) {
-                if (crs.getEndTime() != null && crs.getEndTime().compareTo(endTime) <= 0) {
-                    rating++; // Found a match
-                    break EndIf;
-                }
-            }
-            return -1;
-        }
-        // Apply day of the week filter
-        DatesIf:
-        if (!dates.isEmpty()) {
-            DayOfWeek[] crsDates = crs.getDates();
-            int numDays = crsDates.length;
-            for (DayOfWeek[] daysOfWeek : dates) {
-                if (numDays == daysOfWeek.length) {
-                    for (int i = 0; i < daysOfWeek.length; i++) {
-                        if (crsDates[i].equals(daysOfWeek[i])) {
-                            rating++; // Found a match
-                            break DatesIf;
-                        }
-                    }
-                }
-            }
-            return -1;
-        }
-        // TODO: Add credit hours check, professor, class level filters?
-        return rating;
-    }
-
-    public Boolean hasFilters() {
-        if (!depts.isEmpty()) return true;
-        if (!startTimes.isEmpty()) return true;
-        if (!dates.isEmpty()) return true;
-        if (!creditHrs.isEmpty()) return true;
-        return false;
-    }
-
-    public Boolean hasSearchedQuery() {
+    public boolean hasSearchedQuery() {
         if (searched == null) return false;
-        if (searched.isBlank()) return false;
-        return true;
+        return !searched.isBlank();
     }
 
     // GETTERS N' SETTERS
@@ -194,113 +97,51 @@ public class Search {
 
     public void setSearched(String searched) {
         this.searched = searched.toLowerCase();
-        System.out.println("SetSeatcheddddas:" +this.searched);
+        System.out.println("Search set to: " +this.searched);
     }
 
-    public String getDepts() {
-        return filters.getOrDefault("dept","ERROR");
+    public String getFilterOfName(String filterName) {
+        return filters.getOrDefault(filterName, "ERROR");
     }
 
     public void setDept(String dept) {
-        this.filters.put("dept",dept);
+        this.filters.put("department",dept);
     }
 
-    //public String getProfessor() {
-    //    return professor;
-    //}
-
-    //public void setProfessor(String professor) {
-    //    this.professor = professor;
-    //}
-
-    public String getCreditHrs() { return filters.getOrDefault("creditHrs","ERROR"); }
-
-    public void setCreditHrs(String creditHrs) { this.filters.put("creditHrs",creditHrs); }
-
-    public String getDates() { return filters.getOrDefault("dates","ERROR"); }
+    public void setCreditHrs(String creditHrs) {
+        filters.put("credits",creditHrs);
+    }
 
     public void setDates(String dates) {
         filters.put("dates",dates);
-//        DayOfWeek[] meets;
-//        if (dates == null)
-//            meets = null;
-//        else {
-//            String[] days = dates.split("");
-//            meets = new DayOfWeek[days.length];
-//
-//            for (int i = 0; i < days.length; i++) {
-//                switch (days[i]) {
-//                    case "M":
-//                        meets[i] = DayOfWeek.of(1);
-//                        break;
-//                    case "T":
-//                        meets[i] = DayOfWeek.of(2);
-//                        break;
-//                    case "W":
-//                        meets[i] = DayOfWeek.of(3);
-//                        break;
-//                    case "R":
-//                        meets[i] = DayOfWeek.of(4);
-//                        break;
-//                    case "F":
-//                        meets[i] = DayOfWeek.of(5);
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        }
-//        this.dates.add(meets);
     }
-
-    public String getStartTimes() { return filters.getOrDefault("startTime","ERROR"); }
 
     public void setStartTime(String startTime) {
-        filters.put("startTime",startTime);
-//        LocalTime start = null;
-//        try {
-//            start = startTime == null ? null : LocalTime.parse(startTime);
-//        } catch (java.time.format.DateTimeParseException ex) {
-//            startTime = "0" + startTime;
-//            start = startTime == null ? null : LocalTime.parse(startTime);
-//        }
-//        this.startTimes.add(start);
+        filters.put("beginTime", startTime);
     }
 
-    //public void addStartTime(LocalTime startTime){
-//        startTimes.add(startTime);
-//    }
-
-    public String getEndTime() { return filters.getOrDefault("endTime","ERROR"); }
-
     public void setEndTime(String endTime) {
-        filters.put("endTime",endTime);
-//        LocalTime end = null;
-//        try {
-//            end = endTime == null ? null : LocalTime.parse(endTime);
-//        } catch (java.time.format.DateTimeParseException ex) {
-//            endTime = "0" + endTime;
-//            end = endTime == null ? null : LocalTime.parse(endTime);
-//        }
-//        this.endTimes.add(end);
+        filters.put("endTime", endTime);
+    }
+
+    public void setProfessor(String professor) {
+        filters.put("professor",professor);
     }
 //    public void addEndTime(LocalTime endTime) {
 //        endTimes.add(endTime);
 //        System.out.println(endTimes.toString());
 //    }
 
-    public ArrayList<Course> getResults() { 
+    public ArrayList<Course> getResults() {
         ArrayList<Course> out = new ArrayList<Course>();
         for (Match match : results) {
             out.add(match.getCourse());
         }
         return out;
-     }
+    }
 
-    //public void setResults(ArrayList<Match> results) { this.results = results; }
-
-    public ArrayList<Course> getAllCourses(){
-        return data.getCourses();
+    public ArrayList<Course> getAllCourses() {
+        return new ArrayList<>();
     }
 
     private void clearFilters(){

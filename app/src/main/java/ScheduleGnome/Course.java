@@ -1,169 +1,159 @@
 package ScheduleGnome;
 
-import java.time.DayOfWeek;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
 public class Course extends Event {
-    private String courseCode;
-    private String shortTitle;
-    private String building;
-    private String room;
-    private int enrollment;
+    private String year;
+    private String semester;
+    private String department;
+    private int number;
+    private String section;
+    private int creditHours;
     private int capacity;
+    private int enrollment;
+    private String professor;
+    private String comments;
+    private boolean hasPrerequisite;
+    private int id;
 
-    public Course(String courseCode, String shortTitle, String longTitle, LocalTime start, LocalTime end,
-            DayOfWeek[] dates, String building, String room, int enrollment, int capacity) {
+
+    public Course(String longTitle, LocalTime start, LocalTime end,
+                  String dates, int enrollment, int capacity) {
         super(longTitle, start, end, dates);
-        this.courseCode = courseCode;
-        this.shortTitle = shortTitle;
-        this.building = building;
-        this.room = room;
         this.enrollment = enrollment;
         this.capacity = capacity;
     }
 
     public Course(String[] items) {
-        super(items[2], items[3], items[4], items[5]);
+        super(items[5], items[9], items[10], items[11], items[12], items[13], items[14], items[15]);
 
-        this.courseCode = items[0];
-        this.shortTitle = items[1];
-        this.building = items[6];
-        this.room = items[7];
+        this.year = items[0];
+        int sem = items[1] == null ? -1 : Integer.parseInt(items[1]);
+        this.semester = sem == 10 ? "Fall" : sem == 30 ? "Spring" : "";
+        this.department = items[2];
+        this.number = items[3] == null ? -1 : Integer.parseInt(items[3]);
+        this.section = items[4];
+        this.creditHours = items[6] == null ? -1 : Integer.parseInt(items[6]);
+        this.capacity = items[7] == null ? -1 : Integer.parseInt(items[7]);
         this.enrollment = items[8] == null ? -1 : Integer.parseInt(items[8]);
-        this.capacity = items[9] == null ? -1 : Integer.parseInt(items[9]);
+        this.professor = (items[18].isEmpty() ? items[17] : items[18]) + " " + items[16];
+        this.comments = items[19];
+        initializePrereqs();
+    }
+
+    public Course(ResultSet result) throws SQLException {
+        super(result.getString(4), result.getObject(12, LocalTime.class),
+                result.getObject(13, LocalTime.class), result.getString(11));
+        id = result.getInt(1);
+        year = result.getString(2);
+        semester = result.getString(3);
+        department = result.getString(5);
+        number = result.getInt(6);
+        section = result.getString(7);
+        creditHours = result.getInt(8);
+        capacity = result.getInt(9);
+        enrollment = result.getInt(10);
+        professor = result.getString(14);
+        comments = result.getString(15);
+        initializePrereqs();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Course course = (Course) o;
+        return creditHours == course.creditHours && capacity == course.capacity && enrollment == course.enrollment && Objects.equals(year, course.year) && Objects.equals(semester, course.semester) && Objects.equals(department, course.department) && Objects.equals(number, course.number) && Objects.equals(section, course.section) && Objects.equals(professor, course.professor) && Objects.equals(comments, course.comments);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((building == null) ? 0 : building.hashCode());
-        result = prime * result + capacity;
-        result = prime * result + ((courseCode == null) ? 0 : courseCode.hashCode());
-        result = prime * result + enrollment;
-        result = prime * result + ((room == null) ? 0 : room.hashCode());
-        result = prime * result + ((shortTitle == null) ? 0 : shortTitle.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Course other = (Course) obj;
-        if (building == null) {
-            if (other.building != null)
-                return false;
-        } else if (!building.equals(other.building))
-            return false;
-        if (capacity != other.capacity)
-            return false;
-        if (courseCode == null) {
-            if (other.courseCode != null)
-                return false;
-        } else if (!courseCode.equals(other.courseCode))
-            return false;
-        if (enrollment != other.enrollment)
-            return false;
-        if (room == null) {
-            if (other.room != null)
-                return false;
-        } else if (!room.equals(other.room))
-            return false;
-        if (shortTitle == null) {
-            if (other.shortTitle != null)
-                return false;
-        } else if (!shortTitle.equals(other.shortTitle))
-            return false;
-        return true;
+        return Objects.hash(super.hashCode(), year, semester, department, number, section, creditHours, capacity, enrollment, professor, comments);
     }
 
     @Override
     public String toString() {
 
-        return String.format("%-40s%-25s\n%-40s%-25s%-15s%-15s", getTitle(), getStartTime() + " - " + getEndTime(), courseCode,
-                getDatesString(), building + " " + room, enrollment + "/" + capacity);
+        return String.format("%-40s%-25s\n%-40s%-25s%-5s", getTitle(), getStartTime() + " - " + getEndTime(), getCourseCode(),
+                getDatesString(), enrollment + "/" + capacity);
     }
 
     public String getCourseCode() {
-        return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
-
-    public String getShortTitle() {
-        return shortTitle;
-    }
-
-    public void setShortTitle(String shortTitle) {
-        this.shortTitle = shortTitle;
-    }
-
-    public String getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(String building) {
-        this.building = building;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
+        return department + " " + number + " " + section;
     }
 
     public int getEnrollment() {
         return enrollment;
     }
 
-    public void setEnrollment(int enrollment) {
-        this.enrollment = enrollment;
-    }
-
     public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     public String getDept() {
-        if (courseCode == null || courseCode.isEmpty())
-            return "Error";
-        String[] crsCode = courseCode.split(" ");
-        String out = "output";
-        for (int i = 0, j = 0; j < 1; i++) {
-            if (crsCode[i].equals(""))
-                continue;
-            out = crsCode[i];
-            j++;
-        }
-        return out;
+        return department;
     }
 
-    public String getCode() {
-        if (courseCode == null || courseCode.isEmpty())
-            return "Error";
-        String[] crsCode = courseCode.split(" ");
-        String out = "output";
-        for (int i = 0, j = 0; j < 2; i++) {
-            if (crsCode[i].equals(""))
-                continue;
-            if (j == 1)
-                out = crsCode[i];
-            j++;
-        }
-        return out;
+    public String getYear() {
+        return year;
     }
 
+    public String getSemester() {
+        return semester;
+    }
+
+    public int getCreditHours() {
+        return creditHours;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    private void initializePrereqs() {
+        //parse course codes from comments string
+        if(comments == null) return;
+        //check if comments string containes a three digit number
+        if(comments.matches(".*\\d{3}.*") || comments.toLowerCase().contains("standing") || comments.toLowerCase().contains("status")) {
+            hasPrerequisite = true;
+        }
+    }
+
+    public boolean hasPrerequisite() {
+        return hasPrerequisite;
+    }
+
+    @Override
+    public int hasConflictWith(Event e) {
+        if (e instanceof Course) {
+
+            Course c = (Course) e;
+            if (c.getNumber() == number && c.getDept().equals(department))
+                return 2;
+        }
+        return super.hasConflictWith(e);
+    }
 }

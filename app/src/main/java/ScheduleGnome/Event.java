@@ -1,167 +1,91 @@
 package ScheduleGnome;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public abstract class Event {
-    private int id;
+    private final String title;
+    private final LocalTime startTime;
+    private final LocalTime endTime;
+    private String dates;
 
-    private String title;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private DayOfWeek[] dates;
-
-    public Event(String title, LocalTime start, LocalTime end, DayOfWeek[] dates) {
+    public Event(String title, LocalTime start, LocalTime end, String dates) {
         this.title = title;
         this.startTime = start;
         this.endTime = end;
         this.dates = dates;
     }
 
-    public Event(String title, String s, String e, String day){
+    public Event(String title, String m, String t, String w, String r, String f, String b, String e) {
         this.title = title;
+        LocalTime start = LocalTime.of(0, 0), end = LocalTime.of(0, 0);
 
-        
-        LocalTime start = null, end = null;
+        dates = "";
+        for (String day : new String[]{m, t, w, r, f}) {
+            dates = dates.concat(day == null ? "" : day);
+        }
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.US);
+
         try {
-            start = s == null ? null : LocalTime.parse(s);
+            start = b == null ? null : LocalTime.parse(b, df);
         } catch (java.time.format.DateTimeParseException ex) {
-            s = "0" + s;
-            start = s == null ? null : LocalTime.parse(s);
+            if (!b.isBlank()) {
+                b = "0" + b;
+                start = LocalTime.parse(b, df);
+            }
         }
         try {
-            end = e == null ? null : LocalTime.parse(e);
+            end = e == null ? null : LocalTime.parse(e, df);
         } catch (java.time.format.DateTimeParseException ex) {
-            e = "0" + e;
-            end = e == null ? null : LocalTime.parse(e);
+            if (!e.isBlank()) {
+                e = "0" + e;
+                end = LocalTime.parse(e, df);
+            }
         }
 
         this.startTime = start;
         this.endTime = end;
-
-        DayOfWeek[] meets;
-
-        if (day == null)
-            meets = null;
-        else {
-            String[] days = day.split("");
-            meets = new DayOfWeek[days.length];
-
-            for (int i = 0; i < days.length; i++) {
-                switch (days[i]) {
-                    case "M":
-                        meets[i] = DayOfWeek.of(1);
-                        break;
-                    case "T":
-                        meets[i] = DayOfWeek.of(2);
-                        break;
-                    case "W":
-                        meets[i] = DayOfWeek.of(3);
-                        break;
-                    case "R":
-                        meets[i] = DayOfWeek.of(4);
-                        break;
-                    case "F":
-                        meets[i] = DayOfWeek.of(5);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        dates = meets.clone();
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Arrays.hashCode(dates);
-        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Event other = (Event) obj;
-        if (!Arrays.equals(dates, other.dates))
-            return false;
-        if (endTime == null) {
-            if (other.endTime != null)
-                return false;
-        } else if (!endTime.equals(other.endTime))
-            return false;
-        if (startTime == null) {
-            if (other.startTime != null)
-                return false;
-        } else if (!startTime.equals(other.startTime))
-            return false;
-        if (title == null) {
-            if (other.title != null)
-                return false;
-        } else if (!title.equals(other.title))
-            return false;
-        return true;
     }
 
     @Override
     public String toString() {
         return title + ", from " + startTime + " to " + endTime +
-        " on " + getDatesString();
+                " on " + getDatesString();
     }
 
     public String getDatesString() {
-        //Print dates in a concise and understandable fashion
-        char[] datesChars = {'M','T','W','R','F','S','S'};
-        String datesString = "";
 
-        for(DayOfWeek date : dates) {
-            if(date != null)
-                datesString += datesChars[date.getValue() - 1];
-        }
-        return datesString;
+        return dates;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
     }
 
     public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
+    public int hasConflictWith(Event e) {
+        LocalTime eStart = e.getStartTime();
+        LocalTime eEnd = e.getEndTime();
 
-    public DayOfWeek[] getDates() {
-        return dates;
-    }
-
-    public void setDates(DayOfWeek[] dates) {
-        this.dates = dates;
+        for (String day : e.getDatesString().split("")) {
+            if (dates.contains(day)) {
+                if (eStart.compareTo(startTime) >= 0 && eStart.compareTo(endTime) <= 0
+                        ||
+                        eEnd.compareTo(startTime) >= 0 && eEnd.compareTo(endTime) <= 0) {
+                    return 1;
+                }
+            }
+        }
+        return 0;
     }
 
 }
