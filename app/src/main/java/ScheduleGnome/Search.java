@@ -127,6 +127,10 @@ public class Search {
     public void setProfessor(String professor) {
         filters.put("professor",professor);
     }
+//    public void addEndTime(LocalTime endTime) {
+//        endTimes.add(endTime);
+//        System.out.println(endTimes.toString());
+//    }
 
     public ArrayList<Course> getResults() {
         ArrayList<Course> out = new ArrayList<Course>();

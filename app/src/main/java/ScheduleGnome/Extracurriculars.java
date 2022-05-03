@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-
 public class Extracurriculars extends Event {
     public Extracurriculars(String title, LocalTime start, LocalTime end, String dates){
         super(title,start,end,dates);
