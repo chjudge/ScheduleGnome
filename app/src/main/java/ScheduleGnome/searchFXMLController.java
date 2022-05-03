@@ -201,9 +201,9 @@ public class searchFXMLController {
 
                 System.out.println(label[aClass][tRow].getOnMouseEntered().toString());
 
-                //calGrid.add(new CalendarEvent(e, this), aClass, tRow);
+                calGrid.add(new CalendarEvent(e, this), aClass, tRow);
 
-                calGrid.add(label[aClass][tRow], aClass, row - 7);
+                //calGrid.add(label[aClass][tRow], aClass, row - 7);
 
             }
 
