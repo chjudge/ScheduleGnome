@@ -55,7 +55,7 @@ public class searchFXMLController {
 
     Search search;
 
-    private String savedSchedulePath = "./src/main/savedSchedules";
+    private final String savedSchedulePath = "./src/main/savedSchedules";
 
     @FXML
     protected void search() {
@@ -209,11 +209,6 @@ public class searchFXMLController {
 //                calGrid.add(label[aClass][tRow], aClass, row - 7);
             }
 
-            for (Node n : calGrid.getChildren()) {
-                if (n instanceof Label) {
-
-                }
-            }
             classes.clear();
         }
     }
@@ -394,6 +389,7 @@ class CalendarEvent extends HBox {
             JavaFXApp.getCurrentSchedule().deleteEvent(event);
             JavaFXApp.getDB().deleteEvent(event, JavaFXApp.getCurrentSchedule());
             controller.updateCalendar();
+            controller.search();
         });
 
         Popup popup = new Popup(event);
@@ -403,13 +399,9 @@ class CalendarEvent extends HBox {
         popOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
         popOver.setAnchorLocation(PopOver.AnchorLocation.WINDOW_TOP_LEFT);
 
-        this.setOnMouseEntered(me -> {
-            popOver.show(this);
-        });
+        this.setOnMouseEntered(me -> popOver.show(this));
 
-        this.setOnMouseExited(me -> {
-            popOver.hide();
-        });
+        this.setOnMouseExited(me -> popOver.hide());
 
         this.getChildren().addAll(eventLabel, removeButton);
 
