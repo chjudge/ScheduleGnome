@@ -28,7 +28,7 @@ public class JavaFXApp extends Application {
         stg = stage;
         Parent root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
 
-        Scene mainScene = new Scene(root, 800, 450);
+        Scene mainScene = new Scene(root, 800, 600);
         mainScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         Log("Launched main scene");

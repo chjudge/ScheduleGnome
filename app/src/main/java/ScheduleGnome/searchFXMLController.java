@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +12,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.PopupWindow;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 
@@ -138,7 +141,7 @@ public class searchFXMLController {
         int row;
         ArrayList<Integer> classes = new ArrayList<>();
         calGrid.getChildren().clear();
-        calGrid.setGridLinesVisible(true);
+        calGrid.setGridLinesVisible(false);
         for (int i = 0; i < 1; i++) {
             for (int j = 1; j < label[i].length; j++) {
                 label[i][j] = new Label();
@@ -203,8 +206,7 @@ public class searchFXMLController {
 
                 calGrid.add(new CalendarEvent(e, this), aClass, tRow);
 
-                //calGrid.add(label[aClass][tRow], aClass, row - 7);
-
+//                calGrid.add(label[aClass][tRow], aClass, row - 7);
             }
 
             for (Node n : calGrid.getChildren()) {
@@ -386,20 +388,57 @@ class CalendarEvent extends HBox {
         this.controller = controller;
         eventLabel = new Label(event.getTitle()); // TODO: For now
         removeButton = new Button("x");
+        removeButton.setPadding(new Insets(0, 5, 0, 5));
+        removeButton.setFocusTraversable(false);
         removeButton.setOnAction((ActionEvent e) -> {
             JavaFXApp.getCurrentSchedule().deleteEvent(event);
             JavaFXApp.getDB().deleteEvent(event, JavaFXApp.getCurrentSchedule());
             controller.updateCalendar();
         });
 
+        Popup popup = new Popup(event);
+
+        PopOver popOver = new PopOver(popup);
+
+        popOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+        popOver.setAnchorLocation(PopOver.AnchorLocation.WINDOW_TOP_LEFT);
+
+        this.setOnMouseEntered(me -> {
+            popOver.show(this);
+        });
+
+        this.setOnMouseExited(me -> {
+            popOver.hide();
+        });
+
         this.getChildren().addAll(eventLabel, removeButton);
 
-        this.setOnMouseClicked(controller::test);
 
     }
 
     public Event getEvent() {
         return event;
+    }
+}
+
+class Popup extends VBox {
+    public Popup(Event event) {
+        super();
+        Label name = new Label(event.getTitle());
+
+        this.getChildren().add(name);
+        if(event instanceof Course) {
+            Course course = (Course) event;
+            Label courseCode = new Label("Course Code: " + course.getCourseCode());
+            Label courseCredits = new Label("Credit Hours: " + course.getCreditHours());
+            this.getChildren().addAll(courseCode, courseCredits);
+            if(!course.getComments().isBlank()) {
+                Label courseDescription = new Label("Course Information: " + course.getComments());
+                this.getChildren().add(courseDescription);
+            }
+        }
+
+        this.setPadding(new Insets(10, 10, 10, 10));
     }
 }
 
